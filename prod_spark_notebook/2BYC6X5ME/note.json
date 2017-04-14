@@ -1,0 +1,1230 @@
+{
+  "paragraphs": [
+    {
+      "text": "%pyspark\n\n\"\"\"\nImports and versioning.\n\nUpdate processor_version as necessary\n\"\"\"\n\nimport os\nimport argparse\nimport os\nimport logging\nimport logging.config\nimport traceback\nimport nltk\nimport json\nimport re\nfrom collections import OrderedDict\nfrom nltk.downloader import download \n\nfrom pyspark import SparkContext, SparkConf\nfrom pyspark.sql import SQLContext\nfrom pyspark.storagelevel import StorageLevel\n\nprocessor_name \u003d \u0027place_list\u0027\nprocessor_version \u003d \u0027v0.0.1\u0027",
+      "dateUpdated": "Oct 14, 2016 1:45:46 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438504_-557707961",
+      "id": "20160915-135531_953039949",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "dateStarted": "Sep 30, 2016 12:46:07 PM",
+      "dateFinished": "Sep 30, 2016 12:46:27 PM",
+      "status": "ABORT",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "/**\n * Create version columns if necessary in Scylla/Cassandra. \n * Written in Scala because pyspark drivers seem to be missing?\n * Make sure to update processor_version as necessary\n **/\n\nimport java.util.Calendar\nimport java.text.SimpleDateFormat\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\n\nval processor_name \u003d \"place_list\"\nvar processor_version \u003d \"v0.0.1\"\n\nval format \u003d new SimpleDateFormat(\"yw\")\nval yrweek \u003d format.format(Calendar.getInstance().getTime())\n\nprocessor_version \u003d processor_version.replace(\".\", \"_\")\n\nval v \u003d  s\"${processor_name}_v\"\n//val pvd \u003d s\"${processor_name}__${processor_version}__${yrweek}\"\nval pvd \u003d \"place_list__v0_0_1__201639\"\n\ndef writeVersionColumn(sc:SparkContext, column: String, coltype: String, table: String, keyspace: String) \u003d\n{\n\n val cassTable \u003d sc.cassandraTable(keyspace, table)\n val cassSchema \u003d cassTable.selectedColumnNames.toSet\n \n if(!cassSchema.contains(column)) {\n      val cassTable \u003d sc.cassandraTable(keyspace, table)\n      cassTable.connector.withSessionDo {\n            session \u003d\u003e {\n              session.execute(s\"ALTER TABLE $keyspace.$table ADD $column $coltype\")\n    } } }\n }\n\nwriteVersionColumn(sc, v, \"text\", \"news\", \"processed_news\")\nwriteVersionColumn(sc, pvd, \"frozen\u003cset\u003cfrozen\u003cplace\u003e\u003e\u003e\", \"news\", \"processed_news\")\nwriteVersionColumn(sc, v, \"text\", \"agg_table\", \"testing\")\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438504_-557707961",
+      "id": "20160922-172511_112230612",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import java.util.Calendar\nimport java.text.SimpleDateFormat\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\nprocessor_name: String \u003d place_list\nprocessor_version: String \u003d v0.0.1\nformat: java.text.SimpleDateFormat \u003d java.text.SimpleDateFormat@f1e\nyrweek: String \u003d 201640\nprocessor_version: String \u003d v0_0_1\nv: String \u003d place_list_v\npvd: String \u003d place_list__v0_0_1__201639\nwriteVersionColumn: (sc: org.apache.spark.SparkContext, column: String, coltype: String, table: String, keyspace: String)Any\nres20: Any \u003d ()\nres21: Any \u003d ()\nres22: Any \u003d ()\n"
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nLoad geonames from ScyllaDB (TODO: Load from csv? Load from redis?)\n\"\"\"\ngeocode_rdd \u003d sqlContext.read.format(\"org.apache.spark.sql.cassandra\").options(table\u003d\"geonames\", keyspace\u003d\"geonames\").load().persist(StorageLevel.MEMORY_AND_DISK_SER)\ngeocode_pdd \u003d  geocode_rdd.toPandas()\ngeocode_pdd[\u0027name\u0027] \u003d geocode_pdd[\u0027name\u0027].str.lower()\nsqlContext.registerDataFrameAsTable(geocode_rdd, \"geonames\")",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438511_-558862208",
+      "id": "20160922-143953_1778987938",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\nprint geocode_pdd.head(5)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438511_-558862208",
+      "id": "20160927-124409_261582650",
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nGlobal variables\n\"\"\"\n\nSCRIPT_DIR \u003d os.path.dirname(os.path.realpath(__file__))\nCODE_REGEX \u003d r\u0027(?:\\s|^|!|,|\\()([A-Z]{2,3})(?:\\s|$|!|,|\\))\u0027\nDELETE_REGEX \u003d r\u0027\\\\n|\\\\t|\\\u003e|\\\u003c|\\(|\\)|\\\u003e|\\\u003c\u0027\n\n# Words that should not be considered placenames\nIGNORE_WORDS \u003d [\u0027a\u0027,\u0027ai\u0027,\u0027I\u0027,\u0027of\u0027,\u0027the\u0027\u0027many\u0027,\u0027may\u0027,\u0027march\u0027,\u0027center\u0027,\u0027as\u0027,\u0027see\u0027,\u0027valley\u0027,\u0027university\u0027,\u0027about\u0027,\u0027new\u0027,\u0027sars\u0027,\u0027aids\u0027,\u0027hpv\u0027,\u0027adhd\u0027,\u0027newcastle\u0027,\u0027elisa\u0027,\u0027to\u0027,\u0027influenza\u0027,\u0027who\u0027,\u0027pro\u0027,\u0027os\u0027,\u0027and\u0027,\u0027pdt\u0027,\u0027in\u0027,\u0027flu\u0027,\u0027ha\u0027,\u0027ron\u0027,\u0027control\u0027,\u0027mod\u0027,\u0027northern\u0027,\u0027southern\u0027,\u0027eastern\u0027,\u0027western\u0027,\u0027all\u0027,\u0027am\u0027,\u0027pm\u0027,\u0027eua\u0027,\u0027avian\u0027,\u0027ah\u0027,\u0027human\u0027,\u0027date\u0027,\u0027health\u0027,\u0027fry\u0027,\u0027many\u0027,\u0027is\u0027,\u0027the\u0027,\u0027by\u0027,\u0027on\u0027,\u0027ap\u0027,\u0027er\u0027,\u0027church\u0027,\n]\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438511_-558862208",
+      "id": "20160922-005029_1129076521",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nStanford Tagger Functions\nTODO: Need jar loaded in pyspark, training data jar available in path\nNot currently being used\n\"\"\"\n\ndef get_stanford_tagger():\n    \"\"\"\n    Use the superior Stanford tagger\n    \"\"\"\n    training_db \u003d os.path.join(\n        SCRIPT_DIR,\n        \u0027resources/classifiers/english.conll.4class.distsim.crf.ser.gz\u0027)\n    jar_file \u003d os.path.join(SCRIPT_DIR, \u0027resources/stanford-ner.jar\u0027)\n    tagger \u003d nltk.StanfordNERTagger(training_db, path_to_jar\u003djar_file)\n    return tagger\n\ndef get_stanford_gpes(text):\n    \"\"\"\n    Return a list of possible names based on Stanford NLTK chunking\n    \"\"\"\n    tokens \u003d [x.strip(\u0027.\u0027) for x in nltk.word_tokenize(text)]\n    tagger \u003d get_stanford_tagger()\n    stagged_text \u003d tagger.tag(tokens)\n    ne_tree \u003d stanford2tree(stagged_text)\n    ne_in_sent \u003d []\n    for subtree in ne_tree:\n        if type(\n                subtree) \u003d\u003d nltk.Tree:  # If subtree is a noun chunk, i.e. NE !\u003d \"O\"\n            ne_label \u003d subtree.label()\n            ne_string \u003d \" \".join([token for token, pos in subtree.leaves()])\n            if ne_label in [\u0027ORGANIZATION\u0027, \u0027LOCATION\u0027]:\n                ne_in_sent.append(ne_string)\n    return ne_in_sent\n\n\ndef stanfordNE2BIO(tagged_sent):\n    bio_tagged_sent \u003d []\n    prev_tag \u003d \"O\"\n    for token, tag in tagged_sent:\n        if tag \u003d\u003d \"O\":  # O\n            prev_tag \u003d tag\n            continue\n        if tag !\u003d \"O\" and prev_tag \u003d\u003d \"O\":  # Begin NE\n            bio_tagged_sent.append((token, \"B-\" + tag))\n            prev_tag \u003d tag\n        elif prev_tag !\u003d \"O\" and prev_tag \u003d\u003d tag:  # Inside NE\n            bio_tagged_sent.append((token, \"I-\" + tag))\n            prev_tag \u003d tag\n        elif prev_tag !\u003d \"O\" and prev_tag !\u003d tag:  # Adjacent NE\n            bio_tagged_sent.append((token, \"B-\" + tag))\n            prev_tag \u003d tag\n\n    return bio_tagged_sent\n\n\ndef stanford2tree(ne_tagged_sent):\n    bio_tagged_sent \u003d stanfordNE2BIO(ne_tagged_sent)\n    bio_tagged_filtered \u003d [x for x in bio_tagged_sent if x[0]]\n    if bio_tagged_filtered:\n        sent_tokens, sent_ne_tags \u003d zip(*bio_tagged_filtered)\n        pos_tokens \u003d nltk.pos_tag(sent_tokens)\n        sent_pos_tags \u003d [pos for token, pos in pos_tokens]\n        sent_conlltags \u003d [(token, pos, ne) for token, pos, ne in\n                          zip(sent_tokens, sent_pos_tags, sent_ne_tags)]\n        ne_tree \u003d nltk.conlltags2tree(sent_conlltags)\n        return ne_tree\n    else:\n        return []\n        ",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438511_-558862208",
+      "id": "20160915-132118_1500802402",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nAlternate NLTK tag methods\nCurrently being used but not as good as Stanford tagger\n\"\"\"\n\nnospace_langs \u003d (\u0027zh\u0027,)\n\ndef get_nltk_gpes(text):\n    \"\"\"\n    Use standard NLTK tagger (sucks)\n    \"\"\"\n    try:\n        sents \u003d nltk.sent_tokenize(re.sub(\u0027[\\:\\\\n]\u0027,\u0027.\u0027,text))\n    except LookupError:\n        print(\u0027Download nltk data\u0027)\n        download([\u0027punkt\u0027,\u0027maxent_treebank_pos_tagger\u0027,\u0027averaged_perceptron_tagger\u0027,\u0027maxent_ne_chunker\u0027,\u0027words\u0027])\n        sents \u003d nltk.sent_tokenize(re.sub(\u0027[\\:\\\\n]\u0027,\u0027.\u0027,text))\n    gpes \u003d []\n    for sent in sents:\n        tokenizer \u003d nltk.RegexpTokenizer(\u0027\\w(?:[-\\w]*[\\\u0027\\w]*\\w)?\u0027)\n        tokens \u003d tokenizer.tokenize(sent.replace(\u0027,\u0027, \u0027.\u0027))\n        tagged_text \u003d nltk.pos_tag(tokens)\n        for subtree in nltk.ne_chunk(tagged_text).subtrees():\n            # State/country codes often end up labelled as \u0027ORGANIZATION\u0027\n            if subtree.label() in [\u0027GPE\u0027, \u0027ORGANIZATION\u0027, \u0027PERSON\u0027]:\n                gpe \u003d u\u0027 \u0027.join([t[0] for t in subtree])\n                if len(gpe) \u003e 2 or (len(gpe) \u003e 1 and gpe.isupper()):\n                    gpes.append(gpe)\n            elif subtree.label() \u003d\u003d \u0027S\u0027:\n                for t in subtree:\n                    if type(t) \u003d\u003d tuple and t[0] and t[1].startswith(\u0027NNP\u0027):\n                        gpe \u003d u\u0027 \u0027.join([t[0]])\n                        if len(gpe) \u003e 2 or (len(gpe) \u003e 1 and gpe.isupper()):\n                            gpes.append(gpe)\n    return gpes\n\ndef dumb_gpes(text, max\u003d10):\n    \"\"\"\n    Split text by spaces, stripping non-alphanumeric characters,\n    and return the resulting list\n    \"\"\"\n    words \u003d re.sub(r\u0027,|\\\u0027|\"|:\u0027, \u0027 \u0027, text)\n    words \u003d filter(unicode.isalnum, words.split())\n    words \u003d [word for word in words if len(word) \u003e 2]\n    return words[0:max]\n\n\ndef splitchars(text, maxwords\u003d20, maxlen\u003d5, minlen\u003d2):\n    \"\"\"\n    Intended for Asian languages lacking spaces between words,\n    this function splits text at intervals producing a list of\n    words each containing minlen to maxlen characters.\n    \"\"\"\n    text \u003d filter(unicode.isalnum, text)\n    words \u003d set()\n    texts \u003d text.split()\n    for t in texts:\n        for x in range(len(t)):\n            if len(words) \u003e\u003d maxwords:\n                break\n            for y in range(maxlen, 0, -1):\n                if len(words) \u003e\u003d maxwords:\n                    break\n                if x + y \u003c\u003d len(t) and ((x + y) - x) \u003e\u003d minlen:\n                    words.add((t[x:x + y]))\n    return list(words)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438511_-558862208",
+      "id": "20160922-005225_708283355",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\ngeocode match Scoring methods\n\"\"\"\n\ndef relation_score(places, admins, countries):\n    \"\"\"\n    Adjust scores if the admin/country name or code of a place/admin match\n    equals the name/code of an admin/country match.\n    \"\"\"\n    for place in places.keys():\n        for item in places[place]:\n            admin_code \u003d item[\u0027admin1\u0027]\n            country \u003d item[\u0027country\u0027]\n            if admin_code:\n                if admin_code.upper() in admins.keys():\n                    item[\u0027score\u0027] *\u003d 3\n                    for admitem in admins[admin_code]:\n                        if admitem[\u0027country\u0027] \u003d\u003d country:\n                            admitem[\u0027score\u0027] *\u003d 3\n                else:\n                    for admin in admins.keys():\n                        for admitem in admins[admin]:\n                            if (admitem[\u0027country\u0027] \u003d\u003d country and\n                                        admitem[\u0027admin1\u0027] \u003d\u003d admin_code and\n                                        admitem[\u0027feature_code\u0027] \u003d\u003d \u0027ADM1\u0027):\n                                item[\u0027score\u0027] *\u003d 4\n                                admitem[\u0027score\u0027] *\u003d 3\n            if country:\n                for cc in countries.keys():\n                    for ccitem in countries[cc]:\n                        if ccitem[\u0027country\u0027] \u003d\u003d country:\n                            ccitem[\u0027score\u0027] *\u003d 2\n                            if ccitem[\u0027matching_word\u0027] !\u003d item[\u0027matching_word\u0027] \\\n                                    and item[\u0027matching_word\u0027] not in (admins.keys() + countries.keys()):\n                                item[\u0027score\u0027] *\u003d 2\n    for adm in admins.keys():\n        for item in admins[adm]:\n            country \u003d item[\u0027country\u0027]\n            if country:\n                for cc in countries.keys():\n                    for ccitem in countries[cc]:\n                        if ccitem[\u0027country\u0027] \u003d\u003d country:\n                            if ccitem[\u0027matching_word\u0027] !\u003d item[\u0027matching_word\u0027] \\\n                                    and item[\u0027matching_word\u0027] in admins.keys():\n                                item[\u0027score\u0027] *\u003d 2\n\n\n\ndef score_matches(matches, name, codes):\n    \"\"\"\n    Make a semi-educated guess about which match is better\n    \"\"\"\n    for nmatch in matches:\n        fc \u003d nmatch[\u0027feature_code\u0027]\n        alternates \u003d []\n        score \u003d 1\n        exact_match \u003d False\n        source \u003d nmatch[\u0027source\u0027]\n        if source \u003d\u003d \u0027name\u0027:\n            # Best type of nmatch\n            score +\u003d 100000\n            exact_match \u003d True\n        if name not in codes and (nmatch[\u0027name\u0027].lower().startswith(name.lower()) or nmatch[\u0027name\u0027].lower().endswith(name.lower())):\n            score +\u003d 50000\n            if fc.startswith(\u0027PCL\u0027):\n                score +\u003d 1000000\n        elif source in (\u0027alternate\u0027, \u0027ascii\u0027):\n            # 2nd best (alternate name - for all foreign languages)\n            score +\u003d 100000\n            exact_match \u003d True\n        if name in codes:\n            if (name.upper() \u003d\u003d nmatch[\u0027country\u0027] or name.upper() in alternates) and fc.startswith(\u0027PCL\u0027):\n                score +\u003d 50000\n            elif (name.upper() \u003d\u003d nmatch[\u0027admin1\u0027] or name.upper() in alternates) and fc \u003d\u003d \u0027ADM1\u0027:\n                score +\u003d 50000\n            else:\n                score \u003d -1\n        # Give higher scores to political capitals.\n        # \u0027Moscow\u0027 is most likely the one in Russia, not Maine\n        if score \u003e 50000:\n            if fc:\n                if fc.startswith(u\u0027PCL\u0027):\n                    score +\u003d 100000\n                elif fc \u003d\u003d \u0027ADM1\u0027:\n                    score +\u003d 50000\n                elif fc.startswith(\u0027PPLA\u0027) and exact_match:\n                    score +\u003d 40000\n                elif fc \u003d\u003d \u0027PPLC\u0027:\n                    score +\u003d 400000\n        if score \u003e 1:\n            if codes:\n                admin \u003d nmatch[\u0027admin1\u0027]\n                if admin and admin in codes:\n                    score *\u003d 4\n                admin \u003d nmatch[\u0027country\u0027]\n                if admin and admin in codes:\n                    score *\u003d 2\n            if alternates:\n                # Bonus points for actually having alternate names\n                score +\u003d 5000\n            if nmatch[\u0027feature_code\u0027].startswith(\u0027PPL\u0027):\n                score +\u003d ((nmatch[\u0027population\u0027] + 1) / 10)\n            else:\n                score +\u003d ((nmatch[\u0027population\u0027] + 1) / 1000)\n        nmatch[\u0027score\u0027] \u003d score\n\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438512_-548473987",
+      "id": "20160922-005307_662518208",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\ndef name_match(name, results, admin1\u003dNone, country\u003dNone):\n    \"\"\"\n    Create a list of objects for each match found for a name\n    \"\"\"\n    name_matches \u003d []\n    for geoname in results:\n        if not admin1 or admin1 \u003d\u003d geoname[\u0027admin1_code\u0027]:\n            if not country or country \u003d\u003d geoname[\"country_code\"]:\n                name_matches.append({\n                    \u0027coord\u0027: [[geoname[\u0027longitude\u0027], geoname[\u0027latitude\u0027]]],\n                    \u0027geonameid\u0027: geoname[\u0027geonameid\u0027],\n                    \u0027name\u0027: geoname[\u0027name\u0027],\n                    \u0027matching_word\u0027: name,\n                    \u0027admin1\u0027: geoname[\u0027admin1_code\u0027],\n                    \u0027admin1_abbr\u0027: geoname[\u0027admin1_abbr\u0027],\n                    \u0027admin2\u0027: geoname[\u0027admin2_code\u0027],\n                    \u0027admin3\u0027: geoname[\u0027admin3_code\u0027],\n                    \u0027admin4\u0027: geoname[\u0027admin4_code\u0027],\n                    \u0027feature_code\u0027: geoname[\u0027feature_code\u0027],\n                    \u0027country\u0027: geoname[\u0027country_code\u0027],\n                    \u0027population\u0027: geoname.get(\u0027population\u0027) or 0,\n                    \u0027source\u0027: geoname.get(\u0027source\u0027),\n                    \u0027score\u0027: -1\n                })\n    return name_matches",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438512_-548473987",
+      "id": "20160919-191612_1719005909",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndef panda_query(names, codes):\n    \"\"\"\n    Performs a query against Geonames Panda DataFrame.\n    :param names: list of placenames to search for\n    :param codes: list of potential admin/country codes to search for\n    :return: matching geonames records\n    \"\"\"\n\n    featurecodes \u003d [\u0027PCL\u0027,\u0027PCLD\u0027,\u0027PCLF\u0027,\u0027PCLI\u0027,\u0027PCLS\u0027,\u0027TERR\u0027,\n                        \u0027ADM1\u0027,\u0027ADM2\u0027,\u0027ADM3\u0027,\u0027ADM4\u0027,\n                        \u0027PPL\u0027,\u0027PPLA\u0027,\u0027PPLA2\u0027,\u0027PPLA3\u0027,\u0027PPLA4\u0027,\u0027PPLC\u0027\n                        ]\n    featureclasses \u003d [\u0027P\u0027, \u0027A\u0027]\n    population \u003d 1000\n\n    place_matches \u003d {}\n    admin_matches \u003d {}\n    country_matches \u003d {}\n\n    for name in names:\n        result_pdd \u003d geocode_pdd[\n            (geocode_pdd[\"name\"] \u003d\u003d name.lower()) \u0026\n            (geocode_pdd[\"feature_class\"].isin(featureclasses)) \u0026\n            (geocode_pdd[\"feature_code\"].isin(featurecodes)) \u0026\n            (geocode_pdd[\"population\"] \u003e population)\n         ]\n         \n        results \u003d result_pdd.T.to_dict().values()\n        name_matches \u003d name_match(name, results)\n        \n        score_matches(name_matches, name, codes)\n        for nmatch in name_matches:\n            featurecode \u003d nmatch[\u0027feature_code\u0027]\n            if featurecode and featurecode.startswith(\u0027ADM\u0027):\n                admin_matches.setdefault(name, []).append(nmatch)\n            elif featurecode and featurecode.startswith(\u0027PCL\u0027):\n                country_matches.setdefault(name, []).append(nmatch)\n            else:\n                place_matches.setdefault(name, []).append(nmatch)\n    return place_matches, admin_matches, country_matches",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438512_-548473987",
+      "id": "20160921-181203_1373825730",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndef get_geonames(names, codes):\n    \"\"\"\n    Find matching geonames records given a list of placenames and (possibly blank) state/country codes\n    \"\"\"\n    all_matches \u003d {}\n    place_matches, admin_matches, country_matches \u003d panda_query(names, codes)\n    relation_score(place_matches, admin_matches, country_matches)\n\n    for group in (place_matches, admin_matches, country_matches):\n        unique_ids \u003d []\n        for k, v in group.iteritems():\n            ranked \u003d sorted(v, key\u003dlambda k: k[\u0027score\u0027], reverse\u003dTrue)\n            if ranked[0][\u0027score\u0027] \u003e 1 and \\\n                            ranked[0][\u0027geonameid\u0027] not in unique_ids and \\\n                    (k not in all_matches or all_matches[k][\u0027score\u0027] \u003c\n                        ranked[0][\u0027score\u0027]):\n                all_matches[k] \u003d ranked[0]\n                unique_ids.append(ranked[0][\u0027geonameid\u0027])\n\n    place_list \u003d []\n    for place in sorted(all_matches.values(), key\u003dlambda k: k[\u0027score\u0027], reverse\u003dTrue):\n        place_list.append({\n                        \u0027place_name\u0027: place[\u0027name\u0027],\n                        \u0027place_lat\u0027: place[\u0027coord\u0027][0][1],\n                        \u0027place_lng\u0027: place[\u0027coord\u0027][0][0],\n                        \u0027geo_geonameid\u0027: int(place[\u0027geonameid\u0027])\n                    })   \n    return place_list\n    \ndef geocode(name):\n    return get_geonames([name],[])",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438512_-548473987",
+      "id": "20160922-010303_2088559782",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\ndef extract(text, lang\u003d\u0027en\u0027, dumb_tokens\u003dFalse, stanford\u003dFalse):\n    \"\"\"\n    Extract possible placenames from text, then query Geonames dataframe for matches.\n    \"\"\"\n    name_counts \u003d OrderedDict([])\n    code_counts \u003d {}\n\n    if not text:\n        # Nothing to do\n        return\n\n    if type(text) \u003d\u003d str:\n        text \u003d unicode(text)\n\n    text \u003d re.sub(DELETE_REGEX, u\u0027, \u0027, text)\n    text \u003d re.sub(r\u0027\\\u0027\u0027, u\u0027\\\u0027\\\u0027\u0027, text)\n\n    # Look for state/country codes (2-3 capital letters)\n    possible_codes \u003d list(\n        set(re.findall(CODE_REGEX, text)))\n    for code in possible_codes:\n        if code.lower() not in IGNORE_WORDS:\n            code_counts[code.lower()] \u003d code_counts.get(\n                code, 0) + 1\n\n    possible_names \u003d []\n    if lang in nospace_langs:\n        # No spaces in language, so make spaces\n        possible_names \u003d splitchars(text)[0:255]\n    elif dumb_tokens:\n        # Split words on spaces\n        possible_names \u003d dumb_gpes(text)\n    else:\n        # Use NLTK tokenizer and Stanford tagger to find placenames.\n        if stanford:\n            try:\n                possible_names.extend(get_stanford_gpes(text))\n            except OSError:\n                possible_names.extend(get_nltk_gpes(text))\n        else:\n            possible_names.extend(get_nltk_gpes(text))\n            name_prefixes \u003d [\u0027san\u0027, \u0027las\u0027, \u0027los\u0027]\n            for prefix in name_prefixes:\n                san_matches \u003d re.findall(\u0027{} \\w+\u0027.format(prefix), text, flags\u003dre.IGNORECASE)\n                for san_match in san_matches:\n                    if san_match not in possible_names:\n                        possible_names.append(san_match)\n                    for san_word in san_match.split(\u0027 \u0027):\n                        if san_word in possible_names:\n                            possible_names.remove(san_word)\n\n    for i, possible_geoname in enumerate(possible_names):\n        if possible_geoname.lower() in IGNORE_WORDS: continue\n\n        # If it looks like a state/country code, treat it that way\n        if (2 \u003c\u003d len(\n                possible_geoname) \u003c\u003d 3) and possible_geoname.isupper() and \\\n                        lang not in nospace_langs:\n            code_counts[possible_geoname.lower()] \u003d code_counts.get(\n                possible_geoname, 0) + 1\n        else:\n            name_counts[possible_geoname.lower()] \u003d name_counts.get(\n                possible_geoname.lower(), 0) + 1\n\n    if not name_counts and not code_counts:\n        # Nothing to do\n        return []\n\n    codes \u003d u\u0027,\u0027.join(u\u0027\"{}\"\u0027.format(key) for key in code_counts.keys())\n\n    names \u003d name_counts.keys()\n    names.extend(code_counts.keys())\n\n    return get_geonames(names, codes)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438512_-548473987",
+      "id": "20160922-005509_310516318",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nres \u003d extract(\"I want to live in Colorado someday \")\nprint(res)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438512_-548473987",
+      "id": "20160922-011110_1485682505",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "[{\u0027place_lng\u0027: -105.5008316040039, \u0027geo_geonameid\u0027: 5417618, \u0027place_lat\u0027: 39.00027084350586, \u0027place_name\u0027: u\u0027colorado\u0027}]\n"
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\"\"\"\nLoad processed_news.news table into SparkRDD\n\"\"\"\nall_news \u003d sqlContext.read.format(\"org.apache.spark.sql.cassandra\").options(table\u003d\"news\", keyspace\u003d\"processed_news\").load().select(\"id\", \"ds\", \"ymds\", \"rdt\", \"place_list\", \"place_lat\", \"place_lng\", \"place_name\", \"t\", \"place_list_v\").persist(StorageLevel.MEMORY_AND_DISK_SER)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438512_-548473987",
+      "id": "20160919-191927_1080118395",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n#hm_news.show(5)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438512_-548473987",
+      "id": "20160926-194939_1278515211",
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nSelect news records which have a place_name\n\"\"\"\n\nplacename_news \u003d all_news.filter(\n    (all_news[\"place_name\"].isNotNull()) \u0026\n    (\n        (all_news[\u0027place_list_v\u0027].isNull()) |\n        (all_news[\u0027place_list_v\u0027] !\u003d processor_version)\n    )\n)\n#placename_news.select(\u0027place_list\u0027, \u0027place_name\u0027, \u0027t\u0027, \u0027ds\u0027, \u0027place_list_v\u0027).show(10)\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438512_-548473987",
+      "id": "20160921-141300_1549303169",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nUDF Functions for a) extract and geocode, b) geocode only\n\"\"\"\n\nfrom pyspark.sql.types import StringType, StructType, FloatType, DoubleType, IntegerType, StructField, ArrayType\nfrom pyspark.sql.functions import udf\n\nPlaceType \u003d  ArrayType(StructType([\n    StructField(\u0027place_name\u0027, StringType(), True),\n    StructField(\u0027place_lat\u0027, FloatType(), True),    \n    StructField(\u0027place_lng\u0027, FloatType(), True),  \n    StructField(\u0027place_id\u0027, IntegerType(), True),\n    StructField(\u0027geo_geonameid\u0027, IntegerType(), True)\n    ]),True)\n\nextract_udf \u003d udf(lambda txt: extract(txt), PlaceType)\ngeocode_udf \u003d udf(lambda txt: geocode(txt), PlaceType)\n    \n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438513_-548858736",
+      "id": "20160921-145859_2099202807",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nCalculate version column for this week\n\"\"\"\nimport datetime\n\ndef versiondate_column(column, version, dt):\n    return \u0027{}__{}__{}\u0027.format(column,\n                               version.replace(\u0027.\u0027, \u0027_\u0027),\n                               datetime.datetime.strftime(dt, \u0027%Y%W\u0027))\n                               \n\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438513_-548858736",
+      "id": "20160922-143615_1684514285",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\"\"\"\nGeocode rows with existing place_name column\n\"\"\"\nplacename_news \u003d placename_news.withColumn(\"place_list\", geocode_udf(placename_news[\"place_name\"]))\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438513_-548858736",
+      "id": "20160921-141436_313357053",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n#placename_news.select(\"id\", \"ds\",  \"place_list\", \"place_name\", \"place_lng\", \"place_lat\").show(5)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438513_-548858736",
+      "id": "20160922-150114_1556117963",
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\"\"\"\nAssign geocode results to  \"place_lat\", \"place_lng\" columns\n\"\"\"\n\nfrom pyspark.sql.functions import lit\n\nplacename_news \u003d placename_news.filter(placename_news[\"place_list\"].isNotNull()).withColumn(\"place_lat\", placename_news[\"place_list\"][0].place_lat).withColumn(\"place_lng\", placename_news[\"place_list\"][0].place_lng)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438513_-548858736",
+      "id": "20160922-021434_507900216",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nCreate versioning columns and populate them\n\"\"\"\ntoday \u003d datetime.datetime.now()                               \nvdc \u003d versiondate_column(processor_name, processor_version, today)\nv \u003d \u0027{}_v\u0027.format(processor_name)\nplacename_news \u003d placename_news.withColumn(v, lit(processor_version)).withColumn(vdc, placename_news[\u0027place_list\u0027])#.persist(StorageLevel.MEMORY_AND_DISK_SER)\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438514_-547704489",
+      "id": "20160922-144236_1717998006",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nDisplay some records\n\"\"\"\n\n#placename_news.select(\"id\", \"ds\",  \"place_list\", \"place_name\", \"place_lng\", \"place_lat\", v, vdc).count()\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": false,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438514_-547704489",
+      "id": "20160921-141543_103518315",
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nSave the records\n\"\"\"\n\nplacename_news.select(\"id\", \"ds\", \"ymds\", \"rdt\", \"place_list\", \"place_lat\", \"place_lng\", v, vdc).write.format(\"org.apache.spark.sql.cassandra\").options(table\u003d\"news\", keyspace\u003d\"processed_news\").save(mode\u003d\"append\")\n\ntry:\n    placename_news.unpersist()\nexcept Exception as e:\n    print(\"NO NEED TO UNPERSIST HERE?\")\n    print(e)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438514_-547704489",
+      "id": "20160921-151733_906993747",
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nNow select all rows with null/empty place_name values and non-null t values (if any)\n\"\"\"\nfrom pyspark.sql.functions import col, when, size\n\n#def blank_as_null(x):\n#    return when(col(x) !\u003d \"\", col(x)).otherwise(None)\n\n#noname_news \u003d all_news.withColumn(\"place_name\", blank_as_null(\"place_name\"))\nnoname_news \u003d all_news.filter(\n    (all_news[\"place_name\"].isNull()) \u0026\n    (all_news[\"t\"].isNotNull()) \u0026\n    (\n        (all_news[\u0027place_list_v\u0027].isNull()) |\n        (all_news[\u0027place_list_v\u0027] !\u003d processor_version)\n    )\n)#.persist(StorageLevel.MEMORY_AND_DISK_SER)\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438514_-547704489",
+      "id": "20160922-125541_568720035",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nExtract and geocode rows without place_name values based on \u0027t\u0027 column\n\"\"\"\n\nnoname_news \u003d noname_news.withColumn(\"place_list\", extract_udf(noname_news[\"t\"]))#.persist(StorageLevel.MEMORY_AND_DISK_SER)\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438515_-548089238",
+      "id": "20160922-125834_1157030855",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n#noname_news.select(\u0027place_list\u0027,\u0027t\u0027).show(10)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438515_-548089238",
+      "id": "20160922-130530_1376046344",
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nAssign extract/geocode results to  \"place_lat\", \"place_lng\" columns, based on 1st element of place_list\n\"\"\"\n\nfrom pyspark.sql.functions import lit\n\nnoname_news \u003d noname_news.filter(noname_news[\"place_list\"].isNotNull()).withColumn(\"place_lat\", noname_news[\"place_list\"][0].place_lat).withColumn(\"place_lng\", noname_news[\"place_list\"][0].place_lng).withColumn(v, lit(processor_version)).withColumn(vdc, noname_news[\u0027place_list\u0027])#.persist(StorageLevel.MEMORY_AND_DISK_SER)\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438515_-548089238",
+      "id": "20160922-130206_1754881568",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\nnoname_news.select(\"id\", \"ds\", \"ymds\", \"rdt\", \"place_list\", \"place_lat\", \"place_lng\", v, vdc)#.persist(StorageLevel.MEMORY_AND_DISK_SER)\n#noname_latlng.count()",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438515_-548089238",
+      "id": "20160922-134105_1821340891",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nSave results to Scylla\n\"\"\"\n\nnoname_news.select(\"id\", \"ds\", \"ymds\", \"rdt\", \"place_list\", \"place_lat\", \"place_lng\", v, vdc).write.format(\"org.apache.spark.sql.cassandra\").options(table\u003d\"news\", keyspace\u003d\"processed_news\").save(mode\u003d\"append\")",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438515_-548089238",
+      "id": "20160922-130331_639004188",
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\"\"\"\nLoad testing.agg_table table into SparkRDD\n\"\"\"\nall_agg \u003d sqlContext.read.format(\"org.apache.spark.sql.cassandra\").options(table\u003d\"agg_table\", keyspace\u003d\"testing\").load().persist(StorageLevel.MEMORY_AND_DISK_SER)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438515_-548089238",
+      "id": "20160922-142617_394676347",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nall_agg.count()",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438515_-548089238",
+      "id": "20160927-165056_680129354",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438515_-548089238",
+      "id": "20160927-165402_1176598805",
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\nagg_geo \u003d all_agg.withColumn(\"place_list\", extract_udf(all_agg[\"description\"])).persist(StorageLevel.MEMORY_AND_DISK_SER)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438516_-550012983",
+      "id": "20160927-165244_1209557008",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nagg_geo.count()",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438516_-550012983",
+      "id": "20160927-165355_404286843",
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nagg_geo \u003d agg_geo.filter(agg_geo[\"place_list\"].isNotNull()).withColumn(\"place_lat\", agg_geo[\"place_list\"][0].place_lat).withColumn(\"place_lng\", agg_geo[\"place_list\"][0].place_lng).withColumn(v, lit(processor_version)).persist(StorageLevel.MEMORY_AND_DISK_SER)",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438516_-550012983",
+      "id": "20160927-165316_637447126",
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n\n\nagg_geo.select(\"id\", \"place_lat\", \"place_lng\", v).write.format(\"org.apache.spark.sql.cassandra\").options(table\u003d\"agg_table\", keyspace\u003d\"testing\").save(mode\u003d\"append\")\n",
+      "dateUpdated": "Sep 27, 2016 5:30:38 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438516_-550012983",
+      "id": "20160927-155734_703188919",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Py4JJavaError: An error occurred while calling o496.save.\n: org.apache.spark.SparkException: Job 8 cancelled part of cancelled job group zeppelin-20160927-155734_703188919\n\tat org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1431)\n\tat org.apache.spark.scheduler.DAGScheduler.handleJobCancellation(DAGScheduler.scala:1370)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply$mcVI$sp(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:783)\n\tat scala.collection.mutable.HashSet.foreach(HashSet.scala:79)\n\tat org.apache.spark.scheduler.DAGScheduler.handleJobGroupCancelled(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1619)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1599)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1588)\n\tat org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)\n\tat org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:620)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1832)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1845)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1922)\n\tat com.datastax.spark.connector.RDDFunctions.saveToCassandra(RDDFunctions.scala:37)\n\tat org.apache.spark.sql.cassandra.CassandraSourceRelation.insert(CassandraSourceRelation.scala:67)\n\tat org.apache.spark.sql.cassandra.DefaultSource.createRelation(DefaultSource.scala:85)\n\tat org.apache.spark.sql.execution.datasources.ResolvedDataSource$.apply(ResolvedDataSource.scala:222)\n\tat org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:148)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:231)\n\tat py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:381)\n\tat py4j.Gateway.invoke(Gateway.java:259)\n\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:133)\n\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\n\tat py4j.GatewayConnection.run(GatewayConnection.java:209)\n\tat java.lang.Thread.run(Thread.java:745)\n\n(\u003cclass \u0027py4j.protocol.Py4JJavaError\u0027\u003e, Py4JJavaError(u\u0027An error occurred while calling o496.save.\\n\u0027, JavaObject id\u003do497), \u003ctraceback object at 0x7f1307b18ea8\u003e)"
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom cassandra.cluster import Cluster\n\ncluster \u003d Cluster([\u002710.3.2.179\u0027])",
+      "dateUpdated": "Oct 9, 2016 9:54:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474997438516_-550012983",
+      "id": "20160927-155956_1081954069",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-5682142401406938752.py\", line 239, in \u003cmodule\u003e\n    eval(compiledCode)\n  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\nImportError: No module named cassandra.cluster\n"
+      },
+      "dateCreated": "Sep 27, 2016 5:30:38 PM",
+      "dateStarted": "Oct 9, 2016 9:54:39 PM",
+      "dateFinished": "Oct 9, 2016 9:54:40 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476050078843_1353335189",
+      "id": "20161009-215438_1276251570",
+      "dateCreated": "Oct 9, 2016 9:54:38 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "geocode_test",
+  "id": "2BYC6X5ME",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

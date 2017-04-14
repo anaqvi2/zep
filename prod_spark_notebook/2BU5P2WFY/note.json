@@ -1,0 +1,39 @@
+{
+  "paragraphs": [
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470764756331_-1611538202",
+      "id": "20160809-174556_1523324758",
+      "dateCreated": "Aug 9, 2016 5:45:56 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "geotrellis",
+  "id": "2BU5P2WFY",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

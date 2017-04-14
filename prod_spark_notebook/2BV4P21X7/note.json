@@ -1,0 +1,310 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.mongodb.casbah.{WriteConcern \u003d\u003e MongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray",
+      "dateUpdated": "Aug 10, 2016 3:54:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470844469162_1935343807",
+      "id": "20160810-155429_1237869108",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.mongodb.casbah.{WriteConcern\u003d\u003eMongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\n"
+      },
+      "dateCreated": "Aug 10, 2016 3:54:29 PM",
+      "dateStarted": "Aug 10, 2016 3:54:46 PM",
+      "dateFinished": "Aug 10, 2016 3:54:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.6.146.93\"), Database -\u003e \"twitter\", Collection -\u003e\"testing_harold2\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\nval obit0 \u003d sqlContext.fromMongoDB(readConfig)",
+      "dateUpdated": "Aug 10, 2016 4:00:10 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470844486010_-770949308",
+      "id": "20160810-155446_1655763979",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e testing_harold2, host -\u003e List(52.6.146.93)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@1fb02535\nobit0: org.apache.spark.sql.DataFrame \u003d [tg: int, t: string, _id: string, cr: timestamp, pr: string]\n"
+      },
+      "dateCreated": "Aug 10, 2016 3:54:46 PM",
+      "dateStarted": "Aug 10, 2016 4:00:10 PM",
+      "dateFinished": "Aug 10, 2016 4:00:11 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "obit0.show()",
+      "dateUpdated": "Aug 10, 2016 4:00:14 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470844501180_-1979830352",
+      "id": "20160810-155501_775288614",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+---+--------------------+------------------+--------------------+-------+\n| tg|                   t|               _id|                  cr|     pr|\n+---+--------------------+------------------+--------------------+-------+\n|  1|cialis купить спб...|609004924605739008|2015-06-11 14:31:...|[ 1207]|\n|  7|Bongasin kurkia ä...|609004942804840450|2015-06-11 14:31:...|[ 1336]|\n|  7|где продают виагр...|609004966292942849|2015-06-11 14:31:...|    { }|\n|  2|RT @prettylittled...|609005024518111232|2015-06-11 14:31:...| [ 983]|\n|  1|\"@NanaKing8: @ras...|258504210088333312|2012-10-17 09:46:...| [ 331]|\n|  7|#TobiHitAMilli Co...|609459668759527426|2015-06-12 20:38:...|    { }|\n+---+--------------------+------------------+--------------------+-------+\n\n"
+      },
+      "dateCreated": "Aug 10, 2016 3:55:01 PM",
+      "dateStarted": "Aug 10, 2016 4:00:14 PM",
+      "dateFinished": "Aug 10, 2016 4:00:14 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext",
+      "dateUpdated": "Aug 10, 2016 4:05:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470844525002_816001987",
+      "id": "20160810-155525_255215731",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\n"
+      },
+      "dateCreated": "Aug 10, 2016 3:55:25 PM",
+      "dateStarted": "Aug 10, 2016 4:05:22 PM",
+      "dateFinished": "Aug 10, 2016 4:05:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "obit0.createCassandraTable(\"processed_social\", \"test\", \npartitionKeyColumns \u003d Some(Seq(\"_id\")))",
+      "dateUpdated": "Aug 10, 2016 4:06:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470845121977_-193123214",
+      "id": "20160810-160521_1694727786",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 10, 2016 4:05:21 PM",
+      "dateStarted": "Aug 10, 2016 4:06:17 PM",
+      "dateFinished": "Aug 10, 2016 4:06:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val space \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else text.split(\" \")\n})\nvar builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"dev-one-mongo.epidemi.co\"), Database -\u003e \"EpiOne\", Collection -\u003e\"final_master\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nvar readConfig \u003d builder.build()\n\nval master \u003d sqlContext.fromMongoDB(readConfig).select(\"name\", \"synonyms\", \"_id\", \"tag\").where(size($\"synonyms\") \u003e 0).\nwithColumn(\"synonyms\", explode($\"synonyms\")).withColumn(\"synonyms\", regexp_replace(lower($\"synonyms\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).withColumn(\"size\", size(space($\"synonyms\"))).sort(desc(\"size\"))",
+      "dateUpdated": "Sep 24, 2016 9:31:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470845162641_178757117",
+      "id": "20160810-160602_1366638936",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "space: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,ArrayType(StringType,true),List(StringType))\nbuilder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e EpiOne, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e final_master, host -\u003e List(dev-one-mongo.epidemi.co)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@a68ff2c\nmaster: org.apache.spark.sql.DataFrame \u003d [name: string, synonyms: string, _id: int, tag: string, size: int]\n"
+      },
+      "dateCreated": "Aug 10, 2016 4:06:02 PM",
+      "dateStarted": "Sep 24, 2016 9:31:16 PM",
+      "dateFinished": "Sep 24, 2016 9:31:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "master.show()",
+      "dateUpdated": "Sep 24, 2016 9:31:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474752595582_-1559030496",
+      "id": "20160924-212955_1878668289",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+--------------------+-----+-------+----+\n|                name|            synonyms|  _id|    tag|size|\n+--------------------+--------------------+-----+-------+----+\n|ue: negative soci...|people look just ...|17777|     ue|  15|\n|   unevaluable event|feels like i m wr...|12329|symptom|  13|\n|rocky mountain sp...|rickettsia tick b...|21943|disease|  13|\n|ue: negative soci...|dumb grls on the ...|17777|     ue|  12|\n|ue: negative soci...|if you smoke an e...|17777|     ue|  12|\n|          rickettsia|rickettsia tick b...|25777|disease|  12|\n|ue: negative soci...|smoking an e cig ...|17777|     ue|  12|\n|       hallucination|keep thinking i s...| 9843|symptom|  12|\n|             colitis|inflammatory bowe...|25949|disease|  11|\n|      abnormal sleep|i fall asleep for...|13031|symptom|  11|\n|abdominal discomfort|makes me feel lik...|15576|symptom|  11|\n|ue: health relate...|it has been a lon...|17839|     ue|  11|\n|        nail picking|fingernails i m s...|16506|symptom|  11|\n|ue: negative soci...|if you re smoking...|17777|     ue|  11|\n|   ue: high efficacy|it has been a lon...|18228|     ue|  11|\n|ue: cessation rel...|i quit smoking ci...|17821|     ue|  10|\n|ue: product ambiv...| cant really say ...|18304|     ue|  10|\n|ue: entyvio conne...|with the help of ...|18516|     ue|  10|\n|          rickettsia|rickettsia tick b...|25777|disease|  10|\n|           amebiasis|amebas other e ha...|18804|disease|  10|\n+--------------------+--------------------+-----+-------+----+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 24, 2016 9:29:55 PM",
+      "dateStarted": "Sep 24, 2016 9:31:25 PM",
+      "dateFinished": "Sep 24, 2016 9:31:26 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val symp \u003d master.filter($\"tag\"\u003d\u003d\u003d\"symptom\")",
+      "dateUpdated": "Sep 24, 2016 9:32:43 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474752685766_408296255",
+      "id": "20160924-213125_1180273043",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "symp: org.apache.spark.sql.DataFrame \u003d [name: string, synonyms: string, _id: int, tag: string, size: int]\n"
+      },
+      "dateCreated": "Sep 24, 2016 9:31:25 PM",
+      "dateStarted": "Sep 24, 2016 9:32:43 PM",
+      "dateFinished": "Sep 24, 2016 9:32:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474752702472_-248454793",
+      "id": "20160924-213142_23606225",
+      "dateCreated": "Sep 24, 2016 9:31:42 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "testing harold",
+  "id": "2BV4P21X7",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

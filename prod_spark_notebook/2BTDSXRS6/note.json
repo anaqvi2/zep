@@ -1,0 +1,208 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.redislabs.provider.redis._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext",
+      "dateUpdated": "Aug 29, 2016 5:42:03 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472448703988_1743765410",
+      "id": "20160829-053143_1842660023",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.redislabs.provider.redis._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\n"
+      },
+      "dateCreated": "Aug 29, 2016 5:31:43 AM",
+      "dateStarted": "Aug 29, 2016 5:42:03 AM",
+      "dateFinished": "Aug 29, 2016 5:42:04 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var df \u003d sqlContext\n  .read\n  .format(\"org.apache.spark.sql.cassandra\")\n  .options(Map( \"table\" -\u003e \"reddit\", \"keyspace\" -\u003e \"processed_forum\"))\n  .load()\n  .select(\"yrmonthday\", \"cr\", \"ds\", \"type\", \"id\", \"ups\")\n  .limit(5000)",
+      "dateUpdated": "Aug 29, 2016 5:42:06 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472448918494_-934732195",
+      "id": "20160829-053518_2072801010",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df: org.apache.spark.sql.DataFrame \u003d [yrmonthday: int, cr: timestamp, ds: string, type: string, id: string, ups: bigint]\n"
+      },
+      "dateCreated": "Aug 29, 2016 5:35:18 AM",
+      "dateStarted": "Aug 29, 2016 5:42:06 AM",
+      "dateFinished": "Aug 29, 2016 5:42:07 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val hello \u003d df.toJSON.toDF.withColumn(\"id\", when($\"_1\"\u003d\u003d\u003d\"sup\", \"test\").otherwise(\"testt\"))",
+      "dateUpdated": "Aug 29, 2016 5:42:10 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472448713406_-499320678",
+      "id": "20160829-053153_636943364",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "hello: org.apache.spark.sql.DataFrame \u003d [_1: string, id: string]\n"
+      },
+      "dateCreated": "Aug 29, 2016 5:31:53 AM",
+      "dateStarted": "Aug 29, 2016 5:42:10 AM",
+      "dateFinished": "Aug 29, 2016 5:42:10 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import sqlc.implicits._\n\ndef aggConcat(col: String) \u003d hello\n      .map(row \u003d\u003e (row.getAs[String](\"id\"), row.getAs[String](col)))\n      .aggregateByKey(Vector[String]())(_ :+ _, _ ++ _)\n\nval result \u003d aggConcat(\"_1\").toDF ",
+      "dateUpdated": "Aug 29, 2016 5:42:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472448725291_452194000",
+      "id": "20160829-053205_2019294698",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import sqlc.implicits._\naggConcat: (col: String)org.apache.spark.rdd.RDD[(String, scala.collection.immutable.Vector[String])]\nresult: org.apache.spark.sql.DataFrame \u003d [_1: string, _2: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Aug 29, 2016 5:32:05 AM",
+      "dateStarted": "Aug 29, 2016 5:42:12 AM",
+      "dateFinished": "Aug 29, 2016 5:42:13 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "result.show()",
+      "dateUpdated": "Aug 29, 2016 5:42:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472448735000_1022407194",
+      "id": "20160829-053215_1768854951",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+-----+--------------------+\n|   _1|                  _2|\n+-----+--------------------+\n|testt|[{\"yrmonthday\":20...|\n+-----+--------------------+\n\n"
+      },
+      "dateCreated": "Aug 29, 2016 5:32:15 AM",
+      "dateStarted": "Aug 29, 2016 5:42:16 AM",
+      "dateFinished": "Aug 29, 2016 5:42:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472448741253_-864416736",
+      "id": "20160829-053221_623615907",
+      "dateCreated": "Aug 29, 2016 5:32:21 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "reddis spark5",
+  "id": "2BTDSXRS6",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

@@ -1,0 +1,666 @@
+{
+  "paragraphs": [
+    {
+      "text": "%pyspark\n\n\"\"\"\nImports and versioning.\n\nUpdate processor_version as necessary\n\"\"\"\n\nimport os\nimport argparse\nimport os\nimport logging\nimport logging.config\nimport traceback\nimport nltk\nimport json\nimport re\nfrom collections import OrderedDict\nfrom nltk.downloader import download \n\nfrom pyspark import SparkContext, SparkConf\nfrom pyspark.sql import SQLContext\nfrom pyspark.storagelevel import StorageLevel\nfrom pyspark.sql.functions import lit, lower\n\nprocessor_name \u003d \u0027place_list\u0027\nprocessor_version \u003d \u0027v0.0.1\u0027",
+      "dateUpdated": "Oct 11, 2016 1:04:14 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475514544297_1081043380",
+      "id": "20161003-170904_1952746340",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Oct 3, 2016 5:09:04 PM",
+      "dateStarted": "Oct 11, 2016 1:04:14 PM",
+      "dateFinished": "Oct 11, 2016 1:04:14 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import java.util.Calendar\nimport java.text.SimpleDateFormat\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext",
+      "dateUpdated": "Oct 11, 2016 3:21:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475514573590_-344020573",
+      "id": "20161003-170933_1476818854",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import java.util.Calendar\nimport java.text.SimpleDateFormat\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\n"
+      },
+      "dateCreated": "Oct 3, 2016 5:09:33 PM",
+      "dateStarted": "Oct 11, 2016 1:04:17 PM",
+      "dateFinished": "Oct 11, 2016 3:21:27 PM",
+      "status": "ABORT",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var geocode_rdd \u003d sqlContext.read.format(\"org.apache.spark.sql.cassandra\").options(Map( \"table\" -\u003e \"geonames\", \"keyspace\" -\u003e \"geonames\")).load()\nvar geocode_rdd_lower \u003d geocode_rdd.withColumn(\"name\", lower($\"name\")).withColumn(\"hello\", concat_ws(\",\", $\"latitude\", $\"longitude\"))",
+      "dateUpdated": "Oct 7, 2016 11:16:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475514597418_2053981403",
+      "id": "20161003-170957_1459909362",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "geocode_rdd: org.apache.spark.sql.DataFrame \u003d [geonameid: int, name: string, admin1_abbr: string, admin1_code: string, admin2_code: string, admin3_code: string, admin4_code: string, cc2: string, country_code: string, feature_class: string, feature_code: string, isolanguage: string, latitude: float, longitude: float, modification_date: string, population: double, source: string, timezone: string]\ngeocode_rdd_lower: org.apache.spark.sql.DataFrame \u003d [geonameid: int, name: string, admin1_abbr: string, admin1_code: string, admin2_code: string, admin3_code: string, admin4_code: string, cc2: string, country_code: string, feature_class: string, feature_code: string, isolanguage: string, latitude: float, longitude: float, modification_date: string, population: double, source: string, timezone: string, hello: string]\n"
+      },
+      "dateCreated": "Oct 3, 2016 5:09:57 PM",
+      "dateStarted": "Oct 7, 2016 11:16:46 PM",
+      "dateFinished": "Oct 7, 2016 11:17:02 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "geocode_rdd_lower.select(\"name\", \"hello\").filter($\"name\"\u003d\u003d\u003d\"london\").show()",
+      "dateUpdated": "Oct 7, 2016 11:16:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475593071898_-851365841",
+      "id": "20161004-145751_1174013656",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+------+-------------------+\n|  name|              hello|\n+------+-------------------+\n|london| 39.88645,-83.44825|\n|london| 37.12898,-84.08326|\n|london| 1.98487,-157.47502|\n|london|36.47606,-119.44318|\n|london| 42.98339,-81.23304|\n|london|  51.51334,-0.08901|\n|london| 35.32897,-93.25296|\n|london|  51.50853,-0.12574|\n|london|  51.50853,-0.12574|\n|london|  51.51279,-0.09184|\n+------+-------------------+\n\n"
+      },
+      "dateCreated": "Oct 4, 2016 2:57:51 PM",
+      "dateStarted": "Oct 7, 2016 11:16:51 PM",
+      "dateFinished": "Oct 7, 2016 11:17:59 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val gc \u003d geocode_rdd_lower.select(\"name\", \"hello\").collect()\n//val gnmap \u003d geocode_rdd_lower.map(w\u003d\u003e w(0).toString, w.toString).groupByKey().map(x \u003d\u003e x(0), x.toArray)",
+      "dateUpdated": "Oct 7, 2016 11:17:01 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475593258866_-238785940",
+      "id": "20161004-150058_589910949",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "gc: Array[org.apache.spark.sql.Row] \u003d Array([malzeville,48.71028,6.18639], [comune di costermano,45.58689,10.73718], [costermano,45.58689,10.73718], [delfi,38.47942,22.49357], [delfoi,38.47942,22.49357], [delfos,38.47942,22.49357], [delfoí,38.47942,22.49357], [delfy,38.47942,22.49357], [delphes,38.47942,22.49357], [delphi,38.47942,22.49357], [delphoi,38.47942,22.49357], [dhelfoí,38.47942,22.49357], [δελφοί,38.47942,22.49357], [делфи,38.47942,22.49357], [дельфи,38.47942,22.49357], [дельфы,38.47942,22.49357], [דלפי,38.47942,22.49357], [דעלפי,38.47942,22.49357], [دلفی,38.47942,22.49357], [デルポイ,38.47942,22.49357], [德尔斐,38.47942,22.49357], [德尔菲,38.47942,22.49357], [28625,35.78264,-80.8873], [28677,35.78264,-80.8873], [28687,35.78264,-80.8873], [svh,35.78264,-80.8873], [statesville,35.78264,-..."
+      },
+      "dateCreated": "Oct 4, 2016 3:00:58 PM",
+      "dateStarted": "Oct 7, 2016 11:17:02 PM",
+      "dateFinished": "Oct 7, 2016 11:18:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val g_syn \u003d gc.map(x\u003d\u003e x(0).toString).toSet",
+      "dateUpdated": "Oct 7, 2016 11:17:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475593448948_-1870461697",
+      "id": "20161004-150408_669561685",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "g_syn: scala.collection.immutable.Set[String] \u003d Set(semien wollo, 溫德姆縣, ডেস মৈনেস কাউন্টি, althen-des-paluds, கோபே, вошіта, gamarda, maekel, bānsda, capaccio scalo, モンティキアーリ, gaesti, provincia florida, 93094, comitatul oscoda, 54404 cedex, ཁྲུང་ཆིན་གྲོང་ཁྱེར།, биг рапидс, 19125, монтегю, धनबाद, کرافورڈ کاؤنٹی، انڈیانا, oupeye, fiaschtnzei, fairless hills, khamza khakimzada, 29301, kotapradja semarang, civitella in val di chiana, кун-рапидс, piratini, condado han spartanburg, stegen, габбард, stadt camburg, sālūmbar, شهرستان راکدیل، جورجیا, ле-гран-люсе, 31211, 94309 cedex, ティーエルシュタイン, требнє, zimella, 茲諾伊莫, лимбург на лани, 53202 cedex, mount arlington, veinge-tjaerby, nijere, cabo frio, радомин, ৱাহকিকুম কাউন্টি, tjorumiän, اسوردز, batys qazaqstan, مقاطعة هدزبيث, skanderborg kommune, ए..."
+      },
+      "dateCreated": "Oct 4, 2016 3:04:08 PM",
+      "dateStarted": "Oct 7, 2016 11:17:59 PM",
+      "dateFinished": "Oct 7, 2016 11:18:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var pa :Map[String,String] \u003d Map()\nfor(i \u003c- gc){\n    pa+\u003d (i(0).toString -\u003e i(1).toString)\n}",
+      "dateUpdated": "Oct 7, 2016 11:17:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475593293860_2123233530",
+      "id": "20161004-150133_167797924",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "pa: Map[String,String] \u003d Map()\n"
+      },
+      "dateCreated": "Oct 4, 2016 3:01:33 PM",
+      "dateStarted": "Oct 7, 2016 11:18:45 PM",
+      "dateFinished": "Oct 7, 2016 11:18:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "pa",
+      "dateUpdated": "Oct 7, 2016 11:17:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475593333858_1229723991",
+      "id": "20161004-150213_1780378914",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res18: Map[String,String] \u003d Map(semien wollo -\u003e 11.92,39.1, 溫德姆縣 -\u003e 42.99059,-72.71384, ডেস মৈনেস কাউন্টি -\u003e 40.92318,-91.18147, althen-des-paluds -\u003e 44.00405,4.95861, கோபே -\u003e 34.6913,135.183, вошіта -\u003e 33.59336,-92.88193, gamarda -\u003e 43.7325,-0.87333, maekel -\u003e 15.33333,38.91667, bānsda -\u003e 20.75817,73.36389, capaccio scalo -\u003e 40.45531,15.00891, モンティキアーリ -\u003e 45.41317,10.39799, gaesti -\u003e 44.71667,25.31667, provincia florida -\u003e -18.0,-63.91667, 93094 -\u003e 34.26945,-118.78148, comitatul oscoda -\u003e 44.68175,-84.12974, 54404 cedex -\u003e 49.51936,5.76882, ཁྲུང་ཆིན་གྲོང་ཁྱེར། -\u003e 29.56278,106.55278, биг рапидс -\u003e 43.69808,-85.48366, 19125 -\u003e 39.95233,-75.16379, монтегю -\u003e 46.179,2.8088, धनबाद -\u003e 23.80199,86.44324, کرافورڈ کاؤنٹی، انڈیانا -\u003e 38.29241,-86.45171, oupeye -\u003e 50.71184,5.6468, fiaschtnzei -\u003e ..."
+      },
+      "dateCreated": "Oct 4, 2016 3:02:13 PM",
+      "dateStarted": "Oct 7, 2016 11:18:46 PM",
+      "dateFinished": "Oct 7, 2016 11:18:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475607036569_850386914",
+      "id": "20161004-185036_2090994548",
+      "dateCreated": "Oct 4, 2016 6:50:36 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " case class Address(firstName: String, text: String)\n  val addresses \u003d Seq(\n    Address(\"Bob\", \"So the mexico economy is still not so great\"),\n    Address(\"Bob\", \"I love colarado\"),\n    Address(\"Bob\", \"I love spain\"),\n    Address(\"Bob\", \"I love japan\"),\n    Address(\"Bob\", \"I love paris\"),\n    Address(\"Bob\", \"I love usa\"),\n    Address(\"Bob\", \"I love china\"),\n    Address(\"Bob\", \"I love london\"),\n    Address(\"Bob\", \"I love boston\"),\n    Address(\"Bob\", \"I love new york\"),\n    Address(\"Bob\", \"I love california\"),\n    Address(\"Bob\", \"I love canada\"),\n    Address(\"Bob\", \"I love africa\"),\n    Address(\"Bob\", \"I love australia\"),\n    Address(\"Bob\", \"I love portugal\"),\n    Address(\"Bob\", \"I love mexico\"),\n    Address(\"Bob\", \"I love colarado\"),\n    Address(\"Bob\", \"I love spain\"),\n    Address(\"Bob\", \"I love japan\"),\n    Address(\"Bob\", \"I love paris\"),\n    Address(\"Bob\", \"I love usa\"),\n    Address(\"Bob\", \"I love china\"),\n    Address(\"Bob\", \"I love london\"),\n    Address(\"Bob\", \"I love boston\"),\n    Address(\"Bob\", \"I love new york\"),\n    Address(\"Bob\", \"I love california\"),\n    Address(\"Bob\", \"I love canada\"),\n    Address(\"Bob\", \"I love africa\"),\n    Address(\"Bob\", \"I love australia\"),\n    Address(\"Bob\", \"I love portugal\"),\n    Address(\"Bob\", \"I love mexico\"),\n    Address(\"Bob\", \"I love colarado\"),\n    Address(\"Bob\", \"I love spain\"),\n    Address(\"Bob\", \"I love japan\"),\n    Address(\"Bob\", \"I love paris\"),\n    Address(\"Bob\", \"I love usa\"),\n    Address(\"Bob\", \"I love china\"),\n    Address(\"Bob\", \"I love london\"),\n    Address(\"Bob\", \"I love boston\"),\n    Address(\"Bob\", \"I love new york\"),\n    Address(\"Bob\", \"I love california\"),\n    Address(\"Bob\", \"I love canada\"),\n    Address(\"Bob\", \"I love africa\"),\n    Address(\"Bob\", \"I love australia\"),\n    Address(\"Bob\", \"I love portugal\"),\n    Address(\"Bob\", \"I love mexico\"),\n    Address(\"Bob\", \"I love colarado\"),\n    Address(\"Bob\", \"I love spain\"),\n    Address(\"Bob\", \"I love japan\"),\n    Address(\"Bob\", \"I love paris\"),\n    Address(\"Bob\", \"I love usa\"),\n    Address(\"Bob\", \"I love china\"),\n    Address(\"Bob\", \"I love london\"),\n    Address(\"Bob\", \"I love boston\"),\n    Address(\"Bob\", \"I love new york\"),\n    Address(\"Bob\", \"I love california\"),\n    Address(\"Bob\", \"I love canada\"),\n    Address(\"Bob\", \"I love africa\"),\n    Address(\"Bob\", \"I love australia\"),\n    Address(\"Bob\", \"I love portugal\"),\n    Address(\"Bob\", \"I love mexico\"),\n    Address(\"Bob\", \"I love colarado\"),\n    Address(\"Bob\", \"I love spain\"),\n    Address(\"Bob\", \"I love japan\"),\n    Address(\"Bob\", \"I love paris\"),\n    Address(\"Bob\", \"I love usa\"),\n    Address(\"Bob\", \"I love china\"),\n    Address(\"Bob\", \"I love london\"),\n    Address(\"Bob\", \"I love boston\"),\n    Address(\"Bob\", \"I love new york\"),\n    Address(\"Bob\", \"I love california\"),\n    Address(\"Bob\", \"I love canada\"),\n    Address(\"Bob\", \"I love africa\"),\n    Address(\"Bob\", \"I love australia\"),\n    Address(\"Bob\", \"I love portugal\"),\n    Address(\"Bob\", \"I love mexico\"),\n    Address(\"Bob\", \"I love colarado\"),\n    Address(\"Bob\", \"I love spain\"),\n    Address(\"Bob\", \"I love japan\"),\n    Address(\"Bob\", \"I love paris\"),\n    Address(\"Bob\", \"I love usa\"),\n    Address(\"Bob\", \"I love china\"),\n    Address(\"Bob\", \"I love london\"),\n    Address(\"Bob\", \"I love boston\"),\n    Address(\"Bob\", \"I love new york\"),\n    Address(\"Bob\", \"I love california\"),\n    Address(\"Bob\", \"I love canada\"),\n    Address(\"Bob\", \"I love africa\"),\n    Address(\"Bob\", \"I love australia\"),\n    Address(\"Bob\", \"I love portugal\"),\n    Address(\"Bob\", \"I love mexico\"),\n    Address(\"Bob\", \"I love colarado\"),\n    Address(\"Bob\", \"I love spain\"),\n    Address(\"Bob\", \"I love japan\"),\n    Address(\"Bob\", \"I love paris\"),\n    Address(\"Bob\", \"I love usa\"),\n    Address(\"Bob\", \"I love china\"),\n    Address(\"Bob\", \"I love london\"),\n    Address(\"Bob\", \"I love boston\"),\n    Address(\"Bob\", \"I love new york\"),\n    Address(\"Bob\", \"I love california\"),\n    Address(\"Bob\", \"I love canada\"),\n    Address(\"Bob\", \"I love africa\"),\n    Address(\"Bob\", \"I love australia\"),\n    Address(\"Bob\", \"I love portugal\"),\n    Address(\"Bob\", \"I love mexico\"),\n    Address(\"Bob\", \"I love colarado\"),\n    Address(\"Bob\", \"I love spain\"),\n    Address(\"Bob\", \"I love japan\"),\n    Address(\"Bob\", \"I love paris\"),\n    Address(\"Bob\", \"I love usa\"),\n    Address(\"Bob\", \"I love china\"),\n    Address(\"Bob\", \"I love london\"),\n    Address(\"Bob\", \"I love boston\"),\n    Address(\"Bob\", \"I love new york\"),\n    Address(\"Bob\", \"I love california\"),\n    Address(\"Bob\", \"I love canada\"),\n    Address(\"Bob\", \"I love africa\"),\n    Address(\"Bob\", \"I love australia\"),\n    Address(\"Bob\", \"I love portugal\"),\n    Address(\"Bob\", \"I love mexico\"),\n    Address(\"Bob\", \"I love colarado\"),\n    Address(\"Bob\", \"I love spain\"),\n    Address(\"Bob\", \"I love japan\"),\n    Address(\"Bob\", \"I love paris\"),\n    Address(\"Bob\", \"I love usa\"),\n    Address(\"Bob\", \"I love china\"),\n    Address(\"Bob\", \"I love london\"),\n    Address(\"Bob\", \"I love boston\"),\n    Address(\"Bob\", \"I love new york\"),\n    Address(\"Bob\", \"I love california\"),\n    Address(\"Bob\", \"I love canada\"),\n    Address(\"Bob\", \"I love africa\"),\n    Address(\"Bob\", \"I love australia\"),\n    Address(\"Bob\", \"I love portugal\")\n  )\nval addrRdd \u003d sqlContext.sparkContext.parallelize(addresses)\nval adf \u003d addrRdd.toDF()",
+      "dateUpdated": "Oct 7, 2016 11:17:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475593391009_44156099",
+      "id": "20161004-150311_366752915",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "defined class Address\naddresses: Seq[Address] \u003d List(Address(Bob,So the mexico economy is still not so great), Address(Bob,I love colarado), Address(Bob,I love spain), Address(Bob,I love japan), Address(Bob,I love paris), Address(Bob,I love usa), Address(Bob,I love china), Address(Bob,I love london), Address(Bob,I love boston), Address(Bob,I love new york), Address(Bob,I love california), Address(Bob,I love canada), Address(Bob,I love africa), Address(Bob,I love australia), Address(Bob,I love portugal), Address(Bob,I love mexico), Address(Bob,I love colarado), Address(Bob,I love spain), Address(Bob,I love japan), Address(Bob,I love paris), Address(Bob,I love usa), Address(Bob,I love china), Address(Bob,I love london), Address(Bob,I love boston), Address(Bob,I love new york), Address(Bob,I love california), A...addrRdd: org.apache.spark.rdd.RDD[Address] \u003d ParallelCollectionRDD[31] at parallelize at \u003cconsole\u003e:47\nadf: org.apache.spark.sql.DataFrame \u003d [firstName: string, text: string]\n"
+      },
+      "dateCreated": "Oct 4, 2016 3:03:11 PM",
+      "dateStarted": "Oct 7, 2016 11:18:48 PM",
+      "dateFinished": "Oct 7, 2016 11:18:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val matcher \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else {\n    val words \u003d text.split(\" \").toSet\n    val pc \u003d g_syn \u0026 words\n    Map(\"coord\" -\u003e (pc.toArray collect pa), \"names\" -\u003e pc.toArray.distinct)\n    }\n})",
+      "dateUpdated": "Oct 7, 2016 11:17:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475593414274_-2088476406",
+      "id": "20161004-150334_1652579110",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "matcher: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,MapType(StringType,ArrayType(StringType,true),true),List(StringType))\n"
+      },
+      "dateCreated": "Oct 4, 2016 3:03:34 PM",
+      "dateStarted": "Oct 7, 2016 11:18:48 PM",
+      "dateFinished": "Oct 7, 2016 11:18:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "adf.withColumn(\"temp\", matcher($\"text\")).withColumn(\"coord\", $\"temp\"(\"coord\")).withColumn(\"names\", $\"temp\"(\"names\")).drop(\"temp\").show(200, false)",
+      "dateUpdated": "Oct 7, 2016 11:17:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475593626868_-1303064339",
+      "id": "20161004-150706_1463158809",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+---------+-------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------+------------------------------------------+\n|firstName|text                                       |coord                                                                                                                            |names                                     |\n+---------+-------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------+------------------------------------------+\n|Bob      |So the mexico economy is still not so great|[40.60007,-80.22478, 39.16976,-91.88295, 58.7909,59.7179, 3.98333,11.6, 38.10742,-122.5697, 48.54982,7.40444, -5.08917,-42.80194]|[economy, mexico, is, so, not, still, the]|\n|Bob      |I love colarado                            |[]                                                                                                                               |[]                                        |\n|Bob      |I love spain                               |[40.0,-4.0]                                                                                                                      |[spain]                                   |\n|Bob      |I love japan                               |[35.68536,139.7531]                                                                                                              |[japan]                                   |\n|Bob      |I love paris                               |[38.2098,-84.25299]                                                                                                              |[paris]                                   |\n|Bob      |I love usa                                 |[35.40888,-80.58158]                                                                                                             |[usa]                                     |\n|Bob      |I love china                               |[19.76993,-90.49595]                                                                                                             |[china]                                   |\n|Bob      |I love london                              |[51.51279,-0.09184]                                                                                                              |[london]                                  |\n|Bob      |I love boston                              |[42.35843,-71.05977]                                                                                                             |[boston]                                  |\n|Bob      |I love new york                            |[53.95763,-1.08271]                                                                                                              |[york]                                    |\n|Bob      |I love california                          |[38.62753,-92.56658]                                                                                                             |[california]                              |\n|Bob      |I love canada                              |[38.67674,-0.81413]                                                                                                              |[canada]                                  |\n|Bob      |I love africa                              |[35.50472,11.06222]                                                                                                              |[africa]                                  |\n|Bob      |I love australia                           |[-25.0,135.0]                                                                                                                    |[australia]                               |\n|Bob      |I love portugal                            |[39.6945,-8.13057]                                                                                                               |[portugal]                                |\n|Bob      |I love mexico                              |[39.16976,-91.88295]                                                                                                             |[mexico]                                  |\n|Bob      |I love colarado                            |[]                                                                                                                               |[]                                        |\n|Bob      |I love spain                               |[40.0,-4.0]                                                                                                                      |[spain]                                   |\n|Bob      |I love japan                               |[35.68536,139.7531]                                                                                                              |[japan]                                   |\n|Bob      |I love paris                               |[38.2098,-84.25299]                                                                                                              |[paris]                                   |\n|Bob      |I love usa                                 |[35.40888,-80.58158]                                                                                                             |[usa]                                     |\n|Bob      |I love china                               |[19.76993,-90.49595]                                                                                                             |[china]                                   |\n|Bob      |I love london                              |[51.51279,-0.09184]                                                                                                              |[london]                                  |\n|Bob      |I love boston                              |[42.35843,-71.05977]                                                                                                             |[boston]                                  |\n|Bob      |I love new york                            |[53.95763,-1.08271]                                                                                                              |[york]                                    |\n|Bob      |I love california                          |[38.62753,-92.56658]                                                                                                             |[california]                              |\n|Bob      |I love canada                              |[38.67674,-0.81413]                                                                                                              |[canada]                                  |\n|Bob      |I love africa                              |[35.50472,11.06222]                                                                                                              |[africa]                                  |\n|Bob      |I love australia                           |[-25.0,135.0]                                                                                                                    |[australia]                               |\n|Bob      |I love portugal                            |[39.6945,-8.13057]                                                                                                               |[portugal]                                |\n|Bob      |I love mexico                              |[39.16976,-91.88295]                                                                                                             |[mexico]                                  |\n|Bob      |I love colarado                            |[]                                                                                                                               |[]                                        |\n|Bob      |I love spain                               |[40.0,-4.0]                                                                                                                      |[spain]                                   |\n|Bob      |I love japan                               |[35.68536,139.7531]                                                                                                              |[japan]                                   |\n|Bob      |I love paris                               |[38.2098,-84.25299]                                                                                                              |[paris]                                   |\n|Bob      |I love usa                                 |[35.40888,-80.58158]                                                                                                             |[usa]                                     |\n|Bob      |I love china                               |[19.76993,-90.49595]                                                                                                             |[china]                                   |\n|Bob      |I love london                              |[51.51279,-0.09184]                                                                                                              |[london]                                  |\n|Bob      |I love boston                              |[42.35843,-71.05977]                                                                                                             |[boston]                                  |\n|Bob      |I love new york                            |[53.95763,-1.08271]                                                                                                              |[york]                                    |\n|Bob      |I love california                          |[38.62753,-92.56658]                                                                                                             |[california]                              |\n|Bob      |I love canada                              |[38.67674,-0.81413]                                                                                                              |[canada]                                  |\n|Bob      |I love africa                              |[35.50472,11.06222]                                                                                                              |[africa]                                  |\n|Bob      |I love australia                           |[-25.0,135.0]                                                                                                                    |[australia]                               |\n|Bob      |I love portugal                            |[39.6945,-8.13057]                                                                                                               |[portugal]                                |\n|Bob      |I love mexico                              |[39.16976,-91.88295]                                                                                                             |[mexico]                                  |\n|Bob      |I love colarado                            |[]                                                                                                                               |[]                                        |\n|Bob      |I love spain                               |[40.0,-4.0]                                                                                                                      |[spain]                                   |\n|Bob      |I love japan                               |[35.68536,139.7531]                                                                                                              |[japan]                                   |\n|Bob      |I love paris                               |[38.2098,-84.25299]                                                                                                              |[paris]                                   |\n|Bob      |I love usa                                 |[35.40888,-80.58158]                                                                                                             |[usa]                                     |\n|Bob      |I love china                               |[19.76993,-90.49595]                                                                                                             |[china]                                   |\n|Bob      |I love london                              |[51.51279,-0.09184]                                                                                                              |[london]                                  |\n|Bob      |I love boston                              |[42.35843,-71.05977]                                                                                                             |[boston]                                  |\n|Bob      |I love new york                            |[53.95763,-1.08271]                                                                                                              |[york]                                    |\n|Bob      |I love california                          |[38.62753,-92.56658]                                                                                                             |[california]                              |\n|Bob      |I love canada                              |[38.67674,-0.81413]                                                                                                              |[canada]                                  |\n|Bob      |I love africa                              |[35.50472,11.06222]                                                                                                              |[africa]                                  |\n|Bob      |I love australia                           |[-25.0,135.0]                                                                                                                    |[australia]                               |\n|Bob      |I love portugal                            |[39.6945,-8.13057]                                                                                                               |[portugal]                                |\n|Bob      |I love mexico                              |[39.16976,-91.88295]                                                                                                             |[mexico]                                  |\n|Bob      |I love colarado                            |[]                                                                                                                               |[]                                        |\n|Bob      |I love spain                               |[40.0,-4.0]                                                                                                                      |[spain]                                   |\n|Bob      |I love japan                               |[35.68536,139.7531]                                                                                                              |[japan]                                   |\n|Bob      |I love paris                               |[38.2098,-84.25299]                                                                                                              |[paris]                                   |\n|Bob      |I love usa                                 |[35.40888,-80.58158]                                                                                                             |[usa]                                     |\n|Bob      |I love china                               |[19.76993,-90.49595]                                                                                                             |[china]                                   |\n|Bob      |I love london                              |[51.51279,-0.09184]                                                                                                              |[london]                                  |\n|Bob      |I love boston                              |[42.35843,-71.05977]                                                                                                             |[boston]                                  |\n|Bob      |I love new york                            |[53.95763,-1.08271]                                                                                                              |[york]                                    |\n|Bob      |I love california                          |[38.62753,-92.56658]                                                                                                             |[california]                              |\n|Bob      |I love canada                              |[38.67674,-0.81413]                                                                                                              |[canada]                                  |\n|Bob      |I love africa                              |[35.50472,11.06222]                                                                                                              |[africa]                                  |\n|Bob      |I love australia                           |[-25.0,135.0]                                                                                                                    |[australia]                               |\n|Bob      |I love portugal                            |[39.6945,-8.13057]                                                                                                               |[portugal]                                |\n|Bob      |I love mexico                              |[39.16976,-91.88295]                                                                                                             |[mexico]                                  |\n|Bob      |I love colarado                            |[]                                                                                                                               |[]                                        |\n|Bob      |I love spain                               |[40.0,-4.0]                                                                                                                      |[spain]                                   |\n|Bob      |I love japan                               |[35.68536,139.7531]                                                                                                              |[japan]                                   |\n|Bob      |I love paris                               |[38.2098,-84.25299]                                                                                                              |[paris]                                   |\n|Bob      |I love usa                                 |[35.40888,-80.58158]                                                                                                             |[usa]                                     |\n|Bob      |I love china                               |[19.76993,-90.49595]                                                                                                             |[china]                                   |\n|Bob      |I love london                              |[51.51279,-0.09184]                                                                                                              |[london]                                  |\n|Bob      |I love boston                              |[42.35843,-71.05977]                                                                                                             |[boston]                                  |\n|Bob      |I love new york                            |[53.95763,-1.08271]                                                                                                              |[york]                                    |\n|Bob      |I love california                          |[38.62753,-92.56658]                                                                                                             |[california]                              |\n|Bob      |I love canada                              |[38.67674,-0.81413]                                                                                                              |[canada]                                  |\n|Bob      |I love africa                              |[35.50472,11.06222]                                                                                                              |[africa]                                  |\n|Bob      |I love australia                           |[-25.0,135.0]                                                                                                                    |[australia]                               |\n|Bob      |I love portugal                            |[39.6945,-8.13057]                                                                                                               |[portugal]                                |\n|Bob      |I love mexico                              |[39.16976,-91.88295]                                                                                                             |[mexico]                                  |\n|Bob      |I love colarado                            |[]                                                                                                                               |[]                                        |\n|Bob      |I love spain                               |[40.0,-4.0]                                                                                                                      |[spain]                                   |\n|Bob      |I love japan                               |[35.68536,139.7531]                                                                                                              |[japan]                                   |\n|Bob      |I love paris                               |[38.2098,-84.25299]                                                                                                              |[paris]                                   |\n|Bob      |I love usa                                 |[35.40888,-80.58158]                                                                                                             |[usa]                                     |\n|Bob      |I love china                               |[19.76993,-90.49595]                                                                                                             |[china]                                   |\n|Bob      |I love london                              |[51.51279,-0.09184]                                                                                                              |[london]                                  |\n|Bob      |I love boston                              |[42.35843,-71.05977]                                                                                                             |[boston]                                  |\n|Bob      |I love new york                            |[53.95763,-1.08271]                                                                                                              |[york]                                    |\n|Bob      |I love california                          |[38.62753,-92.56658]                                                                                                             |[california]                              |\n|Bob      |I love canada                              |[38.67674,-0.81413]                                                                                                              |[canada]                                  |\n|Bob      |I love africa                              |[35.50472,11.06222]                                                                                                              |[africa]                                  |\n|Bob      |I love australia                           |[-25.0,135.0]                                                                                                                    |[australia]                               |\n|Bob      |I love portugal                            |[39.6945,-8.13057]                                                                                                               |[portugal]                                |\n|Bob      |I love mexico                              |[39.16976,-91.88295]                                                                                                             |[mexico]                                  |\n|Bob      |I love colarado                            |[]                                                                                                                               |[]                                        |\n|Bob      |I love spain                               |[40.0,-4.0]                                                                                                                      |[spain]                                   |\n|Bob      |I love japan                               |[35.68536,139.7531]                                                                                                              |[japan]                                   |\n|Bob      |I love paris                               |[38.2098,-84.25299]                                                                                                              |[paris]                                   |\n|Bob      |I love usa                                 |[35.40888,-80.58158]                                                                                                             |[usa]                                     |\n|Bob      |I love china                               |[19.76993,-90.49595]                                                                                                             |[china]                                   |\n|Bob      |I love london                              |[51.51279,-0.09184]                                                                                                              |[london]                                  |\n|Bob      |I love boston                              |[42.35843,-71.05977]                                                                                                             |[boston]                                  |\n|Bob      |I love new york                            |[53.95763,-1.08271]                                                                                                              |[york]                                    |\n|Bob      |I love california                          |[38.62753,-92.56658]                                                                                                             |[california]                              |\n|Bob      |I love canada                              |[38.67674,-0.81413]                                                                                                              |[canada]                                  |\n|Bob      |I love africa                              |[35.50472,11.06222]                                                                                                              |[africa]                                  |\n|Bob      |I love australia                           |[-25.0,135.0]                                                                                                                    |[australia]                               |\n|Bob      |I love portugal                            |[39.6945,-8.13057]                                                                                                               |[portugal]                                |\n|Bob      |I love mexico                              |[39.16976,-91.88295]                                                                                                             |[mexico]                                  |\n|Bob      |I love colarado                            |[]                                                                                                                               |[]                                        |\n|Bob      |I love spain                               |[40.0,-4.0]                                                                                                                      |[spain]                                   |\n|Bob      |I love japan                               |[35.68536,139.7531]                                                                                                              |[japan]                                   |\n|Bob      |I love paris                               |[38.2098,-84.25299]                                                                                                              |[paris]                                   |\n|Bob      |I love usa                                 |[35.40888,-80.58158]                                                                                                             |[usa]                                     |\n|Bob      |I love china                               |[19.76993,-90.49595]                                                                                                             |[china]                                   |\n|Bob      |I love london                              |[51.51279,-0.09184]                                                                                                              |[london]                                  |\n|Bob      |I love boston                              |[42.35843,-71.05977]                                                                                                             |[boston]                                  |\n|Bob      |I love new york                            |[53.95763,-1.08271]                                                                                                              |[york]                                    |\n|Bob      |I love california                          |[38.62753,-92.56658]                                                                                                             |[california]                              |\n|Bob      |I love canada                              |[38.67674,-0.81413]                                                                                                              |[canada]                                  |\n|Bob      |I love africa                              |[35.50472,11.06222]                                                                                                              |[africa]                                  |\n|Bob      |I love australia                           |[-25.0,135.0]                                                                                                                    |[australia]                               |\n|Bob      |I love portugal                            |[39.6945,-8.13057]                                                                                                               |[portugal]                                |\n+---------+-------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------+------------------------------------------+\n\n"
+      },
+      "dateCreated": "Oct 4, 2016 3:07:06 PM",
+      "dateStarted": "Oct 7, 2016 11:18:50 PM",
+      "dateFinished": "Oct 7, 2016 11:19:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var df \u003d sqlContext\n  .read\n  .format(\"org.apache.spark.sql.cassandra\")\n  .options(Map( \"table\" -\u003e \"news\", \"keyspace\" -\u003e \"test_news\"))\n  .load()\n  .cache()",
+      "dateUpdated": "Oct 8, 2016 12:11:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475609048088_-261254471",
+      "id": "20161004-192408_1818397628",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df: org.apache.spark.sql.DataFrame \u003d [ds: string, ymds: int, rdt: timestamp, id: string, ae: map\u003cstring,array\u003cint\u003e\u003e, ae_v: string, alert_category_list: array\u003cstring\u003e, alert_category_list_ids: array\u003cint\u003e, authors: array\u003cstring\u003e, business_category: array\u003cdouble\u003e, business_category_synonyms: array\u003cdouble\u003e, business_category_v: string, category: array\u003cdouble\u003e, category_synonyms: array\u003cdouble\u003e, category_v: string, cc: string, classification: string, classification_id: int, cr: timestamp, description: string, disease: array\u003cdouble\u003e, disease__hm: array\u003cdouble\u003e, disease_synonyms: array\u003cdouble\u003e, disease_v: string, dom: string, dup_count: int, dup_of: string, feed: string, feed_id: int, geo_geoname_id: int, girder_item_id: string, hm_metas: array\u003cstruct\u003calert_meta_id:string,case_count_date:timest..."
+      },
+      "dateCreated": "Oct 4, 2016 7:24:08 PM",
+      "dateStarted": "Oct 8, 2016 12:11:33 AM",
+      "dateFinished": "Oct 8, 2016 12:11:39 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.storage._\nval full_news \u003d df.withColumn(\"temp\", matcher($\"t\")).withColumn(\"coord\", $\"temp\"(\"coord\")).withColumn(\"names\", $\"temp\"(\"names\")).select(\"names\",\"coord\", \"temp\").persist(StorageLevel.MEMORY_AND_DISK_SER)\n\nfull_news.count()",
+      "dateUpdated": "Oct 8, 2016 12:14:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475609045538_-866849240",
+      "id": "20161004-192405_566502982",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.storage._\nfull_news: org.apache.spark.sql.DataFrame \u003d [names: array\u003cstring\u003e, coord: array\u003cstring\u003e, temp: map\u003cstring,array\u003cstring\u003e\u003e]\norg.apache.spark.SparkException: Job 8 cancelled part of cancelled job group zeppelin-20161004-192405_566502982\n\tat org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1431)\n\tat org.apache.spark.scheduler.DAGScheduler.handleJobCancellation(DAGScheduler.scala:1370)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply$mcVI$sp(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:783)\n\tat scala.collection.mutable.HashSet.foreach(HashSet.scala:79)\n\tat org.apache.spark.scheduler.DAGScheduler.handleJobGroupCancelled(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1619)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1599)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1588)\n\tat org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)\n\tat org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:620)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1832)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1845)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1858)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1929)\n\tat org.apache.spark.rdd.RDD$$anonfun$collect$1.apply(RDD.scala:927)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:316)\n\tat org.apache.spark.rdd.RDD.collect(RDD.scala:926)\n\tat org.apache.spark.sql.execution.SparkPlan.executeCollect(SparkPlan.scala:166)\n\tat org.apache.spark.sql.execution.SparkPlan.executeCollectPublic(SparkPlan.scala:174)\n\tat org.apache.spark.sql.DataFrame$$anonfun$org$apache$spark$sql$DataFrame$$execute$1$1.apply(DataFrame.scala:1499)\n\tat org.apache.spark.sql.DataFrame$$anonfun$org$apache$spark$sql$DataFrame$$execute$1$1.apply(DataFrame.scala:1499)\n\tat org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:56)\n\tat org.apache.spark.sql.DataFrame.withNewExecutionId(DataFrame.scala:2086)\n\tat org.apache.spark.sql.DataFrame.org$apache$spark$sql$DataFrame$$execute$1(DataFrame.scala:1498)\n\tat org.apache.spark.sql.DataFrame.org$apache$spark$sql$DataFrame$$collect(DataFrame.scala:1505)\n\tat org.apache.spark.sql.DataFrame$$anonfun$count$1.apply(DataFrame.scala:1515)\n\tat org.apache.spark.sql.DataFrame$$anonfun$count$1.apply(DataFrame.scala:1514)\n\tat org.apache.spark.sql.DataFrame.withCallback(DataFrame.scala:2099)\n\tat org.apache.spark.sql.DataFrame.count(DataFrame.scala:1514)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:63)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:68)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:70)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:72)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:74)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:76)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:78)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:80)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:82)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:84)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:86)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:88)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:90)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:92)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:94)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:96)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:98)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:100)\n\tat \u003cinit\u003e(\u003cconsole\u003e:102)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:106)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Oct 4, 2016 7:24:05 PM",
+      "dateStarted": "Oct 8, 2016 12:14:00 AM",
+      "dateFinished": "Oct 8, 2016 12:28:58 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nprint(geocode_pdd.head())",
+      "dateUpdated": "Oct 3, 2016 5:31:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475514620523_-2107847449",
+      "id": "20161003-171020_258797859",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "   geonameid        name admin1_abbr admin1_code admin2_code admin3_code  \\\n0    6540242  costermano                    20.0          VR     23030.0   \n1     263219      delphi                  ESYE24        32.0        9165   \n2     285673     az zawr                     2.0                           \n3    2971265       uzein                      75          64         643   \n4    1261076   odugattūr                    25.0         605               \n\n  admin4_code cc2 country_code feature_class feature_code isolanguage  \\\n0                           IT             A         ADM3          it   \n1                           GR             P          PPL          nl   \n2                           KW             P          PPL               \n3       64549               FR             P          PPL               \n4                           IN             P          PPL               \n\n    latitude  longitude modification_date  population source       timezone  \n0  45.586891  10.737180        2014-01-02      3586.0   name    Europe/Rome  \n1  38.479420  22.493570        2015-11-08      2373.0   name  Europe/Athens  \n2  29.442499  48.274719        2012-01-18      5750.0   name    Asia/Kuwait  \n3  43.400002  -0.433330        2016-02-18      1189.0   name   Europe/Paris  \n4  12.767920  78.883072        2014-10-14      8282.0   name   Asia/Kolkata  \n"
+      },
+      "dateCreated": "Oct 3, 2016 5:10:20 PM",
+      "dateStarted": "Oct 3, 2016 5:31:42 PM",
+      "dateFinished": "Oct 3, 2016 5:31:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " case class Address(firstName: String, text: String)\n  val addresses \u003d Seq(\n    Address(\"Bob\", \"I love mexico\"),\n    Address(\"Bob\", \"I love colarado\"),\n    Address(\"Bob\", \"I love spain\"),\n    Address(\"Bob\", \"I love japan\"),\n    Address(\"Bob\", \"I love paris\"),\n    Address(\"Bob\", \"I love usa\"),\n    Address(\"Bob\", \"I love china\"),\n    Address(\"Bob\", \"I love london\"),\n    Address(\"Bob\", \"I love boston\"),\n    Address(\"Bob\", \"I love new york\"),\n    Address(\"Bob\", \"I love california\"),\n    Address(\"Bob\", \"I love canada\"),\n    Address(\"Bob\", \"I love africa\"),\n    Address(\"Bob\", \"I love australia\"),\n    Address(\"Bob\", \"I love portugal\")\n  )\nval addrRdd \u003d sqlContext.sparkContext.parallelize(addresses)\nval df \u003d addrRdd.toDF()",
+      "dateUpdated": "Oct 3, 2016 5:18:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475514707162_-938256765",
+      "id": "20161003-171147_678188052",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "defined class Address\naddresses: Seq[Address] \u003d List(Address(Bob,I love mexico), Address(Bob,I love colarado), Address(Bob,I love spain), Address(Bob,I love japan), Address(Bob,I love paris), Address(Bob,I love usa), Address(Bob,I love china), Address(Bob,I love london), Address(Bob,I love boston), Address(Bob,I love new york), Address(Bob,I love california), Address(Bob,I love canada), Address(Bob,I love africa), Address(Bob,I love australia), Address(Bob,I love portugal))\naddrRdd: org.apache.spark.rdd.RDD[Address] \u003d ParallelCollectionRDD[9] at parallelize at \u003cconsole\u003e:40\ndf: org.apache.spark.sql.DataFrame \u003d [firstName: string, text: string]\n"
+      },
+      "dateCreated": "Oct 3, 2016 5:11:47 PM",
+      "dateStarted": "Oct 3, 2016 5:18:22 PM",
+      "dateFinished": "Oct 3, 2016 5:18:24 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.show()",
+      "dateUpdated": "Oct 3, 2016 5:18:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475515075652_1126794562",
+      "id": "20161003-171755_1517801304",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+---------+-----------------+\n|firstName|             text|\n+---------+-----------------+\n|      Bob|    I love mexico|\n|      Bob|  I love colarado|\n|      Bob|     I love spain|\n|      Bob|     I love japan|\n|      Bob|     I love paris|\n|      Bob|       I love usa|\n|      Bob|     I love china|\n|      Bob|    I love london|\n|      Bob|    I love boston|\n|      Bob|  I love new york|\n|      Bob|I love california|\n|      Bob|    I love canada|\n|      Bob|    I love africa|\n|      Bob| I love australia|\n|      Bob|  I love portugal|\n+---------+-----------------+\n\n"
+      },
+      "dateCreated": "Oct 3, 2016 5:17:55 PM",
+      "dateStarted": "Oct 3, 2016 5:18:32 PM",
+      "dateFinished": "Oct 3, 2016 5:18:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.sql.functions import udf\ndef scoreToCategory(score):\n    x \u003d score.split(\" \")\n    print(geocode_pdd[geocode_pdd[\"name\"] \u003d\u003dx(0)][\"name\"]).to_string",
+      "dateUpdated": "Oct 3, 2016 6:23:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475515112572_-1324025284",
+      "id": "20161003-171832_439909397",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-723185907893086290.py\", line 237, in \u003cmodule\u003e\n    compiledCode \u003d compile(final_code, \"\u003cstring\u003e\", \"exec\")\n  File \"\u003cstring\u003e\", line 4\n    for(i in x):\n               ^\nSyntaxError: invalid syntax\n"
+      },
+      "dateCreated": "Oct 3, 2016 5:18:32 PM",
+      "dateStarted": "Oct 3, 2016 5:50:01 PM",
+      "dateFinished": "Oct 3, 2016 5:50:01 PM",
+      "status": "ABORT",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nprint(geocode_pdd[geocode_pdd[\"name\"] \u003d\u003d\"mexico\"][\"name\"]).to_string",
+      "dateUpdated": "Oct 3, 2016 5:48:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475515694147_851400837",
+      "id": "20161003-172814_1726947896",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\u003cbound method Series.to_string of 43942    mexico\n57921    mexico\n63323    mexico\nName: name, dtype: object\u003e\n"
+      },
+      "dateCreated": "Oct 3, 2016 5:28:14 PM",
+      "dateStarted": "Oct 3, 2016 5:48:36 PM",
+      "dateFinished": "Oct 3, 2016 5:48:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475515707487_-1549801724",
+      "id": "20161003-172827_959090885",
+      "dateCreated": "Oct 3, 2016 5:28:27 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "testing geocoder",
+  "id": "2BZW6FG1E",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

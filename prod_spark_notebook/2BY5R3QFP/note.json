@@ -1,0 +1,434 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.sql.functions.udf\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.SQLContext\nimport org.apache.spark.{SparkConf, SparkContext}\nimport com.mongodb.casbah.{WriteConcern \u003d\u003e MongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray",
+      "dateUpdated": "Oct 5, 2016 3:59:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475681613233_-1505194300",
+      "id": "20161005-153333_1527134417",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.sql.functions.udf\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.SQLContext\nimport org.apache.spark.{SparkConf, SparkContext}\nimport com.mongodb.casbah.{WriteConcern\u003d\u003eMongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\n"
+      },
+      "dateCreated": "Oct 5, 2016 3:33:33 PM",
+      "dateStarted": "Oct 5, 2016 3:59:11 PM",
+      "dateFinished": "Oct 5, 2016 3:59:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val space \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else text.split(\" \")\n})\n\nvar builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"one-mongo.epidemi.co\"), Database -\u003e \"EpiOne\", Collection -\u003e\"final_master\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nvar readConfig \u003d builder.build()\nval master \u003d sqlContext.fromMongoDB(readConfig).select(\"name\", \"synonyms\", \"_id\", \"tag\").where(size($\"synonyms\") \u003e 0).withColumn(\"synonyms\", explode($\"synonyms\")).withColumn(\"synonyms\", regexp_replace(lower($\"synonyms\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).withColumn(\"size\", size(space($\"synonyms\"))).sort(desc(\"size\"))",
+      "dateUpdated": "Oct 5, 2016 4:05:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475681627575_-7720932",
+      "id": "20161005-153347_405759205",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "space: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,ArrayType(StringType,true),List(StringType))\nbuilder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e EpiOne, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e final_master, host -\u003e List(one-mongo.epidemi.co)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@62a30823\nmaster: org.apache.spark.sql.DataFrame \u003d [name: string, synonyms: string, _id: int, tag: string, size: int]\n"
+      },
+      "dateCreated": "Oct 5, 2016 3:33:47 PM",
+      "dateStarted": "Oct 5, 2016 4:05:56 PM",
+      "dateFinished": "Oct 5, 2016 4:06:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"one-mongo.epidemi.co\"), Database -\u003e \"EpiOne\", Collection -\u003e\"pos_words\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nreadConfig \u003d builder.build()\nval pos \u003d sqlContext.fromMongoDB(readConfig).select(\"x\", \"_id\")\n\nbuilder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"one-mongo.epidemi.co\"), Database -\u003e \"EpiOne\", Collection -\u003e\"neg_words\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nreadConfig \u003d builder.build()\nval neg \u003d sqlContext.fromMongoDB(readConfig).select(\"x\", \"_id\")\n\nbuilder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"one-mongo.epidemi.co\"), Database -\u003e \"EpiOne\", Collection -\u003e\"final_id_all\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nreadConfig \u003d builder.build()\nval id_all \u003d sqlContext.fromMongoDB(readConfig).select(\"name\", \"_id\")\n\n// builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"one-mongo.epidemi.co\"), Database -\u003e \"EpiOne\", Collection -\u003e\"final_alexa\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\n// readConfig \u003d builder.build()\n// val alexa \u003d sqlContext.fromMongoDB(readConfig).withColumnRenamed(\"url\", \"url2\").select(\"url2\", \"impact\").cache()\n\nval builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"one-mongo.epidemi.co\"), Database -\u003e \"EpiOne\", Collection -\u003e\"pii\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\nval pii \u003d sqlContext.fromMongoDB(readConfig).select(\"phrase\", \"_id\").withColumnRenamed(\"synonyms\", \"phrase\")\n\n\nval symp \u003d master.filter($\"tag\"\u003d\u003d\u003d\"symptom\").collect()\nval ue \u003d master.filter($\"tag\"\u003d\u003d\u003d\"ue\").collect()\nval prod \u003d master.filter($\"tag\"\u003d\u003d\u003d\"product\").collect()\nval comp \u003d master.filter($\"tag\"\u003d\u003d\u003d\"organization\").collect()\nval top \u003d master.filter($\"tag\"\u003d\u003d\u003d\"business_category\").collect()\nval des \u003d master.filter($\"tag\"\u003d\u003d\u003d\"disease\").collect()\nval cat \u003d master.filter($\"tag\"\u003d\u003d\u003d\"place_category\").collect()\nval spec \u003d master.filter($\"tag\"\u003d\u003d\u003d\"species\").collect()\nval poso \u003d pos.collect()\nval nego \u003d neg.collect()\nval ids \u003d id_all.collect()\nval pi \u003d pii.collect()\n\nval p_syn \u003d prod.map(x\u003d\u003e x(1).toString).toSet\nval s_syn \u003d symp.map(x\u003d\u003e x(1).toString).toSet\nval u_syn \u003d ue.map(x\u003d\u003e x(1).toString).toSet\nval pi_syn \u003d pi.map(x\u003d\u003e x(1).toString).toSet\nval comp_syn \u003d comp.map(x\u003d\u003e x(1).toString).toSet\nval top_syn \u003d top.map(x\u003d\u003e x(1).toString).toSet\nval des_syn \u003d des.map(x\u003d\u003e x(1).toString).toSet\n//val cat_syn \u003d cat.map(x\u003d\u003e x(1).toString).toSet\n//val spec_syn \u003d spec.map(x\u003d\u003e x(1).toString).toSet\nval pos_syn \u003d poso.map(x\u003d\u003e x(0).toString).toSet\nval neg_syn \u003d nego.map(x\u003d\u003e x(0).toString).toSet\nval id_syn \u003d nego.map(x\u003d\u003e x(0).toString).toSet\n\nvar pa :Map[String,String] \u003d Map()\nvar sa :Map[String,String] \u003d Map()\nvar ua :Map[String,String] \u003d Map()\nvar pia :Map[String,String] \u003d Map()\nvar ca :Map[String,String] \u003d Map()\nvar ta :Map[String,String] \u003d Map()\nvar das :Map[String,String] \u003d Map()\nvar cas :Map[String,String] \u003d Map()\nvar sas :Map[String,String] \u003d Map()\nvar pas :Map[String,String] \u003d Map()\nvar nas :Map[String,String] \u003d Map()\nvar ias :Map[String,String] \u003d Map()\n\nfor(i \u003c- prod){\n    pa+\u003d (i(1).toString -\u003e i(2).toString)\n}\nfor(i \u003c- symp){\n    sa+\u003d (i(1).toString -\u003e i(2).toString)\n}\nfor(i \u003c- ue){\n    ua+\u003d (i(1).toString -\u003e i(2).toString)\n}\nfor(i \u003c- pi){\n    pia+\u003d (i(0).toString -\u003e i(1).toString)\n}\nfor(i \u003c- comp){\n    ca+\u003d (i(1).toString -\u003e i(2).toString)\n}\nfor(i \u003c- top){\n    ta+\u003d (i(1).toString -\u003e i(2).toString)\n}\nfor(i \u003c- des){\n    das+\u003d (i(1).toString -\u003e i(2).toString)\n}\n//for(i \u003c- cat){\n//    cas+\u003d (i(1).toString -\u003e i(2).toString)\n//}\n//for(i \u003c- spec){\n//    sas+\u003d (i(1).toString -\u003e i(2).toString)\n//}\nfor(i \u003c- poso){\n    pas+\u003d (i(0).toString -\u003e i(1).toString)\n}\nfor(i \u003c- nego){\n    nas+\u003d (i(0).toString -\u003e i(1).toString)\n}\nfor(i \u003c- ids){\n    ias+\u003d (i(0).toString -\u003e i(1).toString)\n}\nval ns \u003d Array(master.select(\"size\").take(1)(0)(0).toString.toInt) \nval nsize \u003d ns.max\n",
+      "dateUpdated": "Oct 5, 2016 4:06:05 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": false,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475639011792_1041725833",
+      "id": "20160928-205912_564766606",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e EpiOne, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e pos_words, host -\u003e List(one-mongo.epidemi.co)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@88f4ee04\npos: org.apache.spark.sql.DataFrame \u003d [x: string, _id: int]\nbuilder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e EpiOne, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e neg_words, host -\u003e List(one-mongo.epidemi.co)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@caeb0bf\nneg: org.apache.spark.sql.DataFrame \u003d [x: string, _id: int]\nbuilder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e EpiOne, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e final_id_all, host -\u003e List(one-mongo.epidemi.co)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@f747401f\nid_all: org.apache.spark.sql.DataFrame \u003d [name: string, _id: int]\nbuilder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e EpiOne, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e pii, host -\u003e List(one-mongo.epidemi.co)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@3f4bf2a5\npii: org.apache.spark.sql.DataFrame \u003d [phrase: string, _id: double]\nsymp: Array[org.apache.spark.sql.Row] \u003d Array([unevaluable event,feels like i m writing with my left hand in my right hand,12329,symptom,13], [hallucination,keep thinking i see people out of the corner of my eye,9843,symptom,12], [abnormal sleep,i fall asleep for roughly 3 hours and then stay awake,13031,symptom,11], [abdominal discomfort,makes me feel like i ve been kicked in the stomach,15576,symptom,11], [nail picking,fingernails i m sorry there s no skin left around you,16506,symptom,11], [vaginal bleeding,have a period for just a bout a solid year,7492,symptom,10], [pain in extremity,feet feel like i have been on them all day,8443,symptom,10], [nonspecific reaction,hate the feeling when you want it to be over,11330,symptom,10], [frequent urination,waking up in the middle of the nig...ue: Array[org.apache.spark.sql.Row] \u003d Array([ue: negative social perception,people look just as gross and stupid smoking e cig things as a real cigarette,17777,ue,15], [ue: negative social perception,dumb grls on the bus are tryna hide smokin an e cig,17777,ue,12], [ue: negative social perception,smoking an e cig in the library does not make you cool,17777,ue,12], [ue: negative social perception,if you smoke an e cig inside i assume you re asshole,17777,ue,12], [ue: negative social perception,if you re smoking an e cig i m judging you,17777,ue,11], [ue: health related testimonial,it has been a long time since i felt this good,17839,ue,11], [ue: high efficacy,it has been a long time since i felt this good,18228,ue,11], [ue: cessation related testimonial,i quit smoking cigarettes after 40...prod: Array[org.apache.spark.sql.Row] \u003d Array([drospirenone/ethinyl estradiol/levomefolate calcium tablets and levomefolate calcium,drospirenone ethinyl estradiol levomefolate calcium tablets and levomefolate calcium,2021,product,9], [6f angio-seal vascular closure device vip,6 f angio seal vascular closure device vip,1514,product,8], [centruroides (scorpion) immune f(ab)2(equine),centruroides scorpion immune f ab 2 equine,880,product,7], [6 shooter saeed multi-band ligator,6 shooter saeed multi band ligator,1510,product,6], [coated vicryl plus antibacterial (polyglactin 910),coated vicryl plus antibacterial polyglactin 910,1552,product,6], [octrode lead kit, 60cm length,octrode lead kit 60 cm length,1591,product,6], [hpv vaccine,vaccine against some kind of cancer,1919,product,6], [acc...comp: Array[org.apache.spark.sql.Row] \u003d Array([epidemico,wholly owned subsidiary booz allen hamilton,216,organization,6], [epidemico,spinoff boston childrens hospital,216,organization,4], [booz allen hamilton,booz allen,204,organization,2], [booz allen hamilton,booze allen,204,organization,2], [pwc,price waterhouse,212,organization,2], [epidemico,john brownstein,216,organization,2], [epidemico,nabarun dasgupta,216,organization,2], [epidemico,robin heffernan,216,organization,2], [epidemico,clark freifeld,216,organization,2], [accenture,accenture,207,organization,1], [deloitte,deloitte,208,organization,1], [raytheon,raytheon,209,organization,1], [ibm,ibm,210,organization,1], [ibm,ibmwatson,210,organization,1], [pwc,pricewaterhousecooper,212,organization,1], [pwc,pricewaterhousecoopers,212...top: Array[org.apache.spark.sql.Row] \u003d Array([cyber,crisis task force officer,8,business_category,4], [digital,inspector of the future,84,business_category,4], [digital,examiner of the future,84,business_category,4], [cyber,supplier security management,8,business_category,3], [cyber,continuous diagnostic mitigation,8,business_category,3], [cyber,intelligence driven operations,8,business_category,3], [cyber,anticipatory threat intelligance,8,business_category,3], [cyber,internet of things,8,business_category,3], [cyber,cyber supply chain,8,business_category,3], [data science,cell based security,54,business_category,3], [data science,semi structured data,54,business_category,3], [data science,data charity bowl,54,business_category,3], [digital,amazon web services,84,business_category,3], ...des: Array[org.apache.spark.sql.Row] \u003d Array([rocky mountain spotted fever,rickettsia tick borne spotted fever r africae r conorii r rickettsii and other,21943,disease,13], [rickettsia,rickettsia tick borne spotted fever tick typhus rmsf african tick bite fever,25777,disease,12], [colitis,inflammatory bowel disease new onset post travel crohns or ulcerative colitis,25949,disease,11], [amebiasis,amebas other e hartmani e nana e coli e polecki,18804,disease,10], [rickettsia,rickettsia tick borne spotted fever tick typhus rmsf atbf msf,25777,disease,10], [undiagnosed,cause of the illness had not yet been determined,23258,disease,9], [other human disease,skin soft tissue infection secondary bacterial of existing lesion,26307,disease,9], [diarrhea,diarrhea chronic responsive to anti parasiti...cat: Array[org.apache.spark.sql.Row] \u003d Array()\nspec: Array[org.apache.spark.sql.Row] \u003d Array()\nposo: Array[org.apache.spark.sql.Row] \u003d Array([a plus,1], [abound,11], [abounds,12], [abundance,25], [abundant,26], [accessable,34], [accessible,35], [acclaim,37], [acclaimed,38], [acclamation,39], [accolade,40], [accolades,41], [accommodative,42], [accomodative,43], [accomplish,44], [accomplished,45], [accomplishment,46], [accomplishments,47], [accurate,49], [accurately,50], [achievable,65], [achievement,66], [achievements,67], [achievible,68], [acumen,76], [adaptable,79], [adaptive,80], [adequate,85], [adjustable,86], [admirable,87], [admirably,88], [admiration,89], [admire,90], [admirer,91], [admiring,92], [admiringly,93], [adorable,99], [adore,100], [adored,101], [adorer,102], [adoring,103], [adoringly,104], [adroit,105], [adroitly,106], [adulate,107], [adulation,108], [adulatory,10...nego: Array[org.apache.spark.sql.Row] \u003d Array([abnormal,2], [abolish,3], [abominable,4], [abominably,5], [abominate,6], [abomination,7], [abort,8], [aborted,9], [aborts,10], [abrade,13], [abrasive,14], [abrupt,15], [abruptly,16], [abscond,17], [absence,18], [absent minded,19], [absentee,20], [absurd,21], [absurdity,22], [absurdly,23], [absurdness,24], [abuse,27], [abused,28], [abuses,29], [abusive,30], [abysmal,31], [abysmally,32], [abyss,33], [accidental,36], [accost,48], [accursed,51], [accusation,52], [accusations,53], [accuse,54], [accuses,55], [accusing,56], [accusingly,57], [acerbate,58], [acerbic,59], [acerbically,60], [ache,61], [ached,62], [aches,63], [achey,64], [aching,69], [acrid,70], [acridly,71], [acridness,72], [acrimonious,73], [acrimoniously,74], [acrimony,75], [adamant...ids: Array[org.apache.spark.sql.Row] \u003d Array([cybersecurity,9], [cyber security,10], [cyber-security,11], [cybercrime,12], [cyber crime,13], [cyber espionage,14], [egovernment,15], [e-government,16], [cybercom,17], [cyber command,18], [cyber operations,19], [cyber control,20], [cyberspace,21], [threatbase,22], [threat intelligence,23], [vulnerability management,24], [mobile security,25], [information protection,26], [application security,27], [supplier security management,28], [postmorten analysis,29], [cyber attack,30], [cyberattack,31], [cyber-attack,32], [incidence response,33], [incident response,34], [continuous diagnostic mitigation,35], [continuous diagnostics,36], [intelligence driven operations,37], [predictive intelligence,38], [anticipatory threat intelligance,39], [cyber wor...pi: Array[org.apache.spark.sql.Row] \u003d Array([ethan,6.0], [isabella,18.0], [olivia,19.0], [noah,23.0], [abigail,25.0], [sophia,26.0], [alexis,28.0], [hannah,29.0], [samantha,40.0], [jayden,41.0], [zachary,42.0], [elijah,43.0], [ava,44.0], [caleb,50.0], [alyssa,55.0], [aiden,59.0], [chloe,60.0], [natalie,64.0], [evan,66.0], [isaiah,68.0], [brianna,71.0], [gavin,72.0], [riley,73.0], [connor,76.0], [kayla,78.0], [hailey,82.0], [ella,85.0], [landon,87.0], [aidan,90.0], [jasmine,93.0], [liam,97.0], [avery,98.0], [addison,101.0], [lily,104.0], [nathaniel,108.0], [jeremiah,111.0], [hayden,112.0], [brayden,113.0], [katherine,114.0], [allison,116.0], [kaitlyn,119.0], [wyatt,120.0], [kaylee,121.0], [sebastian,124.0], [peyton,125.0], [megan,126.0], [alexandra,128.0], [lillian,130.0], [xavier,132.0]...p_syn: scala.collection.immutable.Set[String] \u003d Set(typhoid jab, stribid, ego electronic cigs, breo account, ego cig, whooping cough tetanus, neutrogena eyeliner, spencer forrest laser, breo watches, larazapam, tapentadole, meningococcal group b vaccine, klonipin, cig liquids, buprenurphine, cloudchaser, tapentidal, dabigatran, centruroides, prednisolene, oramoprh, percocets, rebiff, mumps vaccination, ms cotin, pantoprazol, bozara, typhoid, arcapta, victanyle, bed time meds, nurophen, sublimayze, toodle puffing, immuran, halo e cigs, lynlore, alieve, xana x, ibrofen, omniprazole, claretin, loropom, powersail coronary dilation catheter, u47, evra patch, tylenol widd codeine, clonapin, co codamole, tylenol   4, levulan, markten cigarettes, percets, e vapes, flonaize, e shisha, msl, zafen...s_syn: scala.collection.immutable.Set[String] \u003d Set(red circles around my eyes, ill just, bad reactions, piss my pants, inflammatory, got me seeing shit, losing it s benefits, \" hasnt touched my migraine \", arm hurtz, arm is so swollen, \" still hasnt taken effect \", peripheral edema, peripheral coldness, swollen breast, doze off, room spinning, anti neutrophil cytoplasmic antibody positive vasculitis, rage, loopin me out, nothing is happening, sleeping most of the day, irritated eyelid, leg hurts, my appetite is gone, no effect on you any more, black out, laughing, stevens johnsons, \" still dont take my headaches away \", serum sickness like reaction, blurry, pregnant on birth control, got me feeling some typa way, took me out on disability, yacking, no way to fight off infections, \" won...u_syn: scala.collection.immutable.Set[String] \u003d Set(need sold today, was taking, nic base, from tysabri, headache, liquid, used, cloudchaser, clearance sale, has been pretty good, pharma, immunosuppressive, so far so good, company coverage, chargers, been a blessing, successful infusion, beautiful, mojito, what are, ohm, birthday, dont want to stop using e cigs, to humira, teenager, dangerous, one stop shop, started my entyvio, smells like shit, savings, menthol, not sure if this is a side effect, researcher, can you advise me, no side effects, tastes awesome, topper, insurance not approved, outlaw, remission rate, need to decice about stopping nicotine, swag, in a lot of pain, it has been a long time since i felt this good, cleaning your, scares me, positive reaction to entyvio, drip t...pi_syn: scala.collection.immutable.Set[String] \u003d Set(4854.0, 6090.0, 17105.0, 14139.0, 27107.0, 13562.0, 18721.0, 9709.0, 3782.0, 14630.0, 31624.0, 15717.0, 13774.0, 9720.0, 26609.0, 20042.0, 8876.0, 35208.0, 34662.0, 28772.0, 11189.0, 5573.0, 13444.0, 140.0, 4841.0, 1855.0, 19844.0, 5667.0, 8802.0, 20122.0, 738.0, 7446.0, 7549.0, 7627.0, 19914.0, 27533.0, 13934.0, 1375.0, 31152.0, 27083.0, 26207.0, 15676.0, 7384.0, 27642.0, 14436.0, 35202.0, 10063.0, 799.0, 35193.0, 3340.0, 355.0, 32590.0, 31354.0, 9347.0, 30639.0, 14281.0, 33068.0, 7080.0, 30579.0, 17553.0, 4549.0, 7250.0, 918.0, 17055.0, 2657.0, 5861.0, 27146.0, 15503.0, 7938.0, 2744.0, 12195.0, 1608.0, 18967.0, 17187.0, 12660.0, 15027.0, 32313.0, 31543.0, 8466.0, 15397.0, 2761.0, 20995.0, 18562.0, 27180.0, 19608.0, 33912.0, 31382.0,...comp_syn: scala.collection.immutable.Set[String] \u003d Set(epidemico, clark freifeld, pricewaterhousecooper, nabarun dasgupta, booz allen, pricewaterhousecoopers, price waterhouse, wholly owned subsidiary booz allen hamilton, booze allen, spinoff boston childrens hospital, medwatcher, ibmwatson, healthmap, streetrx, raytheon, deloitte, ibm, accenture, robin heffernan, john brownstein)\ntop_syn: scala.collection.immutable.Set[String] \u003d Set(mobile apps, data scientist, data veracity, digitalgov, service design, brand strategy, health, devops, digital listening, supplier security management, cyber workforce, channel alignment, shared services, aws, design, data scientists, digital strategy, open data, mobile security, tradecraft, data valuation, unstructured data, social media analytics, big data, hacker, data lake, cybercom, cyber activity, hackathon, health informatics, web apps, continuous diagnostic mitigation, web applications, application security, digital transformation, interactive media, threatbase, content management system, iot, cloud applications, cyber challenge, iaas, semi structured data, spatial design, digital publications, citizen services, cyber crimin...des_syn: scala.collection.immutable.Set[String] \u003d Set(pdcov, mycoplasma bovis, peritonsillar abscess, australian encephalitis, cre, groundnut ringspot virus, diarrhea acute unspecified, die off, bite spider, kala azar, squirrel pox, not diagnosed disease, potato wart, lactose intolerance post infectious, pontic fever, brugia malayi, chytrid fungus, club root, mystery deadly illness, adem, mycobacterium abscessus, pneumonia fungal, rhinovirus, agalactia, aster yellows, cryptococcal, cholera infected swine, helminth intestinal not diarrhea unspecified, type specific stroke, dyscentry, shigella s dysenteriae, evh 1, urethritis non gonococcal, shot dead, rickettsia typhi flea borne murine typhus, influenza a confirmed, melamine, pseudotuberculosis, colitis unspecified, \"fmd \", ah1n1, kalaza...pos_syn: scala.collection.immutable.Set[String] \u003d Set(foolproof, youthful, precious, compliment, lover, snazzy, plentiful, exuberance, outshine, easiness, excelent, unequivocally, steadfastness, capably, accolade, unity, sweet, lush, striking, futuristic, admiringly, vivid, beautiful, blissfully, astutely, steadfastly, outstrip, innocuous, astonishment, carefree, panoramic, masters, empathize, adulation, euphoria, wow, clear cut, wise, terrifically, succeed, easygoing, perfection, liberate, savings, enjoying, spirited, interesting, verifiable, shiny, proficiently, fragrant, rapture, spellbound, picturesque, comely, dumbfounded, smitten, luxury, thrilling, winning, authoritative, unfettered, razor sharp, intricate, impressive, supurbly, stellar, sturdy, elan, reassure, faithfulness, trum...neg_syn: scala.collection.immutable.Set[String] \u003d Set(ferociously, sinister, breaks, bowdlerize, leer, inflammatory, cataclysmal, outrageousness, distraughtness, malignant, terrible, inevitable, rage, sugarcoated, lesser known, scathing, headache, desolate, polluter, disinclined, lawbreaker, irrecoverably, darkened, despotic, buckle, discomfit, dejection, blurry, blurs, scare, overdue, exploit, extraneous, incomprehensible, molestation, insufficiency, affront, craven, tiring, break up, backbiting, static, inferiority, frown, garish, unhappiness, sack, gracelessly, unobserved, manipulative, subservient, degradation, straining, slowwww, sully, rhetorical, uninsured, abyss, bitchy, inefficiency, demolish, boil, timidly, crafty, funny, joker, lonesome, devastating, pillage, calamitous, kill...id_syn: scala.collection.immutable.Set[String] \u003d Set(ferociously, sinister, breaks, bowdlerize, leer, inflammatory, cataclysmal, outrageousness, distraughtness, malignant, terrible, inevitable, rage, sugarcoated, lesser known, scathing, headache, desolate, polluter, disinclined, lawbreaker, irrecoverably, darkened, despotic, buckle, discomfit, dejection, blurry, blurs, scare, overdue, exploit, extraneous, incomprehensible, molestation, insufficiency, affront, craven, tiring, break up, backbiting, static, inferiority, frown, garish, unhappiness, sack, gracelessly, unobserved, manipulative, subservient, degradation, straining, slowwww, sully, rhetorical, uninsured, abyss, bitchy, inefficiency, demolish, boil, timidly, crafty, funny, joker, lonesome, devastating, pillage, calamitous, kille...pa: Map[String,String] \u003d Map()\nsa: Map[String,String] \u003d Map()\nua: Map[String,String] \u003d Map()\npia: Map[String,String] \u003d Map()\nca: Map[String,String] \u003d Map()\nta: Map[String,String] \u003d Map()\ndas: Map[String,String] \u003d Map()\ncas: Map[String,String] \u003d Map()\nsas: Map[String,String] \u003d Map()\npas: Map[String,String] \u003d Map()\nnas: Map[String,String] \u003d Map()\nias: Map[String,String] \u003d Map()\nns: Array[Int] \u003d Array(15)\nnsize: Int \u003d 15\n"
+      },
+      "dateCreated": "Oct 5, 2016 3:43:31 AM",
+      "dateStarted": "Oct 5, 2016 4:06:05 PM",
+      "dateFinished": "Oct 5, 2016 4:06:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var forum \u003d sqlContext.jsonFile(\"/opt/sup/RS_2015/\")\n\nforum.count()",
+      "dateUpdated": "Oct 5, 2016 6:11:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475689264783_176286370",
+      "id": "20161005-174104_114349304",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res40: Long \u003d 70500862\n"
+      },
+      "dateCreated": "Oct 5, 2016 5:41:04 PM",
+      "dateStarted": "Oct 5, 2016 5:41:15 PM",
+      "dateFinished": "Oct 5, 2016 5:57:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var forum2 \u003d forum\n.withColumn(\"created_utc\", from_unixtime($\"created_utc\".cast(\"String\")))\n.withColumn(\"ymds\", date_format($\"created_utc\", \"yyyyMMddss\").cast(\"Integer\"))\n.withColumn(\"ds\", when($\"ymds\"\u003d\u003d\u003d20160500, \"pushshift\").otherwise(\"pushshift\"))\n.withColumn(\"type\", when($\"ymds\"\u003d\u003d\u003d20160500, \"reddit\").otherwise(\"reddit\"))\n\n    val make_flink \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else Array(\"https://www.reddit.com/r/\", text).mkString(\"\")})\n\nvar forum2 \u003d forum.withColumn(\"t\", concat_ws(\" \", $\"selftext\", $\"url\")).drop(\"url\").withColumn(\"url\", $\"permalink\").withColumnRenamed(\"name\", \"tid\").withColumn(\"tlink\", $\"url\").withColumnRenamed(\"uname\", \"author\").withColumn(\"dom\", when($\"ymds\"\u003d\u003d\u003d\"20150600\", \"reddit.com\").otherwise(\"reddit.com\")).withColumn(\"bname\", when($\"ymds\"\u003d\u003d\u003d\"20150600\", \"Reddit\").otherwise(\"Reddit\")).withColumn(\"cr\", $\"created_utc\".cast(\"timestamp\")).withColumn(\"rdt\",  from_unixtime($\"retrieved_on\").cast(\"timestamp\")).withColumn(\"flink\", make_flink($\"subreddit\")).withColumn(\"fname\", $\"subreddit\").withColumn(\"tstarter\", when($\"ymds\"\u003d\u003d\u003d20150600, \"T\").otherwise(\"T\")).withColumnRenamed(\"author\", \"uname\").filter(\"ymds is not null\").na.fill(0,Seq(\"num_comments\")).withColumn(\"downs\", $\"score\" - $\"ups\").select(\"type\",\"ds\",\"rdt\",\"ymds\",\"id\",\"bname\",\"cr\",\"dom\",\"downs\",\"flink\",\"fname\",\"num_comments\",\"score\",\"t\",\"tid\",\"title\",\"tlink\",\"tstarter\",\"uname\",\"ups\",\"url\")\n\nforum2 \u003d forum2.withColumn(\"t2\", regexp_replace(lower($\"selftext\"), \"\"\"[\\p{Punct}]\"\"\", \" \"))// forum2 \u003d forum2.join(alexa, forum2(\"dom2\")\u003d\u003d\u003dalexa(\"url2\"), \"left\").drop(\"dom2\").drop(\"url2\").na.fill(0,Seq(\"impact\"))",
+      "dateUpdated": "Oct 5, 2016 6:19:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475688779114_875870429",
+      "id": "20161005-173259_725373453",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\norg.apache.spark.SparkException: Job 32 cancelled part of cancelled job group zeppelin-20161005-173259_725373453\n\tat org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1431)\n\tat org.apache.spark.scheduler.DAGScheduler.handleJobCancellation(DAGScheduler.scala:1370)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply$mcVI$sp(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:783)\n\tat scala.collection.mutable.HashSet.foreach(HashSet.scala:79)\n\tat org.apache.spark.scheduler.DAGScheduler.handleJobGroupCancelled(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1619)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1599)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1588)\n\tat org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)\n\tat org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:620)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1832)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1952)\n\tat org.apache.spark.rdd.RDD$$anonfun$reduce$1.apply(RDD.scala:1025)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:316)\n\tat org.apache.spark.rdd.RDD.reduce(RDD.scala:1007)\n\tat org.apache.spark.rdd.RDD$$anonfun$treeAggregate$1.apply(RDD.scala:1150)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:316)\n\tat org.apache.spark.rdd.RDD.treeAggregate(RDD.scala:1127)\n\tat org.apache.spark.sql.execution.datasources.json.InferSchema$.infer(InferSchema.scala:65)\n\tat org.apache.spark.sql.execution.datasources.json.JSONRelation$$anonfun$4.apply(JSONRelation.scala:114)\n\tat org.apache.spark.sql.execution.datasources.json.JSONRelation$$anonfun$4.apply(JSONRelation.scala:109)\n\tat scala.Option.getOrElse(Option.scala:120)\n\tat org.apache.spark.sql.execution.datasources.json.JSONRelation.dataSchema$lzycompute(JSONRelation.scala:109)\n\tat org.apache.spark.sql.execution.datasources.json.JSONRelation.dataSchema(JSONRelation.scala:108)\n\tat org.apache.spark.sql.sources.HadoopFsRelation.schema$lzycompute(interfaces.scala:636)\n\tat org.apache.spark.sql.sources.HadoopFsRelation.schema(interfaces.scala:635)\n\tat org.apache.spark.sql.execution.datasources.LogicalRelation.\u003cinit\u003e(LogicalRelation.scala:37)\n\tat org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:125)\n\tat org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:109)\n\tat org.apache.spark.sql.DataFrameReader.json(DataFrameReader.scala:244)\n\tat org.apache.spark.sql.SQLContext.jsonFile(SQLContext.scala:1011)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:110)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:115)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:117)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:119)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:121)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:123)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:125)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:127)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:129)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:131)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:133)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:135)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:137)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:139)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:141)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:143)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:145)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:147)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:149)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:151)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:153)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:155)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:157)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:159)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:161)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:163)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:165)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:167)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:169)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:171)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:173)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:175)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:177)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:179)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:181)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:183)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:185)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:187)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:189)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:191)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:193)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:195)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:197)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:199)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:201)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:203)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:205)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:207)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:209)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:211)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:213)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:215)\n\tat \u003cinit\u003e(\u003cconsole\u003e:217)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:221)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Oct 5, 2016 5:32:59 PM",
+      "dateStarted": "Oct 5, 2016 6:19:49 PM",
+      "dateFinished": "Oct 5, 2016 6:22:40 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\n\n\nforum2 \u003d forum2.withColumn(\"t3\", concat_ws(\" \", $\"t\", $\"description\", $\"title\")).withColumn(\"t2\", regexp_replace(lower($\"t3\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).filter(\"t2 is not null\").drop(\"t3\").withColumn(\"dom2\", regexp_replace(lower($\"dom\"), \"\"\"https://|www.|/\"\"\", \"\"))",
+      "dateUpdated": "Oct 5, 2016 5:40:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475689116659_575992861",
+      "id": "20161005-173836_1002661975",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "org.apache.spark.sql.AnalysisException: cannot resolve \u0027description\u0027 given input columns: [url, title, cr, score, t, id, downs, ups, type, tid, rdt, tlink, flink, ds, dom, fname, ymds, num_comments, bname, uname, tstarter];\n\tat org.apache.spark.sql.catalyst.analysis.package$AnalysisErrorAt.failAnalysis(package.scala:42)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1$$anonfun$apply$2.applyOrElse(CheckAnalysis.scala:60)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1$$anonfun$apply$2.applyOrElse(CheckAnalysis.scala:57)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$transformUp$1.apply(TreeNode.scala:335)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$transformUp$1.apply(TreeNode.scala:335)\n\tat org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(TreeNode.scala:69)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformUp(TreeNode.scala:334)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$5.apply(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$5.apply(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$4$$anonfun$apply$9.apply(TreeNode.scala:310)\n\tat scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)\n\tat scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)\n\tat scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)\n\tat scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableLike$class.map(TraversableLike.scala:244)\n\tat scala.collection.AbstractTraversable.map(Traversable.scala:105)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$4.apply(TreeNode.scala:308)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat scala.collection.Iterator$class.foreach(Iterator.scala:727)\n\tat scala.collection.AbstractIterator.foreach(Iterator.scala:1157)\n\tat scala.collection.generic.Growable$class.$plus$plus$eq(Growable.scala:48)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:103)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableOnce$class.to(TraversableOnce.scala:273)\n\tat scala.collection.AbstractIterator.to(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toBuffer(TraversableOnce.scala:265)\n\tat scala.collection.AbstractIterator.toBuffer(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toArray(TraversableOnce.scala:252)\n\tat scala.collection.AbstractIterator.toArray(Iterator.scala:1157)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformChildren(TreeNode.scala:321)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformUp(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$5.apply(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$5.apply(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$4.apply(TreeNode.scala:281)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat scala.collection.Iterator$class.foreach(Iterator.scala:727)\n\tat scala.collection.AbstractIterator.foreach(Iterator.scala:1157)\n\tat scala.collection.generic.Growable$class.$plus$plus$eq(Growable.scala:48)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:103)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableOnce$class.to(TraversableOnce.scala:273)\n\tat scala.collection.AbstractIterator.to(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toBuffer(TraversableOnce.scala:265)\n\tat scala.collection.AbstractIterator.toBuffer(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toArray(TraversableOnce.scala:252)\n\tat scala.collection.AbstractIterator.toArray(Iterator.scala:1157)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformChildren(TreeNode.scala:321)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformUp(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.transformExpressionUp$1(QueryPlan.scala:108)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.org$apache$spark$sql$catalyst$plans$QueryPlan$$recursiveTransform$2(QueryPlan.scala:118)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan$$anonfun$org$apache$spark$sql$catalyst$plans$QueryPlan$$recursiveTransform$2$1.apply(QueryPlan.scala:122)\n\tat scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)\n\tat scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)\n\tat scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)\n\tat scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableLike$class.map(TraversableLike.scala:244)\n\tat scala.collection.AbstractTraversable.map(Traversable.scala:105)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.org$apache$spark$sql$catalyst$plans$QueryPlan$$recursiveTransform$2(QueryPlan.scala:122)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan$$anonfun$2.apply(QueryPlan.scala:127)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat scala.collection.Iterator$class.foreach(Iterator.scala:727)\n\tat scala.collection.AbstractIterator.foreach(Iterator.scala:1157)\n\tat scala.collection.generic.Growable$class.$plus$plus$eq(Growable.scala:48)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:103)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableOnce$class.to(TraversableOnce.scala:273)\n\tat scala.collection.AbstractIterator.to(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toBuffer(TraversableOnce.scala:265)\n\tat scala.collection.AbstractIterator.toBuffer(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toArray(TraversableOnce.scala:252)\n\tat scala.collection.AbstractIterator.toArray(Iterator.scala:1157)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.transformExpressionsUp(QueryPlan.scala:127)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1.apply(CheckAnalysis.scala:57)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1.apply(CheckAnalysis.scala:50)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:121)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$class.checkAnalysis(CheckAnalysis.scala:50)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis(Analyzer.scala:44)\n\tat org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:34)\n\tat org.apache.spark.sql.DataFrame.\u003cinit\u003e(DataFrame.scala:133)\n\tat org.apache.spark.sql.DataFrame.org$apache$spark$sql$DataFrame$$withPlan(DataFrame.scala:2126)\n\tat org.apache.spark.sql.DataFrame.select(DataFrame.scala:707)\n\tat org.apache.spark.sql.DataFrame.withColumn(DataFrame.scala:1188)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:116)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:121)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:123)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:125)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:127)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:129)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:131)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:133)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:135)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:137)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:139)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:141)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:143)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:145)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:147)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:149)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:151)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:153)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:155)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:157)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:159)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:161)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:163)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:165)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:167)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:169)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:171)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:173)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:175)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:177)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:179)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:181)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:183)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:185)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:187)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:189)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:191)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:193)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:195)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:197)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:199)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:201)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:203)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:205)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:207)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:209)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:211)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:213)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:215)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:217)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:219)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:221)\n\tat \u003cinit\u003e(\u003cconsole\u003e:223)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:227)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Oct 5, 2016 5:38:36 PM",
+      "dateStarted": "Oct 5, 2016 5:39:34 PM",
+      "dateFinished": "Oct 5, 2016 5:39:35 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer\nval tokenizer \u003d new Tokenizer().setInputCol(\"t2\").setOutputCol(\"words\")\nvar tokenized \u003d tokenizer.transform(forum2)\nfor(i \u003c- 1 to nsize){\n    var num \u003d Array(\"ngram\", i).mkString\n    var ngi \u003d new NGram().setInputCol(\"words\").setOutputCol(num).setN(i)\n    tokenized \u003d ngi.transform(tokenized)\n    tokenized \u003d tokenized.withColumn(\"test\", tokenized(num).cast(\"String\")).withColumn(\"w2\", concat($\"words\".cast(\"String\"), $\"test\")).drop(num).drop(\"test\")\n}\n\nval matcher \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else {\n    val words \u003d text.split(\",\").toSet\n    val pc \u003d p_syn \u0026 words\n    val cc \u003d s_syn \u0026 words\n    val uc \u003d u_syn \u0026 words\n    val pic \u003d pi_syn \u0026 words\n    val coc \u003d comp_syn \u0026 words\n    val toc \u003d top_syn \u0026 words\n    val doc \u003d des_syn \u0026 words\n//    val joc \u003d cat_syn \u0026 words\n//    val soc \u003d spec_syn \u0026 words\n    val poc \u003d pos_syn \u0026 words\n    val noc \u003d neg_syn \u0026 words\n    Map(\"prod\" -\u003e (pc.toArray collect pa).distinct.map(_.toDouble),\n\"prod_syn\" -\u003e (pc.toArray collect ias).distinct.map(_.toDouble),\n \"con\" -\u003e (cc.toArray collect sa).distinct.map(_.toDouble),\n\"con_syn\" -\u003e (cc.toArray collect ias).distinct.map(_.toDouble),\n \"ue\" -\u003e (uc.toArray collect ua).distinct.map(_.toDouble),\n\"ue_syn\" -\u003e (uc.toArray collect ias).distinct.map(_.toDouble),\n\"pii\" -\u003e (pic.toArray collect pia).distinct.map(_.toDouble),\n\"company\" -\u003e (coc.toArray collect ca).distinct.map(_.toDouble),\n\"company_syn\" -\u003e (coc.toArray collect ias).distinct.map(_.toDouble),\n\"topic\" -\u003e (toc.toArray collect ta).distinct.map(_.toDouble),\n\"keys\" -\u003e (toc.toArray collect ias).distinct.map(_.toDouble),\n\"disease\" -\u003e (doc.toArray collect das).distinct.map(_.toDouble),\n\"disease_syn\" -\u003e (doc.toArray collect ias).distinct.map(_.toDouble), \n//\"category\" -\u003e (joc.toArray collect cas).distinct.map(_.toDouble),\n//\"category_syn\" -\u003e (joc.toArray collect ias).distinct.map(_.toDouble), \n//\"species\" -\u003e (soc.toArray collect sas).distinct.map(_.toDouble),\n//\"species_syn\" -\u003e (soc.toArray collect ias).distinct.map(_.toDouble),\n\"pos\" -\u003e (poc.toArray collect pas).map(_.toDouble), \n\"neg\" -\u003e (noc.toArray collect nas).map(_.toDouble))\n}})\nval to_double \u003d udf((text: WrappedArray[String]) \u003d\u003e {\n    if(text.length\u003d\u003d0) null\n    else text.map(_.toDouble)\n})\n\n",
+      "dateUpdated": "Oct 5, 2016 5:38:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475680951819_-1235652242",
+      "id": "20161005-152231_164541481",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer\ntokenizer: org.apache.spark.ml.feature.Tokenizer \u003d tok_8274add2f970\njava.lang.IllegalArgumentException: Field \"t2\" does not exist.\n\tat org.apache.spark.sql.types.StructType$$anonfun$apply$1.apply(StructType.scala:213)\n\tat org.apache.spark.sql.types.StructType$$anonfun$apply$1.apply(StructType.scala:213)\n\tat scala.collection.MapLike$class.getOrElse(MapLike.scala:128)\n\tat scala.collection.AbstractMap.getOrElse(Map.scala:58)\n\tat org.apache.spark.sql.types.StructType.apply(StructType.scala:212)\n\tat org.apache.spark.ml.UnaryTransformer.transformSchema(Transformer.scala:106)\n\tat org.apache.spark.ml.PipelineStage.transformSchema(Pipeline.scala:68)\n\tat org.apache.spark.ml.UnaryTransformer.transform(Transformer.scala:117)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:118)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:123)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:125)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$33d793dde4292884a4720419646f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:127)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:129)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:131)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:133)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:135)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$725d9ae18728ec9520b65ad133e3b55$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:137)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:139)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:141)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:143)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:145)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$3d99ae6e19b65c7f617b22f29b431fb$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:147)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:149)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:151)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:153)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:155)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$ad149dbdbd963d0c9dc9b1d6f07f5e$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:157)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:159)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:161)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:163)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:165)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$6e49527b15a75f3b188beeb1837a4f1$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:167)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:169)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:171)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:173)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:175)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:177)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:179)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:181)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:183)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:185)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:187)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:189)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:191)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:193)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:195)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:197)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:199)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:201)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:203)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:205)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:207)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:209)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:211)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:213)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:215)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:217)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:219)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:221)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:223)\n\tat \u003cinit\u003e(\u003cconsole\u003e:225)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:229)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Oct 5, 2016 3:22:31 PM",
+      "dateStarted": "Oct 5, 2016 5:38:54 PM",
+      "dateFinished": "Oct 5, 2016 5:38:56 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "tokenized.show()",
+      "dateUpdated": "Oct 5, 2016 5:36:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475688977264_348824088",
+      "id": "20161005-173617_270172735",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\u003cconsole\u003e:109: error: not found: value tokenized\n              tokenized.show()\n              ^\n"
+      },
+      "dateCreated": "Oct 5, 2016 5:36:17 PM",
+      "dateStarted": "Oct 5, 2016 5:36:55 PM",
+      "dateFinished": "Oct 5, 2016 5:36:55 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end \u003d tokenized.withColumn(\"temp\", matcher($\"w2\")).\nwithColumn(\"product\", $\"temp\"(\"prod\")).\nwithColumn(\"product_synonyms\", $\"temp\"(\"prod_syn\")).\nwithColumn(\"symptom\", $\"temp\"(\"con\")).\nwithColumn(\"symptom_synonyms\", $\"temp\"(\"con_syn\")).\nwithColumn(\"ue\", $\"temp\"(\"ue\")).\nwithColumn(\"ue_synonyms\", $\"temp\"(\"ue_syn\")).\nwithColumn(\"pii\", $\"temp\"(\"pii\")).\n//withColumn(\"pii_synonyms\", $\"temp\"(\"pii_syn\"))\nwithColumn(\"organization\", $\"temp\"(\"company\")).\nwithColumn(\"organization_synonyms\", $\"temp\"(\"company_syn\")).\nwithColumn(\"business_category\", $\"temp\"(\"topic\")).\nwithColumn(\"business_category_synonyms\", $\"temp\"(\"keys\")).\nwithColumn(\"disease\", $\"temp\"(\"disease\")).\nwithColumn(\"disease_synonyms\", $\"temp\"(\"disease_syn\")).\n//withColumn(\"category\", $\"temp\"(\"category\")).\n//withColumn(\"category_synonyms\", $\"temp\"(\"category_syn\")).\n//withColumn(\"species\", $\"temp\"(\"species\")).\n//withColumn(\"species_synonyms\", $\"temp\"(\"species_syn\")).\nwithColumn(\"pos\",  $\"temp\"(\"pos\")).\nwithColumn(\"neg\", $\"temp\"(\"neg\")).drop(\"w2\").drop(\"temp\").drop(\"words\")\n\n\nimport org.apache.spark.ml.PipelineModel\nval yolo \u003d PipelineModel.load(\"/opt/syed/AeClassifier.model\")\nval class_s \u003d udf((prediction: Double, ue: WrappedArray[Double]) \u003d\u003e {\n    if(ue \u003d\u003d null) 1.0\n  else if (ue.length \u003d\u003d 0) 1.0\n  else if (ue.length !\u003d0 \u0026\u0026 prediction \u003d\u003d 0.0D) 2.0\n  else if (ue.length !\u003d0 \u0026\u0026 prediction \u003d\u003d 1.0D) 7.0\n  else 1.0\n})\nval ind \u003d udf((ue: org.apache.spark.mllib.linalg.Vector) \u003d\u003e {\n    ue.toArray.max\n})\nval senti \u003d udf((sen: Int) \u003d\u003e {\n    if(sen \u003d\u003d0) 0\n    else if (sen\u003e0) 1\n    else -1\n})\n",
+      "dateUpdated": "Oct 5, 2016 5:36:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475688973445_-1444490535",
+      "id": "20161005-173613_1130867740",
+      "dateCreated": "Oct 5, 2016 5:36:13 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end20 \u003d yolo.transform(end).drop(\"rawPrediction\").drop(\"words\").drop(\"features\").drop(\"filtered\").withColumn(\"ind\", ind($\"probability\").cast(\"Double\")).drop(\"probability\").withColumn(\"tg\", class_s($\"prediction\", $\"ue\")).drop(\"t2\").withColumn(\"sentiment\", senti((size($\"pos\") - size($\"neg\")))).drop(\"pos\").drop(\"neg\").drop(\"prediction\")\n\nend20.write.format(\"org.apache.spark.sql.cassandra\").mode(\"append\").options(Map( \"table\" -\u003e \"reddit\", \"keyspace\" -\u003e \"processed_forum\").save()",
+      "dateUpdated": "Oct 5, 2016 4:08:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475683683458_-941764856",
+      "id": "20161005-160803_316954518",
+      "dateCreated": "Oct 5, 2016 4:08:03 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\n// val pi_syn \u003d pi.map(x\u003d\u003e x(1).toString).toSet",
+      "dateUpdated": "Oct 5, 2016 4:40:06 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475639011793_1041341084",
+      "id": "20160928-210931_1832343843",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\u003cconsole\u003e:69: error: value toSet is not a member of org.apache.spark.rdd.RDD[String]\n         val pi_syn \u003d pii.map(x\u003d\u003e x(1).toString).toSet\n                                                 ^\n"
+      },
+      "dateCreated": "Oct 5, 2016 3:43:31 AM",
+      "dateStarted": "Oct 5, 2016 4:37:37 AM",
+      "dateFinished": "Oct 5, 2016 4:39:52 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "pi",
+      "dateUpdated": "Oct 5, 2016 4:31:19 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475639011793_1041341084",
+      "id": "20161005-034041_456628509",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res56: org.apache.spark.sql.DataFrame \u003d [type: string, _id: double, phrase: string, createdAt: timestamp, g: string]\n"
+      },
+      "dateCreated": "Oct 5, 2016 3:43:31 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Oct 5, 2016 3:43:31 AM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475639011793_1041341084",
+      "id": "20161005-034055_292173184",
+      "dateCreated": "Oct 5, 2016 3:43:31 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/julia/reddit_clone",
+  "id": "2BY5R3QFP",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

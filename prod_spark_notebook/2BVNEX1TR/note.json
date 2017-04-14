@@ -1,0 +1,278 @@
+{
+  "paragraphs": [
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.6.146.93\"), Database -\u003e \"twitter\", Collection -\u003e\"testing_ae\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\n\nval ae \u003d sqlContext.fromMongoDB(readConfig).withColumnRenamed(\"t2\", \"t\")",
+      "dateUpdated": "Aug 30, 2016 7:47:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472586335609_-1470594551",
+      "id": "20160830-194535_1157505418",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e testing_ae, host -\u003e List(52.6.146.93)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@89e7802a\nae: org.apache.spark.sql.DataFrame \u003d [old_tg: int, t: string, _id: string, old_ind: double]\n"
+      },
+      "dateCreated": "Aug 30, 2016 7:45:35 PM",
+      "dateStarted": "Aug 30, 2016 7:47:42 PM",
+      "dateFinished": "Aug 30, 2016 7:47:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "ae.show()",
+      "dateUpdated": "Aug 30, 2016 7:47:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472586378553_762549362",
+      "id": "20160830-194618_154927284",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+------+--------------------+--------------------+-----------+\n|old_tg|                   t|                 _id|    old_ind|\n+------+--------------------+--------------------+-----------+\n|     2|I took a melatoni...|57c5e2841a62b72e0...|0.794518188|\n|     2|I took 1 ambien 2...|57c5e2841a62b72e0...|0.995876419|\n|     2|I was so tired la...|57c5e2841a62b72e0...|0.903504721|\n|     2|when u have biolo...|57c5e2841a62b72e0...|0.714331536|\n|     2|Fuuuuccckkkk  Too...|57c5e2841a62b72e0...|0.935951201|\n|     2|Ugh  Hormonal ugl...|57c5e2841a62b72e0...|0.731169878|\n|     7| user I ve had no...|57c5e2841a62b72e0...|0.699955654|\n|     7|Shouldnt of taken...|57c5e2841a62b72e0...|0.535639117|\n|     2|Ambien kicking in...|57c5e2841a62b72e0...|0.845351844|\n|     2|One day I will le...|57c5e2841a62b72e0...|0.727433942|\n|     2|RT  user  My ener...|57c5e2841a62b72e0...|0.724629715|\n|     2| user  user  user...|57c5e2841a62b72e0...|0.955119024|\n|     2|RT  user  My ener...|57c5e2841a62b72e0...|0.724629715|\n|     2|My energy level i...|57c5e2841a62b72e0...|0.763694627|\n|     2|How do u tell you...|57c5e2841a62b72e0...|0.783769564|\n|     2| user  user Thoug...|57c5e2841a62b72e0...|0.978530144|\n|     2|tell me why ambie...|57c5e2841a62b72e0...| 0.95659671|\n|     2|RT  user  Gonna t...|57c5e2841a62b72e0...|0.742688439|\n|     2|Me on the phone w...|57c5e2841a62b72e0...|0.767213166|\n|     2|RT  user  I ve ta...|57c5e2841a62b72e0...|0.810032023|\n+------+--------------------+--------------------+-----------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 30, 2016 7:46:18 PM",
+      "dateStarted": "Aug 30, 2016 7:47:45 PM",
+      "dateFinished": "Aug 30, 2016 7:47:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.PipelineModel\nval yolo \u003d PipelineModel.load(\"/home/syed/AeClassifier.model\")",
+      "dateUpdated": "Aug 30, 2016 7:46:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472586318679_749776027",
+      "id": "20160830-194518_419716106",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.ml.PipelineModel\nyolo: org.apache.spark.ml.PipelineModel \u003d pipeline_e6ec2d152454\n"
+      },
+      "dateCreated": "Aug 30, 2016 7:45:18 PM",
+      "dateStarted": "Aug 30, 2016 7:46:45 PM",
+      "dateFinished": "Aug 30, 2016 7:46:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val class_s \u003d udf((prediction: Double) \u003d\u003e {\n  if (prediction \u003d\u003d 0.0D) 2.0\n  else if (prediction \u003d\u003d 1.0D) 7.0\n  else 1.0\n})\n\nval ind \u003d udf((ue: org.apache.spark.mllib.linalg.Vector) \u003d\u003e {\n    ue.toArray.max\n})",
+      "dateUpdated": "Aug 30, 2016 7:51:21 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472586579570_357902433",
+      "id": "20160830-194939_81463919",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "class_s: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,DoubleType,List(DoubleType))\nind: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,DoubleType,List(org.apache.spark.mllib.linalg.VectorUDT@f71b0bce))\n"
+      },
+      "dateCreated": "Aug 30, 2016 7:49:39 PM",
+      "dateStarted": "Aug 30, 2016 7:51:21 PM",
+      "dateFinished": "Aug 30, 2016 7:51:22 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val ae2 \u003d yolo.transform(ae).select(\"t\", \"old_tg\", \"old_ind\", \"_id\", \"prediction\", \"probability\").\nwithColumn(\"prediction\", class_s($\"prediction\")).withColumn(\"ind\", ind($\"probability\")).drop(\"probability\")",
+      "dateUpdated": "Aug 30, 2016 7:51:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472586405184_-439944193",
+      "id": "20160830-194645_1079474194",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "ae2: org.apache.spark.sql.DataFrame \u003d [t: string, old_tg: int, old_ind: double, _id: string, prediction: double, ind: double]\n"
+      },
+      "dateCreated": "Aug 30, 2016 7:46:45 PM",
+      "dateStarted": "Aug 30, 2016 7:51:46 PM",
+      "dateFinished": "Aug 30, 2016 7:51:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "ae2.show()",
+      "dateUpdated": "Aug 30, 2016 7:51:48 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472586446481_764765910",
+      "id": "20160830-194726_947537514",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+------+-----------+--------------------+----------+------------------+\n|                   t|old_tg|    old_ind|                 _id|prediction|               ind|\n+--------------------+------+-----------+--------------------+----------+------------------+\n|I took a melatoni...|     2|0.794518188|57c5e2841a62b72e0...|       2.0| 0.689453236604287|\n|I took 1 ambien 2...|     2|0.995876419|57c5e2841a62b72e0...|       2.0|0.7741822595303475|\n|I was so tired la...|     2|0.903504721|57c5e2841a62b72e0...|       2.0|0.7042496692101121|\n|when u have biolo...|     2|0.714331536|57c5e2841a62b72e0...|       7.0|0.7490482423108377|\n|Fuuuuccckkkk  Too...|     2|0.935951201|57c5e2841a62b72e0...|       2.0|0.7030289743368482|\n|Ugh  Hormonal ugl...|     2|0.731169878|57c5e2841a62b72e0...|       2.0|0.7627464827997277|\n| user I ve had no...|     7|0.699955654|57c5e2841a62b72e0...|       7.0|0.6161520001650233|\n|Shouldnt of taken...|     7|0.535639117|57c5e2841a62b72e0...|       2.0|0.5090574539171034|\n|Ambien kicking in...|     2|0.845351844|57c5e2841a62b72e0...|       2.0|0.6463703250920873|\n|One day I will le...|     2|0.727433942|57c5e2841a62b72e0...|       7.0|0.5299781660078319|\n|RT  user  My ener...|     2|0.724629715|57c5e2841a62b72e0...|       7.0|0.7777162801767907|\n| user  user  user...|     2|0.955119024|57c5e2841a62b72e0...|       7.0|0.8541135366662069|\n|RT  user  My ener...|     2|0.724629715|57c5e2841a62b72e0...|       7.0|0.7777162801767907|\n|My energy level i...|     2|0.763694627|57c5e2841a62b72e0...|       7.0|0.5882290365544744|\n|How do u tell you...|     2|0.783769564|57c5e2841a62b72e0...|       2.0|0.7021723059840381|\n| user  user Thoug...|     2|0.978530144|57c5e2841a62b72e0...|       7.0|0.6434594214027282|\n|tell me why ambie...|     2| 0.95659671|57c5e2841a62b72e0...|       2.0|0.6626347604023515|\n|RT  user  Gonna t...|     2|0.742688439|57c5e2841a62b72e0...|       7.0|0.5000315014826473|\n|Me on the phone w...|     2|0.767213166|57c5e2841a62b72e0...|       2.0|0.7090546496711995|\n|RT  user  I ve ta...|     2|0.810032023|57c5e2841a62b72e0...|       2.0|0.8234451160144629|\n+--------------------+------+-----------+--------------------+----------+------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 30, 2016 7:47:26 PM",
+      "dateStarted": "Aug 30, 2016 7:51:48 PM",
+      "dateFinished": "Aug 30, 2016 7:51:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val saveConfig \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.6.146.93\"), Database -\u003e \"twitter\", Collection -\u003e\"ae_test2\", \nSamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\n\nae2.saveToMongodb(saveConfig.build)",
+      "dateUpdated": "Aug 30, 2016 7:52:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472586494597_-1690054666",
+      "id": "20160830-194814_1134021361",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "saveConfig: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e ae_test2, host -\u003e List(52.6.146.93)))\n"
+      },
+      "dateCreated": "Aug 30, 2016 7:48:14 PM",
+      "dateStarted": "Aug 30, 2016 7:52:56 PM",
+      "dateFinished": "Aug 30, 2016 7:52:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472586776480_-1061083509",
+      "id": "20160830-195256_1087156470",
+      "dateCreated": "Aug 30, 2016 7:52:56 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "testing ae",
+  "id": "2BVNEX1TR",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

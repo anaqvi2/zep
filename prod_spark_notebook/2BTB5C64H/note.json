@@ -1,0 +1,381 @@
+{
+  "paragraphs": [
+    {
+      "text": "%pyspark\n\nsc.parallelize([\u0027hello\u0027])",
+      "dateUpdated": "Aug 4, 2016 7:10:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470337614706_1293567179",
+      "id": "20160804-190654_1752850568",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 4, 2016 7:06:54 PM",
+      "dateStarted": "Aug 4, 2016 7:10:13 PM",
+      "dateFinished": "Aug 4, 2016 7:10:13 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark import SparkConf, SparkContext\nfrom pyspark.sql import SQLContext\nimport pyspark.sql.functions as func\n\n# SQL functions will be used later...\nimport pyspark.sql.functions as func",
+      "dateUpdated": "Aug 29, 2016 5:59:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470337737711_-777015128",
+      "id": "20160804-190857_1104840276",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 4, 2016 7:08:57 PM",
+      "dateStarted": "Aug 29, 2016 5:59:54 PM",
+      "dateFinished": "Aug 29, 2016 5:59:54 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# Load the DataFrame by linking it to a Cassandra table\ndf \u003d sqlContext \\\n    .read \\\n    .format(\"org.apache.spark.sql.cassandra\") \\\n    .options(table\u003d\"reddit\", keyspace\u003d\"processed_forum\") \\\n    .load()",
+      "dateUpdated": "Sep 28, 2016 2:57:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472493594105_775544991",
+      "id": "20160829-175954_88752871",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 29, 2016 5:59:54 PM",
+      "dateStarted": "Sep 28, 2016 2:57:51 PM",
+      "dateFinished": "Sep 28, 2016 2:57:52 PM",
+      "status": "ABORT",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nprint(df.count())\n\ndf.select(\u0027cr\u0027, \u0027title\u0027, \u0027description\u0027, \u0027t\u0027).show()",
+      "dateUpdated": "Aug 30, 2016 5:47:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472493622922_1222269112",
+      "id": "20160829-180022_437801189",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "16186319\nTraceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-6531856412842492969.py\", line 239, in \u003cmodule\u003e\n    eval(compiledCode)\n  File \"\u003cstring\u003e\", line 2, in \u003cmodule\u003e\n  File \"/opt/spark/python/pyspark/sql/dataframe.py\", line 862, in select\n    jdf \u003d self._jdf.select(self._jcols(*cols))\n  File \"/opt/spark/python/lib/py4j-0.9-src.zip/py4j/java_gateway.py\", line 813, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/opt/spark/python/pyspark/sql/utils.py\", line 51, in deco\n    raise AnalysisException(s.split(\u0027: \u0027, 1)[1], stackTrace)\nAnalysisException: u\"cannot resolve \u0027description\u0027 given input columns: [retrieved_on, type, dom, uname, flink, id, t, ds, bname, num_comments, tlink, fname, ups, score, parent_id, title, tid, url, downs, tstarter, yrmonthday, cr];\"\n"
+      },
+      "dateCreated": "Aug 29, 2016 6:00:22 PM",
+      "dateStarted": "Aug 30, 2016 5:47:50 PM",
+      "dateFinished": "Aug 30, 2016 5:49:40 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom pyspark.ml import Pipeline\nfrom pyspark.ml.feature import Tokenizer, HashingTF\nfrom pyspark.mllib.linalg import Vector\nfrom pyspark.mllib.regression import LabeledPoint\nfrom pyspark.mllib.classification import NaiveBayes, NaiveBayesModel\nfrom pyspark.mllib.util import MLUtils\n",
+      "dateUpdated": "Aug 29, 2016 8:26:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472493672658_-255289258",
+      "id": "20160829-180112_1585346884",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 29, 2016 6:01:12 PM",
+      "dateStarted": "Aug 29, 2016 8:26:39 PM",
+      "dateFinished": "Aug 29, 2016 8:26:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\nnc -vz 54.235.50.39 9042 ",
+      "dateUpdated": "Sep 2, 2016 8:40:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sh"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472502315035_-1194142878",
+      "id": "20160829-202515_1051710269",
+      "result": {
+        "code": "INCOMPLETE",
+        "type": "TEXT",
+        "msg": "Paragraph received a SIGTERM.\nExitValue: 143"
+      },
+      "dateCreated": "Aug 29, 2016 8:25:15 PM",
+      "dateStarted": "Sep 2, 2016 8:40:42 PM",
+      "dateFinished": "Sep 2, 2016 8:40:43 PM",
+      "status": "ABORT",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val data \u003d sc.textFile(\"s3n://AKIAJELHMXFIXN3CIKSA:ZCvPtm/U3XeMIMMy4JaKC+Edu2Pxe9bNgDpe5hn9@/datafiles/0d/68/0d685c5af22f410da2a0ed04c4ae4e017\")\ndata.take(5)",
+      "dateUpdated": "Sep 2, 2016 9:18:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472502315026_-1190680138",
+      "id": "20160829-202515_2100443420",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "data: org.apache.spark.rdd.RDD[String] \u003d s3n://AKIAJELHMXFIXN3CIKSA:ZCvPtm/U3XeMIMMy4JaKC+Edu2Pxe9bNgDpe5hn9@/datafiles/0d/68/0d685c5af22f410da2a0ed04c4ae4e017 MapPartitionsRDD[17] at textFile at \u003cconsole\u003e:29\njava.io.IOException: No FileSystem for scheme: s3n\n\tat org.apache.hadoop.fs.FileSystem.getFileSystemClass(FileSystem.java:2584)\n\tat org.apache.hadoop.fs.FileSystem.createFileSystem(FileSystem.java:2591)\n\tat org.apache.hadoop.fs.FileSystem.access$200(FileSystem.java:91)\n\tat org.apache.hadoop.fs.FileSystem$Cache.getInternal(FileSystem.java:2630)\n\tat org.apache.hadoop.fs.FileSystem$Cache.get(FileSystem.java:2612)\n\tat org.apache.hadoop.fs.FileSystem.get(FileSystem.java:370)\n\tat org.apache.hadoop.fs.Path.getFileSystem(Path.java:296)\n\tat org.apache.hadoop.mapred.FileInputFormat.singleThreadedListStatus(FileInputFormat.java:256)\n\tat org.apache.hadoop.mapred.FileInputFormat.listStatus(FileInputFormat.java:228)\n\tat org.apache.hadoop.mapred.FileInputFormat.getSplits(FileInputFormat.java:313)\n\tat org.apache.spark.rdd.HadoopRDD.getPartitions(HadoopRDD.scala:199)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)\n\tat scala.Option.getOrElse(Option.scala:120)\n\tat org.apache.spark.rdd.RDD.partitions(RDD.scala:237)\n\tat org.apache.spark.rdd.MapPartitionsRDD.getPartitions(MapPartitionsRDD.scala:35)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)\n\tat scala.Option.getOrElse(Option.scala:120)\n\tat org.apache.spark.rdd.RDD.partitions(RDD.scala:237)\n\tat org.apache.spark.rdd.RDD$$anonfun$take$1.apply(RDD.scala:1307)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:316)\n\tat org.apache.spark.rdd.RDD.take(RDD.scala:1302)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:32)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:37)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:39)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:41)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:43)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:45)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:47)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:49)\n\tat \u003cinit\u003e(\u003cconsole\u003e:51)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:55)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Aug 29, 2016 8:25:15 PM",
+      "dateStarted": "Sep 2, 2016 8:49:43 PM",
+      "dateFinished": "Sep 2, 2016 8:49:43 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val data \u003d sc.textFile(\"s3n://production-girder.s3-website-us-east-1.amazonaws.com/datafiles/0d/68/0d685c5af22f410da2a0ed04c4ae4e017\")\ndata.take(5)",
+      "dateUpdated": "Sep 2, 2016 9:17:26 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472848471683_1537476287",
+      "id": "20160902-203431_1680452391",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "data: org.apache.spark.rdd.RDD[String] \u003d s3n://AKIAJELHMXFIXN3CIKSA:ZCvPtm/U3XeMIMMy4JaKC+Edu2Pxe9bNgDpe5hn9@/datafiles/0d/68/0d685c5af22f410da2a0ed04c4ae4e017 MapPartitionsRDD[19] at textFile at \u003cconsole\u003e:29\njava.io.IOException: No FileSystem for scheme: s3n\n\tat org.apache.hadoop.fs.FileSystem.getFileSystemClass(FileSystem.java:2584)\n\tat org.apache.hadoop.fs.FileSystem.createFileSystem(FileSystem.java:2591)\n\tat org.apache.hadoop.fs.FileSystem.access$200(FileSystem.java:91)\n\tat org.apache.hadoop.fs.FileSystem$Cache.getInternal(FileSystem.java:2630)\n\tat org.apache.hadoop.fs.FileSystem$Cache.get(FileSystem.java:2612)\n\tat org.apache.hadoop.fs.FileSystem.get(FileSystem.java:370)\n\tat org.apache.hadoop.fs.Path.getFileSystem(Path.java:296)\n\tat org.apache.hadoop.mapred.FileInputFormat.singleThreadedListStatus(FileInputFormat.java:256)\n\tat org.apache.hadoop.mapred.FileInputFormat.listStatus(FileInputFormat.java:228)\n\tat org.apache.hadoop.mapred.FileInputFormat.getSplits(FileInputFormat.java:313)\n\tat org.apache.spark.rdd.HadoopRDD.getPartitions(HadoopRDD.scala:199)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)\n\tat scala.Option.getOrElse(Option.scala:120)\n\tat org.apache.spark.rdd.RDD.partitions(RDD.scala:237)\n\tat org.apache.spark.rdd.MapPartitionsRDD.getPartitions(MapPartitionsRDD.scala:35)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)\n\tat scala.Option.getOrElse(Option.scala:120)\n\tat org.apache.spark.rdd.RDD.partitions(RDD.scala:237)\n\tat org.apache.spark.rdd.RDD$$anonfun$take$1.apply(RDD.scala:1307)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:316)\n\tat org.apache.spark.rdd.RDD.take(RDD.scala:1302)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:32)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:37)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:39)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:41)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:43)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:45)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:47)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:49)\n\tat \u003cinit\u003e(\u003cconsole\u003e:51)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:55)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Sep 2, 2016 8:34:31 PM",
+      "dateStarted": "Sep 2, 2016 8:49:49 PM",
+      "dateFinished": "Sep 2, 2016 8:49:50 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val data \u003d sc.textFile(\"s3n://production-girder/datafiles/0d/68/0d685c5af22f410da2a0ed04c4ae4e017\")\ndata.take(5)",
+      "dateUpdated": "Sep 2, 2016 9:32:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472851047831_-1181461588",
+      "id": "20160902-211727_1442312662",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "data: org.apache.spark.rdd.RDD[String] \u003d s3n://production-girder.s3-website-us-east-1.amazonaws.com/datafiles/0d/68/0d685c5af22f410da2a0ed04c4ae4e017 MapPartitionsRDD[21] at textFile at \u003cconsole\u003e:29\njava.io.IOException: No FileSystem for scheme: s3n\n\tat org.apache.hadoop.fs.FileSystem.getFileSystemClass(FileSystem.java:2584)\n\tat org.apache.hadoop.fs.FileSystem.createFileSystem(FileSystem.java:2591)\n\tat org.apache.hadoop.fs.FileSystem.access$200(FileSystem.java:91)\n\tat org.apache.hadoop.fs.FileSystem$Cache.getInternal(FileSystem.java:2630)\n\tat org.apache.hadoop.fs.FileSystem$Cache.get(FileSystem.java:2612)\n\tat org.apache.hadoop.fs.FileSystem.get(FileSystem.java:370)\n\tat org.apache.hadoop.fs.Path.getFileSystem(Path.java:296)\n\tat org.apache.hadoop.mapred.FileInputFormat.singleThreadedListStatus(FileInputFormat.java:256)\n\tat org.apache.hadoop.mapred.FileInputFormat.listStatus(FileInputFormat.java:228)\n\tat org.apache.hadoop.mapred.FileInputFormat.getSplits(FileInputFormat.java:313)\n\tat org.apache.spark.rdd.HadoopRDD.getPartitions(HadoopRDD.scala:199)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)\n\tat scala.Option.getOrElse(Option.scala:120)\n\tat org.apache.spark.rdd.RDD.partitions(RDD.scala:237)\n\tat org.apache.spark.rdd.MapPartitionsRDD.getPartitions(MapPartitionsRDD.scala:35)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)\n\tat org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)\n\tat scala.Option.getOrElse(Option.scala:120)\n\tat org.apache.spark.rdd.RDD.partitions(RDD.scala:237)\n\tat org.apache.spark.rdd.RDD$$anonfun$take$1.apply(RDD.scala:1307)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:316)\n\tat org.apache.spark.rdd.RDD.take(RDD.scala:1302)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:32)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:37)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:39)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:41)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:43)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:45)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:47)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:49)\n\tat \u003cinit\u003e(\u003cconsole\u003e:51)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:55)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Sep 2, 2016 9:17:27 PM",
+      "dateStarted": "Sep 2, 2016 9:17:50 PM",
+      "dateFinished": "Sep 2, 2016 9:17:50 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc",
+      "dateUpdated": "Aug 31, 2016 9:46:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472502314990_1825381814",
+      "id": "20160829-202514_1506347900",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res48: org.apache.spark.SparkContext \u003d org.apache.spark.SparkContext@439a0f72\n"
+      },
+      "dateCreated": "Aug 29, 2016 8:25:14 PM",
+      "dateStarted": "Aug 31, 2016 9:46:46 PM",
+      "dateFinished": "Aug 31, 2016 9:46:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472680006849_591156480",
+      "id": "20160831-214646_189491513",
+      "dateCreated": "Aug 31, 2016 9:46:46 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/julia/test",
+  "id": "2BTB5C64H",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

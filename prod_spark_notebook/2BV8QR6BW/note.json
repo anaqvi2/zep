@@ -1,0 +1,359 @@
+{
+  "paragraphs": [
+    {
+      "text": "import org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\nimport org.apache.spark.sql.types._",
+      "dateUpdated": "Oct 18, 2016 4:52:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474405590072_-1804423952",
+      "id": "20160920-210630_856128991",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\nimport org.apache.spark.sql.types._\n"
+      },
+      "dateCreated": "Sep 20, 2016 9:06:30 PM",
+      "dateStarted": "Oct 18, 2016 4:52:32 PM",
+      "dateFinished": "Oct 18, 2016 4:52:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// val forum  \u003d sc.cassandraTable(\"processed_forum\", \"reddit2\")\nval forum \u003d sqlContext.read.format(\"org.apache.spark.sql.cassandra\").options(Map( \"table\" -\u003e \"reddit\", \"keyspace\" -\u003e \"processed_forum\")).load()",
+      "dateUpdated": "Oct 19, 2016 4:27:14 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474405693969_-471548137",
+      "id": "20160920-210813_615714471",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "forum: org.apache.spark.sql.DataFrame \u003d [ds: string, ymds: int, id: string, acr: timestamp, ae: map\u003cstring,array\u003cint\u003e\u003e, ae__mws: map\u003cstring,array\u003cint\u003e\u003e, ae_v: string, bname: string, business_category: array\u003cdouble\u003e, business_category_synonyms: array\u003cdouble\u003e, business_category_v: string, cat: string, category: array\u003cdouble\u003e, category_synonyms: array\u003cdouble\u003e, category_v: string, cc: string, cr: timestamp, description: string, disease: array\u003cdouble\u003e, disease_synonyms: array\u003cdouble\u003e, disease_v: string, dom: string, downs: int, dup_of: string, flink: string, fname: string, gdr: string, gdr_v: string, gender: string, girder_item_id: string, ind: float, ind__mws: float, indic: map\u003cstring,array\u003cint\u003e\u003e, indic__mws: map\u003cstring,array\u003cint\u003e\u003e, indic_v: string, lang: string, loc: string, num_comments: ..."
+      },
+      "dateCreated": "Sep 20, 2016 9:08:13 PM",
+      "dateStarted": "Oct 19, 2016 4:27:16 AM",
+      "dateFinished": "Oct 19, 2016 4:27:52 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "forum.count()",
+      "dateUpdated": "Oct 19, 2016 4:27:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476809561470_-314531587",
+      "id": "20161018-165241_1219658665",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res4: Long \u003d 719099\n"
+      },
+      "dateCreated": "Oct 18, 2016 4:52:41 PM",
+      "dateStarted": "Oct 19, 2016 4:27:56 AM",
+      "dateFinished": "Oct 19, 2016 4:28:29 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var news_table2 \u003d news_table.drop(\"raw_t\")\nnews_table2.show()",
+      "dateUpdated": "Oct 6, 2016 4:59:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475771953260_1991795498",
+      "id": "20161006-163913_238920041",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "news_table2: org.apache.spark.sql.DataFrame \u003d [ds: string, ymds: int, rdt: timestamp, id: string, ae: map\u003cstring,array\u003cint\u003e\u003e, ae_v: string, alert_category_list: array\u003cstring\u003e, alert_category_list_ids: array\u003cint\u003e, authors: array\u003cstring\u003e, business_category: array\u003cdouble\u003e, business_category_synonyms: array\u003cdouble\u003e, business_category_v: string, category: array\u003cdouble\u003e, category_synonyms: array\u003cdouble\u003e, category_v: string, cc: string, classification: string, classification_id: int, cr: timestamp, description: string, disease: array\u003cdouble\u003e, disease__hm: array\u003cdouble\u003e, disease_synonyms: array\u003cdouble\u003e, disease_v: string, dom: string, dup_count: int, dup_of: string, feed: string, feed_id: int, geo_geoname_id: int, girder_item_id: string, hm_metas: array\u003cstruct\u003calert_meta_id:string,case_count_da...org.apache.spark.SparkException: Job 2 cancelled part of cancelled job group zeppelin-20161006-163913_238920041\n\tat org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1431)\n\tat org.apache.spark.scheduler.DAGScheduler.handleJobCancellation(DAGScheduler.scala:1370)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply$mcVI$sp(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:783)\n\tat scala.collection.mutable.HashSet.foreach(HashSet.scala:79)\n\tat org.apache.spark.scheduler.DAGScheduler.handleJobGroupCancelled(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1619)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1599)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1588)\n\tat org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)\n\tat org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:620)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1832)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1845)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1858)\n\tat org.apache.spark.sql.execution.SparkPlan.executeTake(SparkPlan.scala:212)\n\tat org.apache.spark.sql.execution.Limit.executeCollect(basicOperators.scala:165)\n\tat org.apache.spark.sql.execution.SparkPlan.executeCollectPublic(SparkPlan.scala:174)\n\tat org.apache.spark.sql.DataFrame$$anonfun$org$apache$spark$sql$DataFrame$$execute$1$1.apply(DataFrame.scala:1499)\n\tat org.apache.spark.sql.DataFrame$$anonfun$org$apache$spark$sql$DataFrame$$execute$1$1.apply(DataFrame.scala:1499)\n\tat org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:56)\n\tat org.apache.spark.sql.DataFrame.withNewExecutionId(DataFrame.scala:2086)\n\tat org.apache.spark.sql.DataFrame.org$apache$spark$sql$DataFrame$$execute$1(DataFrame.scala:1498)\n\tat org.apache.spark.sql.DataFrame.org$apache$spark$sql$DataFrame$$collect(DataFrame.scala:1505)\n\tat org.apache.spark.sql.DataFrame$$anonfun$head$1.apply(DataFrame.scala:1375)\n\tat org.apache.spark.sql.DataFrame$$anonfun$head$1.apply(DataFrame.scala:1374)\n\tat org.apache.spark.sql.DataFrame.withCallback(DataFrame.scala:2099)\n\tat org.apache.spark.sql.DataFrame.head(DataFrame.scala:1374)\n\tat org.apache.spark.sql.DataFrame.take(DataFrame.scala:1456)\n\tat org.apache.spark.sql.DataFrame.showString(DataFrame.scala:170)\n\tat org.apache.spark.sql.DataFrame.show(DataFrame.scala:350)\n\tat org.apache.spark.sql.DataFrame.show(DataFrame.scala:311)\n\tat org.apache.spark.sql.DataFrame.show(DataFrame.scala:319)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:47)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:52)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:54)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:56)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:58)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:60)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:62)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:64)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:66)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:68)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:70)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:72)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:74)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:76)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:78)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:80)\n\tat \u003cinit\u003e(\u003cconsole\u003e:82)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:86)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Oct 6, 2016 4:39:13 PM",
+      "dateStarted": "Oct 6, 2016 4:59:38 PM",
+      "dateFinished": "Oct 6, 2016 5:33:38 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "news_table2.write\n  .format(\"org.apache.spark.sql.cassandra\")\n  .mode(\"append\")\n  .options(Map( \"table\" -\u003e \"news\", \"keyspace\" -\u003e \"processed_news\"))\n  .save()",
+      "dateUpdated": "Oct 6, 2016 5:00:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475771696216_-2144406776",
+      "id": "20161006-163456_259925392",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "org.apache.spark.SparkException: Job 1 cancelled part of cancelled job group zeppelin-20161006-163456_259925392\n\tat org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1431)\n\tat org.apache.spark.scheduler.DAGScheduler.handleJobCancellation(DAGScheduler.scala:1370)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply$mcVI$sp(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:783)\n\tat scala.collection.mutable.HashSet.foreach(HashSet.scala:79)\n\tat org.apache.spark.scheduler.DAGScheduler.handleJobGroupCancelled(DAGScheduler.scala:783)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1619)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1599)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1588)\n\tat org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)\n\tat org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:620)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1832)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1845)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1922)\n\tat com.datastax.spark.connector.RDDFunctions.saveToCassandra(RDDFunctions.scala:37)\n\tat org.apache.spark.sql.cassandra.CassandraSourceRelation.insert(CassandraSourceRelation.scala:67)\n\tat org.apache.spark.sql.cassandra.DefaultSource.createRelation(DefaultSource.scala:85)\n\tat org.apache.spark.sql.execution.datasources.ResolvedDataSource$.apply(ResolvedDataSource.scala:222)\n\tat org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:148)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:49)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:54)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:56)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:58)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:60)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:62)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:64)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:66)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:68)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:70)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:72)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:74)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:76)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:78)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:80)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:82)\n\tat \u003cinit\u003e(\u003cconsole\u003e:84)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:88)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Oct 6, 2016 4:34:56 PM",
+      "dateStarted": "Oct 6, 2016 4:39:49 PM",
+      "dateFinished": "Oct 6, 2016 4:59:10 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// news_table\n// .write.json(\"/data/news_table\")",
+      "dateUpdated": "Oct 6, 2016 4:57:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474405969678_1576296235",
+      "id": "20160920-211249_796135294",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 20, 2016 9:12:49 PM",
+      "dateStarted": "Sep 21, 2016 4:54:56 AM",
+      "dateFinished": "Sep 21, 2016 4:55:07 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\n# zip -r /data/news_table.zip /data/news_table\nmkdir /data/load\nmv /data/news_table.zip /data/load/news_table.zip\ncd /data\ndu -sh *",
+      "dateUpdated": "Sep 21, 2016 5:35:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sh"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474435358741_-56427318",
+      "id": "20160921-052238_411855951",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "161M\tload\n584M\tnews_table\n309M\tspark\n266M\tspark-1.6.2-bin-hadoop2.6.tgz\n266M\tspark-1.6.2-bin-hadoop2.6.tgz.1\n266M\tspark-1.6.2-bin-hadoop2.6.tgz.2\n"
+      },
+      "dateCreated": "Sep 21, 2016 5:22:38 AM",
+      "dateStarted": "Sep 21, 2016 5:35:54 AM",
+      "dateFinished": "Sep 21, 2016 5:35:54 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\ngirder-cli --api-url https://int-girder.epidemi.co:8080/api/v1 --username admin --password Ep1girder883 57e21ad1e2abc771bc2ba70f /data/load",
+      "dateUpdated": "Sep 21, 2016 6:08:47 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sh"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474435625585_-788252019",
+      "id": "20160921-052705_1668148048",
+      "result": {
+        "code": "INCOMPLETE",
+        "type": "TEXT",
+        "msg": "Paragraph received a SIGTERM.\nExitValue: 143"
+      },
+      "dateCreated": "Sep 21, 2016 5:27:05 AM",
+      "dateStarted": "Sep 21, 2016 6:08:47 AM",
+      "dateFinished": "Sep 21, 2016 6:09:47 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\ngirder-cli --help",
+      "dateUpdated": "Sep 21, 2016 5:38:06 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474435697244_-979933592",
+      "id": "20160921-052817_483363285",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "usage: girder-cli [-h] [--reuse] [--blacklist BLACKLIST] [--dryrun]\n                  [--api-url API_URL] [--username USERNAME]\n                  [--password PASSWORD] [--api-key API_KEY] [--scheme SCHEME]\n                  [--host HOST] [--port PORT] [--api-root API_ROOT]\n                  [-c {upload,download,localsync}] [--parent-type PARENT_TYPE]\n                  [--leaf-folders-as-items]\n                  parent_id local_folder\n\nPerform common Girder CLI operations.\n\npositional arguments:\n  parent_id             id of Girder parent target\n  local_folder          path to local target folder\n\noptional arguments:\n  -h, --help            show this help message and exit\n  --reuse               use existing items of same name at same location or\n                        create a new one\n  --blacklist BLACKLIST\n                        comma separated list of filenames to ignore\n  --dryrun              will not write anything to Girder, only report on what\n                        would happen\n  --api-url API_URL     full URL to the RESTful API of a Girder server\n  --username USERNAME\n  --password PASSWORD\n  --api-key API_KEY\n  --scheme SCHEME\n  --host HOST\n  --port PORT\n  --api-root API_ROOT   relative path to the Girder REST API\n  -c {upload,download,localsync}\n                        command to run\n  --parent-type PARENT_TYPE\n                        type of Girder parent target, one of (collection,\n                        folder, user)\n  --leaf-folders-as-items\n                        upload all files in leaf foldersto a single Item named\n                        after the folder\n"
+      },
+      "dateCreated": "Sep 21, 2016 5:28:17 AM",
+      "dateStarted": "Sep 21, 2016 5:38:06 AM",
+      "dateFinished": "Sep 21, 2016 5:38:06 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// val twitterGnip \u003d sqlContext.jsonFile(\"/opt/pipe2spark/processing/processed_social___twitter/twitter_gnip/\")\n// .filter(\"id is not null\")\n// val twitterGnip_cols \u003d twitterGnip.columns\n\n// twitterGnip.printSchema()\n\n// .write.json(\"/reddisDS2\")",
+      "dateUpdated": "Sep 20, 2016 9:06:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474405545533_1303901115",
+      "id": "20160920-210545_430996396",
+      "dateCreated": "Sep 20, 2016 9:05:45 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/julia/migrate_data",
+  "id": "2BV8QR6BW",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

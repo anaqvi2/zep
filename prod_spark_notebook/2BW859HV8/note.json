@@ -1,0 +1,530 @@
+{
+  "paragraphs": [
+    {
+      "text": "val y \u003d sc.textFile(\"/home/syed/challenge_R.csv\")",
+      "dateUpdated": "Aug 28, 2016 3:33:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472354211475_-743957383",
+      "id": "20160828-031651_464918499",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "y: org.apache.spark.rdd.RDD[String] \u003d /home/syed/challenge_R.csv MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:29\n"
+      },
+      "dateCreated": "Aug 28, 2016 3:16:51 AM",
+      "dateStarted": "Aug 28, 2016 3:32:53 AM",
+      "dateFinished": "Aug 28, 2016 3:33:13 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "y.saveAsTextFile(\"alluxio://localhost:19999/out_1\")",
+      "dateUpdated": "Sep 23, 2016 5:16:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472354258780_-58442112",
+      "id": "20160828-031738_1814711076",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "java.io.IOException: No FileSystem for scheme: alluxio\n\tat org.apache.hadoop.fs.FileSystem.getFileSystemClass(FileSystem.java:2584)\n\tat org.apache.hadoop.fs.FileSystem.createFileSystem(FileSystem.java:2591)\n\tat org.apache.hadoop.fs.FileSystem.access$200(FileSystem.java:91)\n\tat org.apache.hadoop.fs.FileSystem$Cache.getInternal(FileSystem.java:2630)\n\tat org.apache.hadoop.fs.FileSystem$Cache.get(FileSystem.java:2612)\n\tat org.apache.hadoop.fs.FileSystem.get(FileSystem.java:370)\n\tat org.apache.hadoop.fs.Path.getFileSystem(Path.java:296)\n\tat org.apache.spark.SparkHadoopWriter$.createPathFromString(SparkHadoopWriter.scala:170)\n\tat org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$4.apply$mcV$sp(PairRDDFunctions.scala:1059)\n\tat org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$4.apply(PairRDDFunctions.scala:1026)\n\tat org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$4.apply(PairRDDFunctions.scala:1026)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:316)\n\tat org.apache.spark.rdd.PairRDDFunctions.saveAsHadoopFile(PairRDDFunctions.scala:1026)\n\tat org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$1.apply$mcV$sp(PairRDDFunctions.scala:952)\n\tat org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$1.apply(PairRDDFunctions.scala:952)\n\tat org.apache.spark.rdd.PairRDDFunctions$$anonfun$saveAsHadoopFile$1.apply(PairRDDFunctions.scala:952)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:316)\n\tat org.apache.spark.rdd.PairRDDFunctions.saveAsHadoopFile(PairRDDFunctions.scala:951)\n\tat org.apache.spark.rdd.RDD$$anonfun$saveAsTextFile$1.apply$mcV$sp(RDD.scala:1457)\n\tat org.apache.spark.rdd.RDD$$anonfun$saveAsTextFile$1.apply(RDD.scala:1436)\n\tat org.apache.spark.rdd.RDD$$anonfun$saveAsTextFile$1.apply(RDD.scala:1436)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:316)\n\tat org.apache.spark.rdd.RDD.saveAsTextFile(RDD.scala:1436)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:32)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:37)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:39)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:41)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:43)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:45)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:47)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:49)\n\tat \u003cinit\u003e(\u003cconsole\u003e:51)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:55)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Aug 28, 2016 3:17:38 AM",
+      "dateStarted": "Aug 28, 2016 3:33:21 AM",
+      "dateFinished": "Aug 28, 2016 3:33:22 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sqlContext.jsonFile(\"/opt/pipe2spark/to_process/processed_forum___reddit\").show()",
+      "dateUpdated": "Sep 23, 2016 5:16:38 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472354383006_-96212090",
+      "id": "20160828-031943_1339012877",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\n+------+-------------------+----------+-----+---------+--------------------+----------------+--------------------+-------+----------+-------------------+-----+--------------------+----------+-----+--------------------+--------+------+-----------------+---+--------------------+----------+\n| bname|                 cr|       dom|downs|       ds|               flink|           fname|      girder_item_id|     id| parent_id|                rdt|score|                   t|       tid|title|               tlink|tstarter|  type|            uname|ups|                 url|      ymds|\n+------+-------------------+----------+-----+---------+--------------------+----------------+--------------------+-------+----------+-------------------+-----+--------------------+----------+-----+--------------------+--------+------+-----------------+---+--------------------+----------+\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|             tf2|57d74356e2abc7514...|d4up6ho|t1_d4up5j3|2016-08-13T06:33:03|    1|           *snorts* |t1_d4up5j3| null|https://www.reddi...|   false|reddit|    DatDrummerGuy|  1|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|            guns|57d74356e2abc7514...|d4up6hp|t1_d4ufu2e|2016-08-13T06:33:03|    5| Not in the Midwe...|t1_d4ufu2e| null|https://www.reddi...|   false|reddit|   3inthebrowning|  5|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|         science|57d74356e2abc7514...|d4up6hq| t3_4qomst|2016-08-13T06:33:03|    1| Very interesting...| t3_4qomst| null|https://www.reddi...|   false|reddit|           Heyutl|  1|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|     pathofexile|57d74356e2abc7514...|d4up6hr|t1_d4ulzv6|2016-08-13T06:33:03|    1| Whats bugged abo...|t1_d4ulzv6| null|https://www.reddi...|   false|reddit|             Emfx|  1|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|       AskReddit|57d74356e2abc7514...|d4up6hs|t1_d4up3ko|2016-08-13T06:33:03|    1| Aw man   ...    ...|t1_d4up3ko| null|https://www.reddi...|   false|reddit|   TheAwesomeMort|  1|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|           anime|57d74356e2abc7514...|d4up6ht| t3_4qot8g|2016-08-13T06:33:03|    1| Depends on wheth...| t3_4qot8g| null|https://www.reddi...|   false|reddit|            Jeroz|  1|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|      philosophy|57d74356e2abc7514...|d4up6hu|t1_d4ufdbi|2016-08-13T06:33:03|    2| no  but it means...|t1_d4ufdbi| null|https://www.reddi...|   false|reddit|    TheImmortalLS|  2|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|       smashbros|57d74356e2abc7514...|d4up6hv|t1_d4uk7fz|2016-08-13T06:33:03|    5| I dont think he ...|t1_d4uk7fz| null|https://www.reddi...|   false|reddit|      ESM_juddy96|  5|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|      offmychest|57d74356e2abc7514...|d4up6hw|t1_d4uoeq2|2016-08-13T06:33:03|    1| oh no  ! Dairy p...|t1_d4uoeq2| null|https://www.reddi...|   false|reddit|       extraspook|  1|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|    pcmasterrace|57d74356e2abc7514...|d4up6hx|t1_d4up1j5|2016-08-13T06:33:03|    2| Ditto  Bandwidth...|t1_d4up1j5| null|https://www.reddi...|   false|reddit|     Michaelscot8|  2|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|       worldnews|57d74356e2abc7514...|d4up6hy|t1_d4uoac2|2016-08-13T06:33:03|   14| 3 lone wolfs   n...|t1_d4uoac2| null|https://www.reddi...|   false|reddit|            twxxx| 14|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|       AskReddit|57d74356e2abc7514...|d4up6hz|t1_d4u4n6o|2016-08-13T06:33:03|    1|    Monsters n pink |t1_d4u4n6o| null|https://www.reddi...|   false|reddit|   inkandpaperguy|  1|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|      holdmybeer|57d74356e2abc7514...|d4up6i0|t1_d4qgnjc|2016-08-13T06:33:03|    1| i know   ...    ...|t1_d4qgnjc| null|https://www.reddi...|   false|reddit|    bitchslap2012|  1|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com| null|pushshift|https://www.reddi...|Whatcouldgowrong|57d74356e2abc7514...|d4up6i1| t3_4qn0v0|2016-08-13T06:33:03|    0| I think he ate T...| t3_4qn0v0| null|https://www.reddi...|   false|reddit|         RynoRama|  0|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|          canada|57d74356e2abc7514...|d4up6i2| t3_4qnl40|2016-08-13T06:33:03|    1| Clean cut  respe...| t3_4qnl40| null|https://www.reddi...|   false|reddit|          yaharon|  1|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|       AskReddit|57d74356e2abc7514...|d4up6i3|t1_d4unejw|2016-08-13T06:33:03|    1|           removed  |t1_d4unejw| null|https://www.reddi...|   false|reddit|        [deleted]|  1|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com| null|pushshift|https://www.reddi...|      ukpolitics|57d74356e2abc7514...|d4up6i4|t1_d4uoten|2016-08-13T06:33:03|    0|      Ha  losing .  |t1_d4uoten| null|https://www.reddi...|   false|reddit|   dublinclontarf|  0|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|      BigBrother|57d74356e2abc7514...|d4up6i5|t1_d4unxht|2016-08-13T06:33:03|   -2| There is absolut...|t1_d4unxht| null|https://www.reddi...|   false|reddit|DoesntGetYourJoke| -2|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|         walmart|57d74356e2abc7514...|d4up6i6| t3_4qnqwz|2016-08-13T06:33:03|   -5|           deleted  | t3_4qnqwz| null|https://www.reddi...|   false|reddit|        [deleted]| -5|https://www.reddi...|2016070100|\n|Reddit|2016-07-01T00:00:00|reddit.com|    0|pushshift|https://www.reddi...|     NewYorkMets|57d74356e2abc7514...|d4up6i7| t3_4qo1sr|2016-08-13T06:33:03|    1| Matz still had t...| t3_4qo1sr| null|https://www.reddi...|   false|reddit|         see_mohn|  1|https://www.reddi...|2016070100|\n+------+-------------------+----------+-----+---------+--------------------+----------------+--------------------+-------+----------+-------------------+-----+--------------------+----------+-----+--------------------+--------+------+-----------------+---+--------------------+----------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 28, 2016 3:19:43 AM",
+      "dateStarted": "Sep 23, 2016 5:16:38 AM",
+      "dateFinished": "Sep 23, 2016 5:16:39 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"dev-one-mongo.epidemi.co\"), Database -\u003e \"EpiOne\", Collection -\u003e\"final_master\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\n\nval products \u003d sqlContext.fromMongoDB(readConfig)",
+      "dateUpdated": "Sep 25, 2016 12:51:25 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474607778644_228147331",
+      "id": "20160923-051618_132777864",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e EpiOne, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e final_master, host -\u003e List(dev-one-mongo.epidemi.co)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@a68ff2c\nproducts: org.apache.spark.sql.DataFrame \u003d [name: string, tag: string, _id: int, synonyms: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Sep 23, 2016 5:16:18 AM",
+      "dateStarted": "Sep 25, 2016 12:51:25 AM",
+      "dateFinished": "Sep 25, 2016 12:51:26 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "products.filter($\"_id\"\u003d\u003d\u003d2285).show(false)",
+      "dateUpdated": "Sep 25, 2016 12:51:58 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474764685396_1531540732",
+      "id": "20160925-005125_479105242",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+-------+-------+----+------------------------------------------------------------+\n|name   |tag    |_id |synonyms                                                    |\n+-------+-------+----+------------------------------------------------------------+\n|vicodin|product|2285|[vicodins, vicoden, vicadin, vidicin, vike, vikes, viciodin]|\n+-------+-------+----+------------------------------------------------------------+\n\n"
+      },
+      "dateCreated": "Sep 25, 2016 12:51:25 AM",
+      "dateStarted": "Sep 25, 2016 12:51:58 AM",
+      "dateFinished": "Sep 25, 2016 12:51:58 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "2+2",
+      "dateUpdated": "Oct 19, 2016 6:58:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474764693596_-1623400248",
+      "id": "20160925-005133_1461537982",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res0: Int \u003d 4\n"
+      },
+      "dateCreated": "Sep 25, 2016 12:51:33 AM",
+      "dateStarted": "Oct 19, 2016 6:58:08 PM",
+      "dateFinished": "Oct 19, 2016 6:58:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var df \u003d sqlContext\n  .read\n  .format(\"org.apache.spark.sql.cassandra\")\n  .options(Map( \"table\" -\u003e \"agg_table\", \"keyspace\" -\u003e \"epione\"))\n  .load()",
+      "dateUpdated": "Oct 21, 2016 8:42:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1477065029149_1882884077",
+      "id": "20161021-155029_1230529207",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df: org.apache.spark.sql.DataFrame \u003d [id: string, source: string, cr: timestamp, business_category: array\u003cdouble\u003e, description: string, ds: string, impact: int, place_list: array\u003cstruct\u003cgeo_geonameid:double,place_id:int,place_name:string,place_lat:float,place_lng:float\u003e\u003e, place_list__v0_0_1__201630: array\u003cstruct\u003cgeo_geonameid:double,place_id:int,place_name:string,place_lat:float,place_lng:float\u003e\u003e, place_list__v0_0_1__201642: array\u003cstruct\u003cgeo_geonameid:double,place_id:int,place_name:string,place_lat:float,place_lng:float\u003e\u003e, place_list__v0_0_1a__201642: array\u003cstruct\u003cgeo_geonameid:double,place_id:int,place_name:string,place_lat:float,place_lng:float\u003e\u003e, place_list_v: string, sentiment: int, title: string, topic: array\u003cdouble\u003e, url: string]\n"
+      },
+      "dateCreated": "Oct 21, 2016 3:50:29 PM",
+      "dateStarted": "Oct 21, 2016 8:42:33 PM",
+      "dateFinished": "Oct 21, 2016 8:42:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.show()",
+      "dateUpdated": "Oct 21, 2016 8:51:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1477065067642_1135726905",
+      "id": "20161021-155107_963170085",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+-------+--------------------+-------------------+--------------------+---------+------+--------------------+--------------------------+--------------------------+---------------------------+------------+---------+--------------------+------------------+--------------------+\n|                  id| source|                  cr|  business_category|         description|       ds|impact|          place_list|place_list__v0_0_1__201630|place_list__v0_0_1__201642|place_list__v0_0_1a__201642|place_list_v|sentiment|               title|             topic|                 url|\n+--------------------+-------+--------------------+-------------------+--------------------+---------+------+--------------------+--------------------------+--------------------------+---------------------------+------------+---------+--------------------+------------------+--------------------+\n|  728489507398426629|twitter|2016-05-06 07:40:...|                 []|My Experience Tak...|     gnip|  null|                  []|                        []|                        []|                         []|     v0.0.1a|        0|My Experience Tak...|          [3372.0]|                null|\n|  765993598273851392|twitter|2016-08-17 19:27:...|                 []|RT @13Si3rra: I a...|     gnip|    44|                  []|                        []|                        []|                         []|     v0.0.1a|       -1|RT @13Si3rra: I a...|          [5609.0]|https://www.twitt...|\n|             4314986|   news|2016-06-28 15:12:...|              [8.0]|Raytheon Co (NYSE...|HealthMap|     0|                  []|                        []|                        []|                         []|     v0.0.1a|        1|Raytheon Co (NYSE...|           [209.0]|http://pressteleg...|\n|             4369844|   news|2016-07-26 02:22:...|                 []|Europe reports 1s...|HealthMap|  null|[[285066.0,null,H...|                        []|                        []|                         []|     v0.0.1a|       -1|Europe reports 1s...|         [26696.0]|http://www.china....|\n|  729720508996931585|twitter|2016-05-09 17:11:...|                 []|E-Cigarette Poiso...|     gnip|  null|                  []|                        []|                        []|                         []|     v0.0.1a|        0|E-Cigarette Poiso...|         [23718.0]|                null|\n|             3945503|   news|2016-01-18 06:57:...|[158.0, 54.0, 84.0]|\u003ctable border\u003d\"0\"...|HealthMap|  null|                  []|                        []|                        []|                         []|     v0.0.1a|        1|В Донецкой област...|[20594.0, 25710.0]|http://donbass.ua...|\n|              50mk08| reddit|2016-09-01 10:38:...|                 []|                null|pushshift|    12|                  []|                        []|                        []|                         []|        null|       -1|Question: Does th...|         [25598.0]|/r/Minecraft/comm...|\n|1e61c8e65c93ae00e...|  forum|2016-05-18 00:21:...|                 []|Humira vs Remicad...| datasift|  null|                  []|                        []|                        []|                         []|     v0.0.1a|       -1| Humira vs Remicade?|  [2573.0, 3372.0]|http://www.crohns...|\n|  731293708096835584|twitter|2016-05-14 01:23:...|                 []|Emily Blunt https...|     gnip|  null|                  []|                        []|                        []|                         []|     v0.0.1a|       -1|Emily Blunt https...|          [5609.0]|                null|\n|  756201515199541248|twitter|2016-07-21 18:57:...|                 []|RT @Beejangles: W...|     gnip|  null|[[1149361.0,null,...|                        []|                        []|                         []|     v0.0.1a|       -1|RT @Beejangles: W...|          [5609.0]|                null|\n|  758317282569388032|twitter|2016-07-27 15:05:...|                 []|I got a blunt of ...|     gnip|  null|                  []|                        []|                        []|                         []|     v0.0.1a|       -1|I got a blunt of ...|          [5609.0]|                null|\n|  728416271918837760|twitter|2016-05-06 02:49:...|                 []|RT @gtfkris: i wi...|     gnip|  null|                  []|                        []|                        []|                         []|     v0.0.1a|       -1|RT @gtfkris: i wi...|          [5023.0]|                null|\n|  765713254001758210|twitter|2016-08-17 00:54:...|                 []|Happy borndate bu...|     gnip|    35|                  []|                        []|                        []|                         []|     v0.0.1a|        0|Happy borndate bu...|          [5620.0]|https://www.twitt...|\n|  737946291938983936|twitter|2016-06-01 09:58:...|                 []|I don\u0027t be wantin...|     gnip|  null|                  []|                        []|                        []|                         []|     v0.0.1a|       -1|I don\u0027t be wantin...|          [5609.0]|                null|\n|  740334367281696768|twitter|2016-06-08 00:07:...|                 []|Newest e cigs kan...|     gnip|  null|                  []|                        []|                        []|                         []|     v0.0.1a|        0|Newest e cigs kan...|          [5023.0]|                null|\n|  742199220376113152|twitter|2016-06-13 03:37:...|                 []|RT @Wario64: just...|     gnip|  null|                  []|                        []|                        []|                         []|     v0.0.1a|       -1|RT @Wario64: just...| [24841.0, 5609.0]|                null|\n|  759137812343992320|twitter|2016-07-29 21:25:...|                 []|\"Your family isn\u0027...|     gnip|  null|                  []|                        []|                        []|                         []|     v0.0.1a|       -1|\"Your family isn\u0027...|          [5609.0]|                null|\n|http://www.sunad....|   news|2016-05-24 22:35:...|                 []|After-School Prog...|   scrapy|  null|                  []|                        []|                        []|                         []|     v0.0.1a|        1|Club Notes 05-24-...|         [24841.0]|http://www.sunad....|\n|  721774514355499008|twitter|2016-04-17 18:57:...|                 []|RT @DriaaNicolee:...|     gnip|  null|                  []|                        []|                        []|                         []|     v0.0.1a|       -1|RT @DriaaNicolee:...|          [5609.0]|                null|\n|  782068628921384960|twitter|2016-10-01 04:04:...|                 []|RT @GeminiTBH: So...|     gnip|  null|                  []|                        []|                        []|                         []|     v0.0.1a|       -1|RT @GeminiTBH: So...|          [5609.0]|                null|\n+--------------------+-------+--------------------+-------------------+--------------------+---------+------+--------------------+--------------------------+--------------------------+---------------------------+------------+---------+--------------------+------------------+--------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Oct 21, 2016 3:51:07 PM",
+      "dateStarted": "Oct 21, 2016 8:51:19 PM",
+      "dateFinished": "Oct 21, 2016 8:51:19 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.count()",
+      "dateUpdated": "Oct 21, 2016 8:51:26 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1477065123096_-1215580893",
+      "id": "20161021-155203_590189248",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res134: Long \u003d 247287\n"
+      },
+      "dateCreated": "Oct 21, 2016 3:52:03 PM",
+      "dateStarted": "Oct 21, 2016 8:51:26 PM",
+      "dateFinished": "Oct 21, 2016 8:51:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.registerTempTable(\"EPIONE\")",
+      "dateUpdated": "Oct 21, 2016 8:55:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1477065105510_-2137286016",
+      "id": "20161021-155145_1083072599",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Oct 21, 2016 3:51:45 PM",
+      "dateStarted": "Oct 21, 2016 8:55:57 PM",
+      "dateFinished": "Oct 21, 2016 8:55:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sqlContext.sql(\"SELECT to_date(cr) as date,id,source,topic,sentiment, impact,description, url,title FROM EPIONE WHERE (array_contains(topic, \u002720065\u0027) OR array_contains(topic, \u002720201\u0027) OR array_contains(topic, \u002721449\u0027) OR array_contains(topic, \u002725888\u0027) OR array_contains(topic, \u002726617\u0027) OR array_contains(topic, \u002726618\u0027) OR array_contains(topic, \u002726619\u0027) OR array_contains(topic, \u002726624\u0027) OR array_contains(topic, \u002726627\u0027) OR array_contains(topic, \u002726634\u0027) OR array_contains(topic, \u002726640\u0027) OR array_contains(topic, \u002726642\u0027) OR array_contains(topic, \u002726662\u0027) OR array_contains(topic, \u002726669\u0027) OR array_contains(topic, \u002726670\u0027) OR array_contains(topic, \u002726671\u0027) OR array_contains(topic, \u002726672\u0027) OR array_contains(topic, \u002726673\u0027) OR array_contains(topic, \u002726674\u0027) OR array_contains(topic, \u002726689\u0027) OR array_contains(topic, \u002726891\u0027) OR array_contains(topic, \u002726894\u0027) OR array_contains(topic, \u002726899\u0027) OR array_contains(topic, \u002726905\u0027) OR array_contains(topic, \u002726906\u0027) OR array_contains(topic, \u002726914\u0027) OR array_contains(topic, \u002726918\u0027) OR array_contains(topic, \u002726921\u0027) OR array_contains(topic, \u002726926\u0027) OR array_contains(topic, \u002726929\u0027) OR array_contains(topic, \u002726930\u0027) OR array_contains(topic, \u002726937\u0027) OR array_contains(topic, \u002726939\u0027) OR array_contains(topic, \u002726942\u0027) OR array_contains(topic, \u002719324\u0027) OR array_contains(topic, \u002726696\u0027) OR array_contains(topic, \u002726790\u0027) OR array_contains(topic, \u002726829\u0027) OR array_contains(topic, \u002726867\u0027))\")",
+      "dateUpdated": "Oct 21, 2016 8:55:59 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476903488198_1410363602",
+      "id": "20161019-185808_1650475707",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res138: org.apache.spark.sql.DataFrame \u003d [date: date, id: string, source: string, topic: array\u003cdouble\u003e, sentiment: int, impact: int, description: string, url: string, title: string]\n"
+      },
+      "dateCreated": "Oct 19, 2016 6:58:08 PM",
+      "dateStarted": "Oct 21, 2016 8:55:59 PM",
+      "dateFinished": "Oct 21, 2016 8:56:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "res138.show()",
+      "dateUpdated": "Oct 21, 2016 8:56:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1477068488604_-446990876",
+      "id": "20161021-164808_287761180",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+----------+--------------------+-------+--------------------+---------+------+--------------------+--------------------+--------------------+\n|      date|                  id| source|               topic|sentiment|impact|         description|                 url|               title|\n+----------+--------------------+-------+--------------------+---------+------+--------------------+--------------------+--------------------+\n|2016-07-26|             4369844|   news|           [26696.0]|       -1|  null|Europe reports 1s...|http://www.china....|Europe reports 1s...|\n|2016-06-15|             4288152|   news|           [26696.0]|        0|     0|\u003ctable border\u003d\"0\"...|http://www.lr21.c...|Convocatoria para...|\n|2016-04-09|  718827573988319236|twitter|           [26696.0]|       -1|  null|RT @ViralBuzzes: ...|                null|RT @ViralBuzzes: ...|\n|2016-02-18|             4031671|   news|           [26696.0]|        1|     0|\u003ctable border\u003d\"0\"...|http://www.parana...|Aedes amea\u0026ccedil...|\n|2016-09-02|              50t1hs| reddit|           [26696.0]|        0|     5|                null|/r/Health/comment...|Florida finds Zik...|\n|2016-08-11|  763736958371700736|twitter|           [26696.0]|        1|    24|How a Florida bil...|https://www.twitt...|How a Florida bil...|\n|2016-08-26|http://www.leader...|   news|           [26867.0]|       -1|     1|Matthews and Pepp...|http://www.leader...|Union: Matthews, ...|\n|2016-04-29|             4191731|   news|           [26696.0]|        1|  null|\u003ctable border\u003d\"0\"...|http://g1.globo.c...|Campos, RJ, confi...|\n|2016-02-08|  696636395801210880|twitter|           [26619.0]|        0|  null|Sinovac Biotech A...|                null|Sinovac Biotech A...|\n|2016-02-08|  696718184922030080|twitter|           [26696.0]|        1|  null|RT @CDCgov: There...|                null|RT @CDCgov: There...|\n|2016-05-20|             4234800|   news|   [26696.0, 2246.0]|        1|  null|Zika virus found ...|http://home.bt.co...|Zika virus found ...|\n|2016-04-11|             4151683|   news|           [26696.0]|        1|     0|\u003ctable border\u003d\"0\"...|http://www.defato...|FAM\u0026Iacute;LIA E ...|\n|2016-01-06|             3916017|   news|  [26696.0, 25107.0]|       -1|  null|\u003ctable border\u003d\"0\"...|http://www.elespe...|Los riesgos de la...|\n|2016-09-01|              50oysj| reddit|           [26696.0]|       -1|     1|                null|/r/ImABlue/commen...|Zika outbreak: It...|\n|2016-06-17|             4294276|   news|           [26696.0]|       -1|     0|West Nile turns u...|http://www.naviga...|West Nile turns u...|\n|2016-01-19|  689435548058923009|twitter|           [26696.0]|       -1|  null|Brazil Government...|                null|Brazil Government...|\n|2016-05-07|             4208474|   news|[26696.0, 22752.0...|       -1|  null|Community efforts...|http://www.hattie...|Community efforts...|\n|2016-01-28|             3974943|   news|           [26696.0]|        0|  null|Jornada Nacional ...|http://www.sespas...|Jornada Nacional ...|\n|2016-03-10|  707728189779537920|twitter|           [26696.0]|       -1|  null|Now on IPW: Zika ...|                null|Now on IPW: Zika ...|\n|2016-02-13|  698457183550251008|twitter|           [26696.0]|        1|  null|WHO sees Zika lin...|                null|WHO sees Zika lin...|\n+----------+--------------------+-------+--------------------+---------+------+--------------------+--------------------+--------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Oct 21, 2016 4:48:08 PM",
+      "dateStarted": "Oct 21, 2016 8:56:03 PM",
+      "dateFinished": "Oct 21, 2016 8:56:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val df2 \u003d sqlContext.sql(\"SELECT                       to_date(cr) as date,                       id,                       source,                       topic,                       sentiment, impact,                       description,                       url,                       title                       FROM EPIONE                       WHERE (array_contains(topic, \u00271012\u0027))                       AND cr \u003e cast(\u00272015-09-15T04:00:00.000Z\u0027 as date) AND cr \u003c\u003d cast(\u00272016-09-22T04:00:00.000Z\u0027 as date)                       ORDER BY to_date(cr) DESC                       LIMIT 10\")",
+      "dateUpdated": "Oct 21, 2016 8:56:06 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1477068864384_-1230955893",
+      "id": "20161021-165424_307153287",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df2: org.apache.spark.sql.DataFrame \u003d [date: date, id: string, source: string, topic: array\u003cdouble\u003e, sentiment: int, impact: int, description: string, url: string, title: string]\n"
+      },
+      "dateCreated": "Oct 21, 2016 4:54:24 PM",
+      "dateStarted": "Oct 21, 2016 8:56:06 PM",
+      "dateFinished": "Oct 21, 2016 8:56:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "print(Array(\"[\",df2.toJSON.collect().deep.mkString(\",\"),\"]\").deep.mkString)",
+      "dateUpdated": "Oct 21, 2016 8:56:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1477071141645_889811216",
+      "id": "20161021-173221_1917413429",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "[{\"date\":\"2016-07-05\",\"id\":\"http://www.mlive.com/news/index.ssf/2016/07/10_things_about_michigans_dead.html::2016-09-06T01:18:40.785698\",\"source\":\"news\",\"topic\":[3372.0,1012.0,3782.0],\"sentiment\":-1,\"impact\":2,\"description\":\"Rick Snyder created the Michigan Prescription Drug and Opioid Abuse Commission on June 23, to help reduce the opioid epidemic in Michigan and ensure the health and safety of Michigan residents.\\nHere\u0027s 10 things to know about the fight against opioid abuse and overdose deaths in Michigan:1.\\nThe numbers are risingIn 2014, 568 people in Michigan died related to opioid overdose, while 433 people died related to heroin overdose.\\nThe Michigan Prescription Drug and Opioid Abuse Task Force recommended the creation of the commission.\\nDrug overdose deaths have surged in Michigan over 15 years and experts say addressing the problem will take multiple approaches.\",\"url\":\"http://www.mlive.com/news/index.ssf/2016/07/10_things_about_michigans_dead.html\",\"title\":\"Michigan fights deadly heroin and opioid epidemic, here\u0027s 7 things to know\"},{\"date\":\"2016-06-03\",\"id\":\"738529192317313024\",\"source\":\"twitter\",\"topic\":[25598.0,1012.0],\"sentiment\":0,\"description\":\"RT @FLGOVSCOTTFAILS: @latimes @EnigmaNetxx Shooting/Snorting #Fentenyl w/ #Oxycodone is Away2die. I wasnHospital-ParalyzedPAIN-Percocet-Fen…\",\"title\":\"RT @FLGOVSCOTTFAILS: @latimes @EnigmaNetxx Shooting/Snorting #Fentenyl w/ #Oxycodone is Away2die. I wasnHospital-ParalyzedPAIN-Percocet-Fen…\"},{\"date\":\"2016-05-11\",\"id\":\"1e6170b4de04a000e0725a660f91deea\",\"source\":\"forum\",\"topic\":[3372.0,1012.0],\"sentiment\":-1,\"description\":\"methadone/lexapro withdrawal -- I\u0027m a pain patient. I broke my neck some years ago so sustained nerve damage although I am still mobile. I h\",\"url\":\"http://www.medhelp.org/posts/Addiction-Substance-Abuse/methadone-lexapro-withdrawal/show/2878026?page\u003d1#post_13835550\",\"title\":\"methadone/lexapro withdrawal\"},{\"date\":\"2016-05-11\",\"id\":\"1e6170b4de04a000e0725a660f91deea\",\"source\":\"forum\",\"topic\":[3372.0,1012.0],\"sentiment\":-1,\"description\":\"methadone/lexapro withdrawal -- I\u0027m a pain patient. I broke my neck some years ago so sustained nerve damage although I am still mobile. I h\",\"url\":\"http://www.medhelp.org/posts/Addiction-Substance-Abuse/methadone-lexapro-withdrawal/show/2878026?page\u003d1#post_13835550\",\"title\":\"methadone/lexapro withdrawal\"},{\"date\":\"2016-05-02\",\"id\":\"reddit_d2pw91l\",\"source\":\"forum\",\"topic\":[1012.0],\"sentiment\":1,\"impact\":1,\"description\":\"Where I did my anesthesia rotation, it was versed and fetanyl for premedication. Propofol for induction (in some cases ketamine), then roncu\",\"url\":\"https://www.reddit.com/comments/4hd7ae/_/d2pw91l\"},{\"date\":\"2016-04-22\",\"id\":\"4177082\",\"source\":\"news\",\"topic\":[24841.0,1012.0],\"sentiment\":-1,\"impact\":0,\"description\":\"\u003ctable border\u003d\\\"0\\\" cellpadding\u003d\\\"2\\\" cellspacing\u003d\\\"7\\\" style\u003d\\\"vertical-align:top;\\\"\u003e\u003ctr\u003e\u003ctd width\u003d\\\"80\\\" align\u003d\\\"center\\\" valign\u003d\\\"top\\\"\u003e\u003cfont style\u003d\\\"font-size:85%;font-family:arial,sans-serif\\\"\u003e\u003ca href\u003d\\\"http://news.google.com/news/url?sa\u003dt\u0026amp;fd\u003dR\u0026amp;ct2\u003des\u0026amp;usg\u003dAFQjCNGORLq1tIfrPaFKtlR7bqPVb0jgpw\u0026amp;clid\u003dc3a7d30bb8a4878e06b80cf16b898331\u0026amp;ei\u003dskoaV6jsHZee3wH0rLXwCg\u0026amp;url\u003dhttp://www.eldiariony.com/2016/04/22/adiccion-a-medicamentos-es-una-epidemia-silenciosa/\\\"\u003e\u003cimg src\u003d\\\"//t2.gstatic.com/images?q\u003dtbn:ANd9GcSW1a1SdGMlC1YGDGnZ7UsrM0SsGZBL_9hlGhl1_bK4GDaYmWlXIrSlH5yG3pcbyExNxEI4a44\\\" alt\u003d\\\"\\\" border\u003d\\\"1\\\" width\u003d\\\"80\\\" height\u003d\\\"80\\\"\u003e\u003cbr\u003e\u003cfont size\u003d\\\"-2\\\"\u003eEl Diario NY\u003c/font\u003e\u003c/a\u003e\u003c/font\u003e\u003c/td\u003e\u003ctd valign\u003d\\\"top\\\" class\u003d\\\"j\\\"\u003e\u003cfont style\u003d\\\"font-size:85%;font-family:arial,sans-serif\\\"\u003e\u003cbr\u003e\u003cdiv style\u003d\\\"padding-top:0.8em;\\\"\u003e\u003cimg alt\u003d\\\"\\\" height\u003d\\\"1\\\" width\u003d\\\"1\\\"\u003e\u003c/div\u003e\u003cdiv class\u003d\\\"lh\\\"\u003e\u003ca href\u003d\\\"http://news.google.com/news/url?sa\u003dt\u0026amp;fd\u003dR\u0026amp;ct2\u003des\u0026amp;usg\u003dAFQjCNGORLq1tIfrPaFKtlR7bqPVb0jgpw\u0026amp;clid\u003dc3a7d30bb8a4878e06b80cf16b898331\u0026amp;ei\u003dskoaV6jsHZee3wH0rLXwCg\u0026amp;url\u003dhttp://www.eldiariony.com/2016/04/22/adiccion-a-medicamentos-es-una-epidemia-silenciosa/\\\"\u003eAdicci\u0026oacute;n a medicamentos es una epidemia silenciosa\u003c/a\u003e\u003cbr\u003e\u003cfont size\u003d\\\"-1\\\"\u003e\u003cfont color\u003d\\\"#6f6f6f\\\"\u003eEl Diario NY\u003c/font\u003e\u003c/font\u003e\u003cbr\u003e\u003cfont size\u003d\\\"-1\\\"\u003eAdicci\u0026oacute;n a medicamentos es una epidemia silenciosa La mayor\u0026iacute;a de los adolescentes y j\u0026oacute;venes adultos obtienen medicamentos con receta m\u0026eacute;dica de parte de sus amigos y familiares. Foto: Shutterstock. Por: Edwin Martinez 22 Abril 2016. Cuando\u0026nbsp;...\u003c/font\u003e\u003cbr\u003e\u003cfont size\u003d\\\"-1\\\" class\u003d\\\"p\\\"\u003e\u003c/font\u003e\u003cbr\u003e\u003cfont class\u003d\\\"p\\\" size\u003d\\\"-1\\\"\u003e\u003ca class\u003d\\\"p\\\" href\u003d\\\"http://news.google.es/news/story?ncl\u003ddQKL8_y8W6994FM\u0026amp;ned\u003des\\\"\u003e\u003cnobr\u003e\u003c/nobr\u003e\u003c/a\u003e\u003c/font\u003e\u003c/div\u003e\u003c/font\u003e\u003c/td\u003e\u003c/tr\u003e\u003c/table\u003e\",\"url\":\"http://www.eldiariony.com/2016/04/22/adiccion-a-medicamentos-es-una-epidemia-silenciosa/\",\"title\":\"Adicci\u0026oacute;n a medicamentos es una epidemia silenciosa - El Diario NY\"}]"
+      },
+      "dateCreated": "Oct 21, 2016 5:32:21 PM",
+      "dateStarted": "Oct 21, 2016 8:56:08 PM",
+      "dateFinished": "Oct 21, 2016 8:56:12 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val space \u003d udf((text: WrappedArray[BigInt]) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else Array(text.mkString(\";\"), \";\").mkString\n})",
+      "dateUpdated": "Oct 23, 2016 4:25:48 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1477074816069_39772248",
+      "id": "20161021-183336_1896774458",
+      "dateCreated": "Oct 21, 2016 6:33:36 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "aluxio spark",
+  "id": "2BW859HV8",
+  "angularObjects": {
+    "2BUZX9EWW:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BTJ3P41C:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BSMJA8VG:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

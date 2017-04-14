@@ -1,0 +1,644 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.redislabs.provider.redis._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext",
+      "dateUpdated": "Aug 29, 2016 2:22:47 AM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554530_497454203",
+      "id": "20160828-204509_635437448",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.redislabs.provider.redis._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 2:22:47 AM",
+      "dateFinished": "Aug 29, 2016 2:23:04 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### PULLING DATA FROM CASSANDRA",
+      "dateUpdated": "Aug 29, 2016 1:50:59 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554531_497069454",
+      "id": "20160829-004804_721568778",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003ePULLING DATA FROM CASSANDRA\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 1:50:59 AM",
+      "dateFinished": "Aug 29, 2016 1:50:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var df \u003d sqlContext\n  .read\n  .format(\"org.apache.spark.sql.cassandra\")\n  .options(Map( \"table\" -\u003e \"reddit\", \"keyspace\" -\u003e \"processed_forum\"))\n  .load()\n  .select(\"yrmonthday\", \"cr\", \"ds\", \"type\", \"id\", \"ups\")",
+      "dateUpdated": "Aug 29, 2016 1:50:59 AM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554531_497069454",
+      "id": "20160828-204528_1045530417",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df: org.apache.spark.sql.DataFrame \u003d [yrmonthday: int, cr: timestamp, ds: string, type: string, id: string, ups: bigint]\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 1:51:03 AM",
+      "dateFinished": "Aug 29, 2016 1:51:24 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val c \u003d df.count()",
+      "dateUpdated": "Aug 29, 2016 1:50:59 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554531_497069454",
+      "id": "20160828-204549_1566594446",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "c: Long \u003d 16186319\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 1:51:22 AM",
+      "dateFinished": "Aug 29, 2016 1:53:22 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### SPLITTING CASSANDRA DATAFRAME INTO BATCHES OF 1.5 MILLION PER KEY",
+      "dateUpdated": "Aug 29, 2016 1:50:59 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554531_497069454",
+      "id": "20160829-004824_15315953",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eSPLITTING CASSANDRA DATAFRAME INTO BATCHES OF 1.5 MILLION PER KEY\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 1:50:59 AM",
+      "dateFinished": "Aug 29, 2016 1:50:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val j \u003d (c / 1000000) + 1\n\nval p \u003d 100.0 / j\n\nval x \u003d Array.fill(j.toInt)(p)\n\nval s \u003d df.randomSplit(x, seed\u003d0)",
+      "dateUpdated": "Aug 29, 2016 1:50:59 AM",
+      "config": {
+        "enabled": true,
+        "tableHide": false,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554531_497069454",
+      "id": "20160828-204649_573668935",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "j: Long \u003d 17\np: Double \u003d 5.882352941176471\nx: Array[Double] \u003d Array(5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471, 5.882352941176471)\ns: Array[org.apache.spark.sql.DataFrame] \u003d Array([yrmonthday: int, cr: timestamp, ds: string, type: string, id: string, ups: bigint], [yrmonthday: int, cr: timestamp, ds: string, type: string, id: string, ups: bigint], [yrmonthday: int, cr: timestamp, ds: string, type: string, id: string, ups: bigint], [yrmonthday: int, cr: timestamp, ds: string, type: string, id: string, ups: bigint], [yrmonthday: int, cr: timestamp, ds: string, type: string, id: string, ups: bigint], [yrmonthday: int, cr: timestamp, ds: string, type: string, id: string, ups: bigint], [yrmonthday: int, cr: timestamp, ds: string, type: string, id: string, ups: bigint], [yrmonthday: int, cr: timestamp, ds: string, type: string, id: string, ups: bigint], [yrmonthday: int, cr: timestamp, ds: string, type: string, id: strin..."
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 1:51:24 AM",
+      "dateFinished": "Aug 29, 2016 1:53:24 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### PUSH BATCHES TO REDIS",
+      "dateUpdated": "Aug 29, 2016 1:50:59 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554531_497069454",
+      "id": "20160829-004930_769055354",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003ePUSH BATCHES TO REDIS\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 1:50:59 AM",
+      "dateFinished": "Aug 29, 2016 1:50:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i \u003c- 0 to (s.length -1)){\n    val y \u003d Array(\"Test\", i, \"t\").mkString\n    val hello \u003d s(i).toJSON.toDF.withColumn(\"id\", when($\"_1\"\u003d\u003d\u003d\"sup\", y).otherwise(y)).groupBy(\"id\").agg(collect_list(\"_1\").cast(\"String\").alias(\"value\")).withColumn(\"value\", regexp_replace($\"value\", \"},\", \"};\")).withColumn(\"value\", regexp_replace($\"value\", \"\\\\[|\\\\]\", \"\"))\n    val sup \u003d hello.rdd.map(x \u003d\u003e \"\\\\[|\\\\]\".r.replaceAllIn(x.toString, \"\").split(\"t,\")).map(x\u003d\u003e (x(0), x(1)))\n    sc.toRedisKV(sup, (6379))\n}",
+      "dateUpdated": "Aug 29, 2016 1:50:59 AM",
+      "config": {
+        "enabled": true,
+        "tableHide": false,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554531_497069454",
+      "id": "20160828-204915_713353974",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 1:53:23 AM",
+      "dateFinished": "Aug 29, 2016 2:20:06 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### READING FROM REDIS",
+      "dateUpdated": "Aug 29, 2016 1:50:59 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554531_497069454",
+      "id": "20160829-004911_1405687330",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eREADING FROM REDIS\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 1:50:59 AM",
+      "dateFinished": "Aug 29, 2016 1:50:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val sup2 \u003d sc.fromRedisKV(sc.fromRedisKeyPattern(\"Test*\", (6379)).toArray, (6379)).flatMap(x \u003d\u003e x._2.split(\";\"))",
+      "dateUpdated": "Aug 29, 2016 2:23:06 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554531_497069454",
+      "id": "20160828-205357_1501203699",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\nsup2: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[3] at flatMap at \u003cconsole\u003e:39\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 2:23:06 AM",
+      "dateFinished": "Aug 29, 2016 2:23:12 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sqlContext.jsonRDD(sup2).show()",
+      "dateUpdated": "Aug 29, 2016 2:21:00 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554531_497069454",
+      "id": "20160829-003015_1113411387",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\n+--------------------+---------+-------+------+---+----------+\n|                  cr|       ds|     id|  type|ups|yrmonthday|\n+--------------------+---------+-------+------+---+----------+\n|2014-12-05 00:00:...|pushshift|cmlgs4t|reddit|  1|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgs63|reddit| -1|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgs69|reddit|  1|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgs6k|reddit|  1|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgs6l|reddit|  9|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgs6s|reddit|  6|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgs79|reddit| 21|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgs7n|reddit|  1|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgs86|reddit|  2|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgs8h|reddit|  4|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgsab|reddit|  1|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgsae|reddit|  1|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgsam|reddit|  1|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgsas|reddit|  3|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgsav|reddit| 10|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgsbd|reddit|  2|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgsd0|reddit|  1|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgsdf|reddit|  3|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgse2|reddit|  3|  20141205|\n|2014-12-05 00:00:...|pushshift|cmlgser|reddit|  1|  20141205|\n+--------------------+---------+-------+------+---+----------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 2:21:12 AM",
+      "dateFinished": "Aug 29, 2016 2:21:40 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sqlContext.jsonRDD(sup2).count()",
+      "dateUpdated": "Aug 29, 2016 2:21:03 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554532_495145710",
+      "id": "20160829-003034_801284095",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\nres4: Long \u003d 16186319\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 2:21:18 AM",
+      "dateFinished": "Aug 29, 2016 2:22:08 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sqlContext.jsonRDD(sup2).registerTempTable(\"sup\")",
+      "dateUpdated": "Aug 29, 2016 2:23:16 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554532_495145710",
+      "id": "20160829-003513_125664103",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 2:23:16 AM",
+      "dateFinished": "Aug 29, 2016 2:23:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### SQL STRING HAROLD SENDS FROM APP",
+      "dateUpdated": "Aug 29, 2016 1:50:59 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554532_495145710",
+      "id": "20160829-004727_375028268",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eSQL STRING HAROLD SENDS FROM APP\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 1:50:59 AM",
+      "dateFinished": "Aug 29, 2016 1:50:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val df2 \u003d sqlContext.sql(\"SELECT to_date(cr) AS DATE, ds, count(*) AS count from sup GROUP BY to_date(cr), ds ORDER BY count(*) DESC\")",
+      "dateUpdated": "Aug 29, 2016 2:23:21 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554532_495145710",
+      "id": "20160829-003735_978472977",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df2: org.apache.spark.sql.DataFrame \u003d [DATE: date, ds: string, count: bigint]\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 2:23:21 AM",
+      "dateFinished": "Aug 29, 2016 2:23:36 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### JSON SENT BACK TO HAROLD",
+      "dateUpdated": "Aug 29, 2016 1:50:59 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554532_495145710",
+      "id": "20160829-004706_834791768",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch3\u003eJSON SENT BACK TO HAROLD\u003c/h3\u003e\n"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 1:50:59 AM",
+      "dateFinished": "Aug 29, 2016 1:50:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "print(Array(\"[\",df2.toJSON.collect().deep.mkString(\",\"),\"]\").deep.mkString)",
+      "dateUpdated": "Aug 29, 2016 2:23:26 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554532_495145710",
+      "id": "20160829-003753_1287260428",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "[{\"DATE\":\"2014-12-03\",\"ds\":\"pushshift\",\"count\":1729639},{\"DATE\":\"2014-12-02\",\"ds\":\"pushshift\",\"count\":1712471},{\"DATE\":\"2014-12-04\",\"ds\":\"pushshift\",\"count\":1710121},{\"DATE\":\"2014-12-01\",\"ds\":\"pushshift\",\"count\":1586760},{\"DATE\":\"2014-08-27\",\"ds\":\"pushshift\",\"count\":1586619},{\"DATE\":\"2014-08-28\",\"ds\":\"pushshift\",\"count\":1577882},{\"DATE\":\"2014-08-29\",\"ds\":\"pushshift\",\"count\":1546055},{\"DATE\":\"2014-08-26\",\"ds\":\"pushshift\",\"count\":1513295},{\"DATE\":\"2014-08-31\",\"ds\":\"pushshift\",\"count\":1338223},{\"DATE\":\"2014-08-30\",\"ds\":\"pushshift\",\"count\":1319192},{\"DATE\":\"2014-12-05\",\"ds\":\"pushshift\",\"count\":472011},{\"DATE\":\"2014-08-25\",\"ds\":\"pushshift\",\"count\":94051}]"
+      },
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 2:23:35 AM",
+      "dateFinished": "Aug 29, 2016 2:23:57 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Aug 29, 2016 1:50:59 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472432554538_494376212",
+      "id": "20160829-004123_1642098441",
+      "dateCreated": "Aug 29, 2016 1:02:34 AM",
+      "dateStarted": "Aug 29, 2016 2:20:25 AM",
+      "dateFinished": "Aug 29, 2016 2:20:25 AM",
+      "status": "ERROR",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "reddis spark3",
+  "id": "2BW6B2RX2",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

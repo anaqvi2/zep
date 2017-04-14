@@ -1,0 +1,867 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.mongodb.casbah.{WriteConcern \u003d\u003e MongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray",
+      "dateUpdated": "Aug 4, 2016 6:18:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255441276_676130774",
+      "id": "20160803-201721_2116633707",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.mongodb.casbah.{WriteConcern\u003d\u003eMongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:17:21 PM",
+      "dateStarted": "Aug 4, 2016 6:18:49 PM",
+      "dateFinished": "Aug 4, 2016 6:18:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.0.59.4\"), Database -\u003e \"twitter\", Collection -\u003e\"temp_june_forum\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\n\nval forum \u003d sqlContext.fromMongoDB(readConfig).withColumn(\"t2\", regexp_replace(lower($\"t\"), \"\"\"[\\p{Punct}]\"\"\", \" \"))",
+      "dateUpdated": "Aug 4, 2016 6:18:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255518749_-1516645152",
+      "id": "20160803-201838_997623076",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e temp_june_forum, host -\u003e List(52.0.59.4)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@9f232cb6\nforum: org.apache.spark.sql.DataFrame \u003d [tid: string, downs: double, id: string, tlink: string, flink: string, uname: string, fname: string, bname: string, t_hash: string, v: boolean, title: string, ups: int, tstarter: boolean, cat: null, lang: string, t: string, _id: string, content_hash: string, cc: string, loc: null, sid: string, num_comments: int, parent_id: string, score: int, cr: timestamp, type: string, url: string, retrieved_on: string, dom: string, query_id: string, ds: string, gdr: string, t2: string]\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:18:38 PM",
+      "dateStarted": "Aug 4, 2016 6:18:50 PM",
+      "dateFinished": "Aug 4, 2016 6:20:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val space \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else text.split(\" \")\n})",
+      "dateUpdated": "Aug 4, 2016 6:18:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255545103_1880934467",
+      "id": "20160803-201905_1338551166",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "space: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,ArrayType(StringType,true),List(StringType))\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:19:05 PM",
+      "dateStarted": "Aug 4, 2016 6:18:54 PM",
+      "dateFinished": "Aug 4, 2016 6:20:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.0.59.4\"), Database -\u003e \"twitter\", Collection -\u003e\"products\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\n\nval products \u003d sqlContext.fromMongoDB(readConfig).select(\"name\", \"synonyms\", \"_id\", \"consists_of\").where(size($\"synonyms\") \u003e 0).withColumn(\"synonyms\", explode($\"synonyms\")).withColumn(\"synonyms\", regexp_replace(lower($\"synonyms\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).withColumn(\"size\", size(space($\"synonyms\"))).sort(desc(\"size\")).filter(\"consists_of is null\").drop(\"consists_of\")",
+      "dateUpdated": "Aug 4, 2016 6:18:53 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255557345_-1786091976",
+      "id": "20160803-201917_900240781",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e products, host -\u003e List(52.0.59.4)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@41720b02\nproducts: org.apache.spark.sql.DataFrame \u003d [name: string, synonyms: string, _id: double, size: int]\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:19:17 PM",
+      "dateStarted": "Aug 4, 2016 6:20:53 PM",
+      "dateFinished": "Aug 4, 2016 6:20:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.0.59.4\"), Database -\u003e \"twitter\", Collection -\u003e\"symptoms\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\nval symptoms \u003d sqlContext.fromMongoDB(readConfig).select(\"name\", \"synonyms\", \"_id\").where(size($\"synonyms\") \u003e 0).withColumn(\"synonyms\", explode($\"synonyms\"))\n.withColumn(\"synonyms\", regexp_replace(lower($\"synonyms\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).withColumn(\"size\", size(space($\"synonyms\"))).sort(desc(\"size\"))",
+      "dateUpdated": "Aug 4, 2016 6:18:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255571791_-230136776",
+      "id": "20160803-201931_1679461521",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e symptoms, host -\u003e List(52.0.59.4)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@9b2857e0\nsymptoms: org.apache.spark.sql.DataFrame \u003d [name: string, synonyms: string, _id: int, size: int]\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:19:31 PM",
+      "dateStarted": "Aug 4, 2016 6:20:54 PM",
+      "dateFinished": "Aug 4, 2016 6:21:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.0.59.4\"), Database -\u003e \"twitter\", Collection -\u003e\"pii\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\n\nval pii \u003d sqlContext.fromMongoDB(readConfig).select(\"phrase\", \"_id\").withColumnRenamed(\"synonyms\", \"phrase\")",
+      "dateUpdated": "Aug 4, 2016 6:23:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255587561_-2102694348",
+      "id": "20160803-201947_565947011",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e pii, host -\u003e List(52.0.59.4)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@a9ccbf0e\npii: org.apache.spark.sql.DataFrame \u003d [phrase: string, _id: double]\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:19:47 PM",
+      "dateStarted": "Aug 4, 2016 6:23:05 PM",
+      "dateFinished": "Aug 4, 2016 6:23:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val symp \u003d symptoms.filter(not($\"name\".contains(\"UE: \"))).filter(not($\"_id\"\u003d\u003d\u003d2175)).collect()\nval ue \u003d symptoms.filter($\"name\".contains(\"UE: \")).collect()\nval prod \u003d products.collect()\nval pi \u003d pii.collect()\n\nval p_syn \u003d prod.map(x\u003d\u003e x(1).toString).toSet\nval s_syn \u003d symp.map(x\u003d\u003e x(1).toString).toSet\nval u_syn \u003d ue.map(x\u003d\u003e x(1).toString).toSet\nval pi_syn \u003d pi.map(x\u003d\u003e x(0).toString).toSet\n\nvar pa :Map[String,String] \u003d Map()\n\nvar sa :Map[String,String] \u003d Map()\n\nvar ua :Map[String,String] \u003d Map()\n\nvar pia :Map[String,String] \u003d Map()\n\n\nfor(i \u003c- prod){\n    pa+\u003d (i(1).toString -\u003e i(2).toString)\n}\n\nfor(i \u003c- symp){\n    sa+\u003d (i(1).toString -\u003e i(2).toString)\n}\n\nfor(i \u003c- ue){\n    ua+\u003d (i(1).toString -\u003e i(2).toString)\n}\n\nfor(i \u003c- pi){\n    pia+\u003d (i(0).toString -\u003e i(1).toString)\n}",
+      "dateUpdated": "Aug 4, 2016 6:23:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255603191_-425209925",
+      "id": "20160803-202003_1324951108",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "symp: Array[org.apache.spark.sql.Row] \u003d Array([unevaluable event,feels like i m writing with my left hand in my right hand,347,13], [hallucination,keep thinking i see people out of the corner of my eye,105,12], [abnormal sleep,i fall asleep for roughly 3 hours and then stay awake,389,11], [abdominal discomfort,makes me feel like i ve been kicked in the stomach,1713,11], [nail picking,fingernails i m sorry there s no skin left around you,2350,11], [vaginal bleeding,have a period for just a bout a solid year,46,10], [pain in extremity,feet feel like i have been on them all day,72,10], [nonspecific reaction,hate the feeling when you want it to be over,204,10], [frequent urination,waking up in the middle of the night to pee,209,10], [chest discomfort,my chest fells like an elephant is sitti...ue: Array[org.apache.spark.sql.Row] \u003d Array([UE: Negative social perception,people look just as gross and stupid smoking e cig things as a real cigarette,2150,15], [UE: Negative social perception,dumb grls on the bus are tryna hide smokin an e cig,2150,12], [UE: Negative social perception,smoking an e cig in the library does not make you cool,2150,12], [UE: Negative social perception,if you smoke an e cig inside i assume you re asshole,2150,12], [UE: Negative social perception,if you re smoking an e cig i m judging you,2150,11], [UE: Health related testimonial,it has been a long time since i felt this good,2155,11], [UE: High efficacy,it has been a long time since i felt this good,2359,11], [UE: Entyvio Connect - Positive experience,with the help of my case manager at entyvio connect,23...prod: Array[org.apache.spark.sql.Row] \u003d Array([drospirenone/ethinyl estradiol/levomefolate calcium tablets and levomefolate calcium,drospirenone ethinyl estradiol levomefolate calcium tablets and levomefolate calcium,587.0,9], [6F Angio-Seal Vascular Closure Device Vip,6 f angio seal vascular closure device vip,371.0,8], [Centruroides (scorpion) Immune F(ab)2(equine),centruroides scorpion immune f ab 2 equine,63.0,7], [6 Shooter Saeed Multi-Band Ligator,6 shooter saeed multi band ligator,370.0,6], [Coated Vicryl Plus Antibacterial (Polyglactin 910),coated vicryl plus antibacterial polyglactin 910,389.0,6], [Homechoice Automated Pd Set With Cassette,homechoice automated pd set with cassette,403.0,6], [Octrode Lead Kit, 60Cm Length,octrode lead kit 60 cm length,412.0,6], [mometasone furoa...pi: Array[org.apache.spark.sql.Row] \u003d Array([ethan,6.0], [isabella,18.0], [olivia,19.0], [noah,23.0], [abigail,25.0], [sophia,26.0], [alexis,28.0], [hannah,29.0], [samantha,40.0], [jayden,41.0], [zachary,42.0], [elijah,43.0], [ava,44.0], [caleb,50.0], [alyssa,55.0], [aiden,59.0], [chloe,60.0], [natalie,64.0], [evan,66.0], [isaiah,68.0], [brianna,71.0], [gavin,72.0], [riley,73.0], [connor,76.0], [kayla,78.0], [hailey,82.0], [ella,85.0], [landon,87.0], [aidan,90.0], [jasmine,93.0], [liam,97.0], [avery,98.0], [addison,101.0], [lily,104.0], [nathaniel,108.0], [jeremiah,111.0], [hayden,112.0], [brayden,113.0], [katherine,114.0], [allison,116.0], [kaitlyn,119.0], [wyatt,120.0], [kaylee,121.0], [sebastian,124.0], [peyton,125.0], [megan,126.0], [alexandra,128.0], [lillian,130.0], [xavier,132.0]...p_syn: scala.collection.immutable.Set[String] \u003d Set(axitinib, drospirenone, fabior, zolman, beclomet, opsumit, typhoid jab, adorma, minicap, stribid, mucivil, everolimus, terbigalen, terfast, erfin, asr uni femoral impl size 45, ego electronic cigs, addwize, lepitam, terbilum, viekira, erbitux, breo account, ego cig, suvorexant, whooping cough tetanus, neutrogena eyeliner, muzome, orsythia, tudorza pressair, calcium gluconate, fungiban, spencer forrest laser, breo watches, larazapam, ferriprox, tapentadole, meningococcal group b vaccine, klonipin, cig liquids, buprenurphine, guanfacine, cloudchaser, yentreve, dicil, anpar, tapentidal, levetiragamma, dabigatran, zakofin, lymphoseek, panderm plus, interbi, albiglutide, centruroides, prednisolene, pazital, buspirone hydrochloride, oramoprh...s_syn: scala.collection.immutable.Set[String] \u003d Set(stoma site rash, red circles around my eyes, weren t helping, ill just, bad reactions, piss my pants, inflammatory, got me seeing shit, losing it s benefits, arm hurtz, isn t doing me no justice, arm is so swollen, abnormal hair growth, peripheral edema, peripheral coldness, swollen breast, doze off, room spinning, anti neutrophil cytoplasmic antibody positive vasculitis, rage, loopin me out, nothing is happening, headache, sleeping most of the day, irritated eyelid, leg hurts, my appetite is gone, no effect on you any more, black out, laughing, stevens johnsons, serum sickness like reaction, blurry, pregnant on birth control, got me feeling some typa way, took me out on disability, multiple birth sibling, yacking, no way to fight off ...u_syn: scala.collection.immutable.Set[String] \u003d Set(need sold today, was taking, nic base, from tysabri, headache, liquid, used, cloudchaser, clearance sale, has been pretty good, pharma, immunosuppressive, so far so good, company coverage, chargers, been a blessing, successful infusion, beautiful, mojito, what are, ohm, birthday, dont want to stop using e cigs, to humira, teenager, dangerous, one stop shop, started my entyvio, smells like shit, savings, isn t looking promising, menthol, not sure if this is a side effect, researcher, can you advise me, no side effects, tastes awesome, topper, insurance not approved, outlaw, remission rate, need to decice about stopping nicotine, swag, in a lot of pain, it has been a long time since i felt this good, cleaning your, scares me, positive re...pi_syn: scala.collection.immutable.Set[String] \u003d Set(senger, khaliq, clarissa, taye, shayden, brink, erdman, mcquaig, jerell, marr, cardell, layton, nailah, mario, isadora, brownfield, kettler, lillyana, benning, maliya, teresa, charlotta, boggs, wimmer, kharma, rorie, daigle, haugh, keianna, whidden, belton, pepi, williford, jena, keilyn, chee, huntlee, yoshi, kalem, kimmy, araseli, laurens, michels, derry, hickson, calli, kris, mckim, hartt, clough, cynthie, gowan, lisabeth, ramel, holiman, whitfield, cariotta, yocum, michael, krebs, pfister, bohner, buckle, bing, rheanna, stavros, thiago, losey, skye, rolon, karas, makya, abisai, reya, stringfield, fleurette, cyrille, hellene, bandy, jeremiah, coney, lonee, baila, aho, burket, kynthia, stipe, yousif, brieanna, cianni, magnolia, betti...pa: Map[String,String] \u003d Map()\nsa: Map[String,String] \u003d Map()\nua: Map[String,String] \u003d Map()\npia: Map[String,String] \u003d Map()\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:20:03 PM",
+      "dateStarted": "Aug 4, 2016 6:23:07 PM",
+      "dateFinished": "Aug 4, 2016 6:23:14 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val ns \u003d Array(products.select(\"size\").take(1)(0)(0).toString.toInt, symptoms.select(\"size\").take(1)(0)(0).toString.toInt)\nval nsize \u003d ns.max",
+      "dateUpdated": "Aug 4, 2016 6:23:10 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255622475_1777523501",
+      "id": "20160803-202022_1262151952",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "ns: Array[Int] \u003d Array(9, 15)\nnsize: Int \u003d 15\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:20:22 PM",
+      "dateStarted": "Aug 4, 2016 6:23:10 PM",
+      "dateFinished": "Aug 4, 2016 6:23:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer\n\nval tokenizer \u003d new Tokenizer().setInputCol(\"t2\").setOutputCol(\"words\")\n\nvar tokenized \u003d tokenizer.transform(forum)\n\nfor(i \u003c- 1 to nsize){\n\n    var num \u003d Array(\"ngram\", i).mkString\n\n    var ngi \u003d new NGram().setInputCol(\"words\").setOutputCol(num).setN(i)\n\n    tokenized \u003d ngi.transform(tokenized)\n    tokenized \u003d tokenized.withColumn(\"test\", tokenized(num).cast(\"String\")).withColumn(\"w2\", concat($\"words\".cast(\"String\"), $\"test\")).drop(num).drop(\"test\")\n}",
+      "dateUpdated": "Aug 4, 2016 6:23:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255631250_-1487840415",
+      "id": "20160803-202031_422386569",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer\ntokenizer: org.apache.spark.ml.feature.Tokenizer \u003d tok_a71f1c600c4b\ntokenized: org.apache.spark.sql.DataFrame \u003d [tid: string, downs: double, id: string, tlink: string, flink: string, uname: string, fname: string, bname: string, t_hash: string, v: boolean, title: string, ups: int, tstarter: boolean, cat: null, lang: string, t: string, _id: string, content_hash: string, cc: string, loc: null, sid: string, num_comments: int, parent_id: string, score: int, cr: timestamp, type: string, url: string, retrieved_on: string, dom: string, query_id: string, ds: string, gdr: string, t2: string, words: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:20:31 PM",
+      "dateStarted": "Aug 4, 2016 6:23:15 PM",
+      "dateFinished": "Aug 4, 2016 6:23:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val matcher \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else {\n    val words \u003d text.split(\",\").toSet\n    val pc \u003d p_syn \u0026 words\n    val cc \u003d s_syn \u0026 words\n    val uc \u003d u_syn \u0026 words\n    val pic \u003d pi_syn \u0026 words\n    Map(\"prod\" -\u003e (pc.toArray collect pa).map(_.toDouble), \"con\" -\u003e (cc.toArray collect sa).map(_.toDouble), \"ue\" -\u003e (uc.toArray collect ua).map(_.toDouble), \n    \"pii\" -\u003e (pic.toArray collect pia).map(_.toDouble))\n    }\n})",
+      "dateUpdated": "Aug 4, 2016 6:23:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255638802_-196992531",
+      "id": "20160803-202038_1111510835",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "matcher: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,MapType(StringType,ArrayType(DoubleType,false),true),List(StringType))\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:20:38 PM",
+      "dateStarted": "Aug 4, 2016 6:23:16 PM",
+      "dateFinished": "Aug 4, 2016 6:23:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end \u003d tokenized.withColumn(\"temp\", matcher($\"w2\")).withColumn(\"pr\", $\"temp\"(\"prod\")).withColumn(\"s\", $\"temp\"(\"con\"))\n.withColumn(\"ue\", $\"temp\"(\"ue\")).withColumn(\"pii\", $\"temp\"(\"pii\")).drop(\"temp\").drop(\"w2\").drop(\"words\").drop(\"t2\")",
+      "dateUpdated": "Aug 4, 2016 6:23:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255650879_-1888733444",
+      "id": "20160803-202050_1635093549",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end: org.apache.spark.sql.DataFrame \u003d [tid: string, downs: double, id: string, tlink: string, flink: string, uname: string, fname: string, bname: string, t_hash: string, v: boolean, title: string, ups: int, tstarter: boolean, cat: null, lang: string, t: string, _id: string, content_hash: string, cc: string, loc: null, sid: string, num_comments: int, parent_id: string, score: int, cr: timestamp, type: string, url: string, retrieved_on: string, dom: string, query_id: string, ds: string, gdr: string, pr: array\u003cdouble\u003e, s: array\u003cdouble\u003e, ue: array\u003cdouble\u003e, pii: array\u003cdouble\u003e]\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:20:50 PM",
+      "dateStarted": "Aug 4, 2016 6:23:18 PM",
+      "dateFinished": "Aug 4, 2016 6:23:19 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end.select(\"_id\", \"pr\", \"s\", \"ue\", \"pii\").show()",
+      "dateUpdated": "Aug 4, 2016 6:23:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255660130_-1165390188",
+      "id": "20160803-202100_432764544",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+-----------+--------------------+--------------------+--------------------+--------------------+\n|        _id|                  pr|                   s|                  ue|                 pii|\n+-----------+--------------------+--------------------+--------------------+--------------------+\n| 3072130924|             [215.0]|             [117.0]|                  []|                  []|\n| 3120649836|             [215.0]|                  []|            [2188.0]|  [13437.0, 10785.0]|\n| 4006845548|             [215.0]|             [117.0]|[2038.0, 2062.0, ...|                  []|\n| 4451003559|                  []|                  []|                  []|                  []|\n| 4597172647|                  []|                  []|                  []|                  []|\n| 4627062695|                  []|                  []|                  []|                  []|\n| 5856901349|                  []|[1960.0, 291.0, 6...|[2065.0, 2045.0, ...|                  []|\n| 7086409876|                  []|                  []|                  []|    [8257.0, 3453.0]|\n| 8839167596|             [215.0]|                  []|[2090.0, 2038.0, ...|                  []|\n|12082900588|     [215.0, 1166.0]|       [117.0, 93.0]|    [2111.0, 2385.0]|                  []|\n|13578367275|[1166.0, 1166.0, ...|[186.0, 190.0, 20...|[2120.0, 2050.0, ...|  [14534.0, 35150.0]|\n|15753365861|                  []|              [49.0]|[2084.0, 2029.0, ...|[13426.0, 1110.0,...|\n|16243705548|[907.0, 1166.0, 1...|[1853.0, 65.0, 17...|[2120.0, 2331.0, ...|[12348.0, 6129.0,...|\n|16259317196|[1004.0, 1005.0, ...|        [382.0, 1.0]|    [2075.0, 2016.0]|                  []|\n|16263722700|[346.0, 2577.0, 2...|[1474.0, 1548.0, ...|                  []|[6741.0, 33927.0,...|\n|16395805283|                  []|                  []|                  []|                  []|\n|16425651813|    [1473.0, 1466.0]|[1434.0, 291.0, 6...|[2120.0, 2042.0, ...|                  []|\n|16425997413|     [1466.0, 482.0]|[1596.0, 117.0, 1...|[2120.0, 2019.0, ...|                  []|\n|16428300256|             [215.0]|              [93.0]|                  []|                  []|\n|16431316581|     [1466.0, 225.0]|[1596.0, 291.0, 1...|[2075.0, 2331.0, ...|                  []|\n+-----------+--------------------+--------------------+--------------------+--------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:21:00 PM",
+      "dateStarted": "Aug 4, 2016 6:23:19 PM",
+      "dateFinished": "Aug 4, 2016 6:23:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.PipelineModel\nval yolo \u003d PipelineModel.load(\"/home/syed/AeClassifier.model\")",
+      "dateUpdated": "Aug 4, 2016 6:23:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255666552_-1819247135",
+      "id": "20160803-202106_510229202",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.ml.PipelineModel\nyolo: org.apache.spark.ml.PipelineModel \u003d pipeline_e6ec2d152454\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:21:06 PM",
+      "dateStarted": "Aug 4, 2016 6:23:20 PM",
+      "dateFinished": "Aug 4, 2016 6:23:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val class_s \u003d udf((prediction: Double, ue: WrappedArray[Double]) \u003d\u003e {\n    if(ue \u003d\u003d null) 1.0\n  else if (ue.length \u003d\u003d 0) 1.0\n  else if (ue.length !\u003d0 \u0026\u0026 prediction \u003d\u003d 0.0D) 2.0\n  else if (ue.length !\u003d0 \u0026\u0026 prediction \u003d\u003d 1.0D) 7.0\n  else 1.0\n})",
+      "dateUpdated": "Aug 4, 2016 6:23:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255706820_-243254344",
+      "id": "20160803-202146_652518590",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "class_s: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction2\u003e,DoubleType,List(DoubleType, ArrayType(DoubleType,false)))\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:21:46 PM",
+      "dateStarted": "Aug 4, 2016 6:23:23 PM",
+      "dateFinished": "Aug 4, 2016 6:23:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val ind \u003d udf((ue: org.apache.spark.mllib.linalg.Vector) \u003d\u003e {\n    ue.toArray.max\n})",
+      "dateUpdated": "Aug 4, 2016 6:23:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470256472099_-1579584152",
+      "id": "20160803-203432_690320814",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "ind: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,DoubleType,List(org.apache.spark.mllib.linalg.VectorUDT@f71b0bce))\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:34:32 PM",
+      "dateStarted": "Aug 4, 2016 6:23:25 PM",
+      "dateFinished": "Aug 4, 2016 6:23:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end20 \u003d yolo.transform(end).drop(\"rawPrediction\").drop(\"words\").drop(\"features\").drop(\"filtered\")\n.withColumn(\"tg\", class_s($\"prediction\", $\"ue\")).drop(\"prediction\").withColumn(\"_id\", $\"_id\".cast(\"String\")).withColumn(\"ind\", ind($\"probability\").cast(\"Double\")).drop(\"probability\")",
+      "dateUpdated": "Aug 4, 2016 6:23:26 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": false,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255718998_424700395",
+      "id": "20160803-202158_1953380899",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end20: org.apache.spark.sql.DataFrame \u003d [tid: string, downs: double, id: string, tlink: string, flink: string, uname: string, fname: string, bname: string, t_hash: string, v: boolean, title: string, ups: int, tstarter: boolean, cat: null, lang: string, t: string, _id: string, content_hash: string, cc: string, loc: null, sid: string, num_comments: int, parent_id: string, score: int, cr: timestamp, type: string, url: string, retrieved_on: string, dom: string, query_id: string, ds: string, gdr: string, pr: array\u003cdouble\u003e, s: array\u003cdouble\u003e, ue: array\u003cdouble\u003e, pii: array\u003cdouble\u003e, tg: double, ind: double]\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:21:58 PM",
+      "dateStarted": "Aug 4, 2016 6:23:26 PM",
+      "dateFinished": "Aug 4, 2016 6:23:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end20.select(\"pr\", \"s\", \"ue\", \"tg\", \"pii\", \"_id\", \"ind\").show()",
+      "dateUpdated": "Aug 4, 2016 6:23:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255727381_579970385",
+      "id": "20160803-202207_1318484845",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+--------------------+--------------------+---+--------------------+-----------+------------------+\n|                  pr|                   s|                  ue| tg|                 pii|        _id|               ind|\n+--------------------+--------------------+--------------------+---+--------------------+-----------+------------------+\n|             [215.0]|             [117.0]|                  []|1.0|                  []| 3072130924|0.6864495413894328|\n|             [215.0]|                  []|            [2188.0]|2.0|  [13437.0, 10785.0]| 3120649836|0.7392755388559575|\n|             [215.0]|             [117.0]|[2038.0, 2062.0, ...|7.0|                  []| 4006845548| 0.953660696848521|\n|                  []|                  []|                  []|1.0|                  []| 4451003559|0.5336810059853357|\n|                  []|                  []|                  []|1.0|                  []| 4597172647|0.5547410546297091|\n|                  []|                  []|                  []|1.0|                  []| 4627062695|0.5547410546297091|\n|                  []|[1960.0, 291.0, 6...|[2065.0, 2045.0, ...|2.0|                  []| 5856901349|0.5483588272060012|\n|                  []|                  []|                  []|1.0|    [8257.0, 3453.0]| 7086409876|0.8323448798778381|\n|             [215.0]|                  []|[2090.0, 2038.0, ...|2.0|                  []| 8839167596|0.8020997859236295|\n|     [215.0, 1166.0]|       [117.0, 93.0]|    [2111.0, 2385.0]|7.0|                  []|12082900588|0.5128779030112295|\n|[1166.0, 1166.0, ...|[186.0, 190.0, 20...|[2120.0, 2050.0, ...|7.0|  [14534.0, 35150.0]|13578367275|               1.0|\n|                  []|              [49.0]|[2084.0, 2029.0, ...|7.0|[13426.0, 1110.0,...|15753365861|0.9999671253057913|\n|[907.0, 1166.0, 1...|[1853.0, 65.0, 17...|[2120.0, 2331.0, ...|7.0|[12348.0, 6129.0,...|16243705548|               1.0|\n|[1004.0, 1005.0, ...|        [382.0, 1.0]|    [2075.0, 2016.0]|7.0|                  []|16259317196|0.9999999265225953|\n|[346.0, 2577.0, 2...|[1474.0, 1548.0, ...|                  []|1.0|[6741.0, 33927.0,...|16263722700|0.9999999709282679|\n|                  []|                  []|                  []|1.0|                  []|16395805283|0.5547410546297091|\n|    [1473.0, 1466.0]|[1434.0, 291.0, 6...|[2120.0, 2042.0, ...|2.0|                  []|16425651813|0.9999999493351986|\n|     [1466.0, 482.0]|[1596.0, 117.0, 1...|[2120.0, 2019.0, ...|7.0|                  []|16425997413|               1.0|\n|             [215.0]|              [93.0]|                  []|1.0|                  []|16428300256|0.8439491843103719|\n|     [1466.0, 225.0]|[1596.0, 291.0, 1...|[2075.0, 2331.0, ...|7.0|                  []|16431316581|               1.0|\n+--------------------+--------------------+--------------------+---+--------------------+-----------+------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:22:07 PM",
+      "dateStarted": "Aug 4, 2016 6:23:29 PM",
+      "dateFinished": "Aug 4, 2016 6:23:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val h \u003d end20.dtypes\nval s \u003d h.map(x\u003d\u003e \"\\\\(|\\\\)\".r.replaceAllIn(x.toString, \"\").split(\",\")).filter(_(1)\u003d\u003d \"StringType\").map(_(0))\nval d \u003d h.map(x\u003d\u003e \"\\\\(|\\\\)\".r.replaceAllIn(x.toString, \"\").split(\",\")).filter(_(1)\u003d\u003d \"DoubleType\").map(_(0))\nval i \u003d h.map(x\u003d\u003e \"\\\\(|\\\\)\".r.replaceAllIn(x.toString, \"\").split(\",\")).filter(_(1)\u003d\u003d \"IntegerType\").map(_(0))",
+      "dateUpdated": "Aug 4, 2016 6:23:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255737646_-1804318549",
+      "id": "20160803-202217_418719372",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "h: Array[(String, String)] \u003d Array((tid,StringType), (downs,DoubleType), (id,StringType), (tlink,StringType), (flink,StringType), (uname,StringType), (fname,StringType), (bname,StringType), (t_hash,StringType), (v,BooleanType), (title,StringType), (ups,IntegerType), (tstarter,BooleanType), (cat,NullType), (lang,StringType), (t,StringType), (_id,StringType), (content_hash,StringType), (cc,StringType), (loc,NullType), (sid,StringType), (num_comments,IntegerType), (parent_id,StringType), (score,IntegerType), (cr,TimestampType), (type,StringType), (url,StringType), (retrieved_on,StringType), (dom,StringType), (query_id,StringType), (ds,StringType), (gdr,StringType), (pr,ArrayType(DoubleType,false)), (s,ArrayType(DoubleType,false)), (ue,ArrayType(DoubleType,false)), (pii,ArrayType(DoubleType...s: Array[String] \u003d Array(tid, id, tlink, flink, uname, fname, bname, t_hash, title, lang, t, _id, content_hash, cc, sid, parent_id, type, url, retrieved_on, dom, query_id, ds, gdr)\nd: Array[String] \u003d Array(downs, tg, ind)\ni: Array[String] \u003d Array(ups, num_comments, score)\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:22:17 PM",
+      "dateStarted": "Aug 4, 2016 6:23:31 PM",
+      "dateFinished": "Aug 4, 2016 6:23:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val errors \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else if(text\u003d\u003d\"NaN\") null\n    else text\n})\nval errors_d \u003d udf((text: Double) \u003d\u003e {\n    if(text.isNaN) -1.0\n    else text\n})\n\nvar end30\u003dend20\nfor(o \u003c- s){\n    end30 \u003d end30.withColumn(o, errors(end30(o)))\n}\n\nfor(j \u003c- d){\n    end30 \u003d end30.withColumn(j, errors_d(end30(j)))\n}\n\nfor(k \u003c- i){\n    end30 \u003d end30.withColumn(k, errors_d(end30(k).cast(\"Double\")))\n}\n\nval errors_l \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) \"\"\n    else text\n})\n\nend30\u003dend30.withColumn(\"loc\", errors_l($\"loc\"))",
+      "dateUpdated": "Aug 4, 2016 6:23:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255748206_-193359580",
+      "id": "20160803-202228_1298918298",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "errors: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,List(StringType))\nerrors_d: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,DoubleType,List(DoubleType))\nend30: org.apache.spark.sql.DataFrame \u003d [tid: string, downs: double, id: string, tlink: string, flink: string, uname: string, fname: string, bname: string, t_hash: string, v: boolean, title: string, ups: int, tstarter: boolean, cat: null, lang: string, t: string, _id: string, content_hash: string, cc: string, loc: null, sid: string, num_comments: int, parent_id: string, score: int, cr: timestamp, type: string, url: string, retrieved_on: string, dom: string, query_id: string, ds: string, gdr: string, pr: array\u003cdouble\u003e, s: array\u003cdouble\u003e, ue: array\u003cdouble\u003e, pii: array\u003cdouble\u003e, tg: double, ind: double]\nerrors_l: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,List(StringType))\nend30: org.apache.spark.sql.DataFrame \u003d [tid: string, downs: double, id: string, tlink: string, flink: string, uname: string, fname: string, bname: string, t_hash: string, v: boolean, title: string, ups: double, tstarter: boolean, cat: null, lang: string, t: string, _id: string, content_hash: string, cc: string, loc: string, sid: string, num_comments: double, parent_id: string, score: double, cr: timestamp, type: string, url: string, retrieved_on: string, dom: string, query_id: string, ds: string, gdr: string, pr: array\u003cdouble\u003e, s: array\u003cdouble\u003e, ue: array\u003cdouble\u003e, pii: array\u003cdouble\u003e, tg: double, ind: double]\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:22:28 PM",
+      "dateStarted": "Aug 4, 2016 6:23:33 PM",
+      "dateFinished": "Aug 4, 2016 6:23:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end30.select(\"downs\", \"tg\", \"loc\", \"title\", \"num_comments\").show()",
+      "dateUpdated": "Aug 4, 2016 6:23:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255761346_484598630",
+      "id": "20160803-202241_706367488",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+-----+---+---+--------------------+------------+\n|downs| tg|loc|               title|num_comments|\n+-----+---+---+--------------------+------------+\n| null|1.0|   |RE: WWAPP- June 1-15|        null|\n| null|2.0|   |RE: WWAPP - June ...|        null|\n| null|7.0|   |          RE: AF \u0026 O|        null|\n| null|1.0|   |RE: Medication Na...|        null|\n| null|1.0|   |RE: Name Medicine...|        null|\n| null|1.0|   |RE: Name Medicine...|        null|\n| null|2.0|   |    Re: Lansoprazole|        null|\n| null|1.0|   |  RE: [A9XX]Mapy GPS|        null|\n| null|2.0|   |RE: WWAPP - Augus...|        null|\n| null|7.0|   |RE: WWAPP Jan 8- ...|        null|\n| null|7.0|   |RE: Heartburn Med...|        null|\n| null|7.0|   |                    |        null|\n| null|7.0|   |Cheap tiffany jew...|        null|\n| null|7.0|   |Comprar Zyprexa o...|        null|\n| null|1.0|   |trouble bipolaire...|        null|\n| null|1.0|   |What a crock Nova...|        null|\n| null|2.0|   |Buy Cheap Ranitid...|        null|\n| null|7.0|   |Buy Cheap Prevaci...|        null|\n| null|1.0|   |RE: did the miren...|        null|\n| null|7.0|   |Order Cheap Preva...|        null|\n+-----+---+---+--------------------+------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:22:41 PM",
+      "dateStarted": "Aug 4, 2016 6:23:35 PM",
+      "dateFinished": "Aug 4, 2016 6:23:37 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val saveConfig \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.0.59.4\"), Database -\u003e \"twitter\", Collection -\u003e\"dsForum\", \nSamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\n\nend30.saveToMongodb(saveConfig.build)",
+      "dateUpdated": "Aug 4, 2016 6:11:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470255770215_-1647295025",
+      "id": "20160803-202250_2142179715",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "saveConfig: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e fdaTweets, host -\u003e List(52.0.59.4)))\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:22:50 PM",
+      "dateStarted": "Aug 4, 2016 4:29:27 PM",
+      "dateFinished": "Aug 4, 2016 5:56:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end30.select(\"_id\", \"ind\").show(50, false)",
+      "dateUpdated": "Aug 4, 2016 5:59:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470257192181_-1523612792",
+      "id": "20160803-204632_520822412",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+------------------------+------------------+\n|_id                     |ind               |\n+------------------------+------------------+\n|5769b62b0aeb3d520a60b2c7|0.7263232522881472|\n|5769b62b0aeb3d520a60b2c8|0.845913924809684 |\n|5769b62b0aeb3d520a60b2c9|0.6480272774913213|\n|5769b62b0aeb3d520a60b2ca|0.8695822253624963|\n|5769b62b0aeb3d520a60b2cb|0.8072353633017132|\n|5769b62b0aeb3d520a60b2cc|0.97051019170749  |\n|5769b62b0aeb3d520a60b2cd|0.6559312978060449|\n|5769b62b0aeb3d520a60b2ce|0.5028255314090139|\n|5769b62b0aeb3d520a60b2cf|0.5970562367261563|\n|5769b62b0aeb3d520a60b2d0|0.5366103183031256|\n|5769b62b0aeb3d520a60b2d1|0.5271453251277678|\n|5769b62b0aeb3d520a60b2d2|0.5615474367521943|\n|5769b62b0aeb3d520a60b2d3|0.5618483253984619|\n|5769b62b0aeb3d520a60b2d4|0.7325181814005471|\n|5769b62b0aeb3d520a60b2d5|0.5916568730493788|\n|5769b62b0aeb3d520a60b2d6|0.6740272905809721|\n|5769b62c0aeb3d520a60b2d7|0.6581041424869595|\n|5769b62c0aeb3d520a60b2d8|0.5601392679096392|\n|5769b62c0aeb3d520a60b2d9|0.704356455597337 |\n|5769b62c0aeb3d520a60b2da|0.5048696135478702|\n|5769b62c0aeb3d520a60b2db|0.5527047864670187|\n|5769b62c0aeb3d520a60b2dc|0.6888914129357221|\n|5769b62c0aeb3d520a60b2dd|0.9409329768090812|\n|5769b62c0aeb3d520a60b2de|0.5916568730493788|\n|5769b62c0aeb3d520a60b2df|0.8990743756564127|\n|5769b62c0aeb3d520a60b2e0|0.5704710760996892|\n|5769b62c0aeb3d520a60b2e1|0.5547410546297091|\n|5769b62c0aeb3d520a60b2e2|0.6151181334484368|\n|5769b62c0aeb3d520a60b2e3|0.7786151271012263|\n|5769b62c0aeb3d520a60b2e4|0.612957919602872 |\n|5769b62c0aeb3d520a60b2e5|0.5376472331437554|\n|5769b62c0aeb3d520a60b2e6|0.5547410546297091|\n|5769b62c0aeb3d520a60b2e7|0.7189700998441386|\n|5769b62c0aeb3d520a60b2e8|0.5028255314090139|\n|5769b62c0aeb3d520a60b2e9|0.5279469534410799|\n|5769b62c0aeb3d520a60b2ea|0.5069549321801838|\n|5769b62c0aeb3d520a60b2eb|0.5379658923971435|\n|5769b62c0aeb3d520a60b2ec|0.5279469534410799|\n|5769b62c0aeb3d520a60b2ed|0.5547410546297091|\n|5769b62c0aeb3d520a60b2ee|0.640088051298417 |\n|5769b62c0aeb3d520a60b2ef|0.5916568730493788|\n|5769b62c0aeb3d520a60b2f0|0.8584134489631048|\n|5769b62d0aeb3d520a60b2f1|0.551753311128767 |\n|5769b62d0aeb3d520a60b2f2|0.5668488764851124|\n|5769b62d0aeb3d520a60b2f3|0.6083928478082605|\n|5769b62d0aeb3d520a60b2f4|0.8157434412016842|\n|5769b62d0aeb3d520a60b2f5|0.6528138361341936|\n|5769b62d0aeb3d520a60b2f6|0.5916568730493788|\n|5769b62d0aeb3d520a60b2f7|0.6963164611979903|\n|5769b62d0aeb3d520a60b2f8|0.5568958172254169|\n+------------------------+------------------+\nonly showing top 50 rows\n\n"
+      },
+      "dateCreated": "Aug 3, 2016 8:46:32 PM",
+      "dateStarted": "Aug 4, 2016 5:59:19 PM",
+      "dateFinished": "Aug 4, 2016 5:59:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "z.show(end30.select(\"ind\", \"cr\"))",
+      "dateUpdated": "Aug 4, 2016 6:45:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "stackedAreaChart",
+          "height": 300.0,
+          "optionOpen": true,
+          "keys": [
+            {
+              "name": "ind",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "cr",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [
+            {
+              "name": "cr",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "scatter": {
+            "xAxis": {
+              "name": "ind",
+              "index": 0.0,
+              "aggr": "sum"
+            },
+            "yAxis": {
+              "name": "cr",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470333541288_-684296624",
+      "id": "20160804-175901_1799291604",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TABLE",
+        "msg": "ind\tcr\n0.6864495413894328\t2015-08-24 00:00:00.0\n0.7392755388559575\t2015-08-24 00:00:00.0\n0.953660696848521\t2015-08-24 00:00:00.0\n0.5336810059853357\t2016-01-27 07:52:00.0\n0.5547410546297091\t2015-04-12 04:30:00.0\n0.5547410546297091\t2015-01-15 03:17:00.0\n0.5483588272060012\t2015-05-09 12:55:00.0\n0.8323448798778381\t2014-12-04 05:15:00.0\n0.8020997859236295\t2015-08-24 00:00:00.0\n0.5128779030112295\t2015-08-24 00:00:00.0\n1.0\t2016-04-10 00:00:00.0\n0.9999671253057913\t2014-09-02 07:32:23.0\n1.0\t2014-09-05 08:02:56.0\n0.9999999265225953\t2014-09-07 07:05:56.0\n0.9999999709282679\t2014-09-08 00:01:22.0\n0.5547410546297091\t2014-09-01 19:28:48.0\n0.9999999493351986\t2014-11-04 08:28:49.0\n1.0\t2014-11-06 05:44:52.0\n0.8439491843103719\t2014-09-04 19:55:00.0\n1.0\t2014-11-06 13:25:54.0\n0.8439853056707187\t2014-09-06 11:44:00.0\n1.0\t2014-09-07 08:58:00.0\n0.9999546430840016\t2014-11-14 22:55:22.0\n1.0\t2014-11-15 14:14:47.0\n0.9999609635508426\t2014-11-17 10:18:46.0\n0.9998545762431775\t2014-11-19 08:47:33.0\n0.9999999969609219\t2014-11-21 05:46:27.0\n1.0\t2014-11-21 07:30:45.0\n1.0\t2014-11-21 19:09:29.0\n1.0\t2014-11-24 07:06:27.0\n1.0\t2014-11-25 08:15:20.0\n0.5676996416791122\t2014-09-07 17:09:00.0\n0.5077492273510207\t2014-09-08 04:26:00.0\n0.9779015643983172\t2014-09-12 18:18:00.0\n1.0\t2014-09-13 23:52:00.0\n0.9988146330762083\t2014-09-12 22:32:00.0\n0.6630924476892268\t2014-09-12 22:33:00.0\n0.9999999999367273\t2014-12-23 10:57:53.0\n0.865123085151918\t2015-12-09 03:20:00.0\n0.9976918991307533\t2014-09-17 06:01:00.0\n0.9060505775975132\t2014-09-17 08:59:00.0\n0.629548074749916\t2015-01-10 13:32:00.0\n1.0\t2014-09-21 17:43:00.0\n0.9713408240068573\t2014-09-24 00:34:00.0\n0.9999878317643254\t2014-09-17 15:48:36.0\n0.9991514712702958\t2014-09-25 12:47:00.0\n0.830313242839973\t2014-10-02 16:10:00.0\n0.6360848846714481\t2014-09-25 22:55:00.0\n0.9535036889290291\t2014-09-27 18:33:00.0\n0.5024234610994772\t2014-09-28 04:00:00.0\n0.649075425051011\t2014-09-30 16:00:00.0\n0.7565502506218413\t2014-09-30 16:02:00.0\n0.9863809009923444\t2014-10-17 08:46:53.0\n0.8365383396411449\t2014-10-02 07:59:00.0\n0.8556053967372518\t2014-10-02 15:52:00.0\n0.9954593354266478\t2014-10-04 11:34:00.0\n0.8968994171026824\t2014-10-06 19:05:00.0\n0.7106711005933554\t2014-10-09 11:58:00.0\n0.9999995981205448\t2014-09-22 16:36:24.0\n0.9998080401599156\t2014-09-23 20:26:09.0\n1.0\t2015-01-22 11:39:19.0\n1.0\t2015-01-22 17:16:24.0\n1.0\t2014-10-13 00:54:00.0\n0.9990212700836134\t2014-09-25 14:27:25.0\n0.9998570355772588\t2014-09-26 15:06:04.0\n0.9999043229644644\t2014-09-25 18:03:39.0\n0.9999984319893085\t2014-09-26 13:31:54.0\n0.8258253313587998\t2014-10-13 11:03:00.0\n0.5114723400735945\t2014-10-13 22:03:00.0\n0.7485616999227649\t2014-10-15 20:56:00.0\n1.0\t2014-10-20 08:25:00.0\n0.5914777210981078\t2014-10-20 15:33:00.0\n0.9116370302716503\t2014-10-22 03:25:00.0\n0.9146051368891702\t2014-10-22 04:22:00.0\n0.908141382869649\t2014-10-22 08:01:00.0\n0.6244524707243108\t2014-10-23 23:39:00.0\n1.0\t2014-11-06 17:51:19.0\n0.6710607343996488\t2014-10-24 22:09:00.0\n0.996594581165834\t2014-10-24 14:42:00.0\n1.0\t2014-10-26 00:16:00.0\n0.999838467904253\t2014-10-03 19:01:24.0\n0.9127067058221129\t2014-10-27 13:23:00.0\n0.509561679235541\t2014-10-26 12:50:00.0\n0.8575452422851689\t2014-10-28 09:50:00.0\n0.8048837979908628\t2014-10-29 00:13:00.0\n1.0\t2014-10-05 00:15:12.0\n0.9996647423740959\t2014-10-06 14:37:06.0\n0.9140409730696131\t2014-10-30 02:58:00.0\n0.6738220618004231\t2014-10-30 10:24:00.0\n0.8625064368367862\t2014-10-31 11:10:00.0\n0.7707869500151573\t2014-11-01 03:43:00.0\n0.9593674484396397\t2014-11-02 10:11:00.0\n0.9912394308814986\t2014-11-04 00:13:00.0\n0.7394941357630697\t2014-11-04 13:22:00.0\n0.5541330610287216\t2014-11-05 22:28:00.0\n0.5801127992606632\t2014-11-04 23:32:00.0\n0.6936219820595091\t2014-11-07 00:13:00.0\n1.0\t2014-11-09 01:12:00.0\n0.9995109715369747\t2014-11-09 04:11:00.0\n0.9727961046438053\t2014-11-10 02:11:00.0\n0.9952504580841955\t2014-11-11 02:55:00.0\n0.7115784073932142\t2014-11-12 14:19:00.0\n0.9802621457792964\t2014-10-30 21:49:00.0\n0.9916174514722302\t2014-10-05 21:58:00.0\n0.9780748783814787\t2014-10-07 13:29:00.0\n0.5976052404455773\t2014-09-28 21:48:00.0\n0.810625439147078\t2014-09-28 22:40:00.0\n0.9708255794373116\t2014-09-27 08:40:00.0\n0.9973829873142641\t2014-09-27 09:40:00.0\n0.6004420859131885\t2014-11-14 13:32:00.0\n0.995052530259324\t2014-09-02 00:37:00.0\n0.5393585989233831\t2014-09-02 08:33:00.0\n0.7475585663694226\t2014-09-02 17:46:00.0\n0.7277512768669322\t2014-09-03 06:45:00.0\n0.8362859000532645\t2014-09-03 18:25:00.0\n0.664655935357348\t2014-11-13 10:36:00.0\n0.9829974867943976\t2014-09-05 13:02:00.0\n0.7999684648822745\t2014-09-05 17:20:00.0\n0.6633970224360034\t2014-11-17 18:18:00.0\n0.8752177335007971\t2014-11-17 18:54:00.0\n0.9999999909992813\t2014-11-15 06:01:00.0\n0.8409230932543914\t2014-11-16 23:32:00.0\n0.8428517100661845\t2014-11-17 23:31:00.0\n0.9999964782277702\t2014-12-25 20:11:00.0\n0.8839087733478672\t2014-09-06 17:10:00.0\n0.94836415626391\t2014-09-06 18:48:00.0\n0.5013711239676201\t2014-09-06 19:19:00.0\n0.9279087459028253\t2014-09-08 10:36:00.0\n0.9997882650520155\t2015-01-09 22:17:26.0\n0.9941143794633246\t2014-11-20 14:06:00.0\n0.8169762606375806\t2014-11-20 17:33:00.0\n0.9917237291513289\t2014-11-21 17:41:00.0\n0.9769555023725797\t2014-11-21 09:37:00.0\n1.0\t2014-11-23 17:28:00.0\n0.941818189056057\t2014-11-24 02:33:00.0\n0.5960956023585924\t2014-11-25 00:52:00.0\n0.5236832286811205\t2014-11-24 19:00:00.0\n0.556218923908629\t2014-11-25 00:51:00.0\n0.9768461295753291\t2014-11-27 10:36:00.0\n1.0\t2014-11-30 00:00:00.0\n0.992618218330755\t2014-11-30 03:57:00.0\n0.9999574150713967\t2014-09-03 08:54:00.0\n0.9978708970394062\t2014-12-04 05:32:00.0\n0.9999999704474434\t2014-12-04 08:27:00.0\n0.989549960642854\t2014-12-04 16:18:00.0\n0.9999999581916381\t2014-12-04 08:27:00.0\n0.9999150807935991\t2014-12-06 16:36:00.0\n1.0\t2014-12-07 23:21:00.0\n0.9641900192075602\t2014-12-08 21:42:00.0\n0.9693483561387444\t2014-09-06 10:24:00.0\n0.9837238791191957\t2014-12-09 05:26:00.0\n0.9818265974306718\t2014-09-06 15:03:00.0\n0.999999881693288\t2014-09-13 22:25:30.0\n0.9991522978848529\t2014-12-09 21:30:00.0\n0.5517385788494554\t2014-12-09 14:45:00.0\n0.8263594262317737\t2014-12-09 22:25:00.0\n0.7057931134920952\t2014-12-09 20:19:00.0\n0.9999999999999987\t2014-09-14 19:04:19.0\n0.9999938872089958\t2014-09-15 08:52:00.0\n0.7930682673974899\t2014-12-10 16:15:00.0\n0.9660486137747027\t2014-12-11 03:44:00.0\n0.9145585983198117\t2014-09-02 11:58:00.0\n0.918675297299798\t2014-09-02 12:20:00.0\n0.6518620074670118\t2014-09-02 12:36:00.0\n0.999999974723982\t2014-09-15 20:26:57.0\n0.7530636307326333\t2014-09-02 22:11:00.0\n0.8753367245253962\t2014-09-03 23:15:00.0\n0.7677016619640025\t2014-09-03 22:24:00.0\n0.5474586706060668\t2014-09-03 21:42:00.0\n0.6093811820929681\t2014-09-03 12:54:00.0\n0.5243472147488932\t2014-09-03 12:07:00.0\n0.6489739004161434\t2014-09-02 23:20:00.0\n0.5693852262416167\t2014-09-02 22:28:00.0\n0.6104503066535782\t2014-09-02 22:18:00.0\n0.9707019847870638\t2014-09-02 20:45:00.0\n0.8004785958092879\t2014-09-02 19:34:00.0\n0.9956862586587168\t2014-12-13 12:31:00.0\n1.0\t2014-12-14 23:22:00.0\n0.7278602322955349\t2014-09-04 13:05:00.0\n0.9975400008825138\t2014-09-04 12:28:00.0\n0.8455260477052999\t2014-09-04 11:41:00.0\n0.8976979401579432\t2014-09-04 11:39:00.0\n0.7466820888291831\t2014-09-04 11:05:00.0\n0.53143431369407\t2014-09-04 10:12:00.0\n0.919776815105837\t2014-12-14 17:13:00.0\n0.8705982540655676\t2014-12-14 12:21:00.0\n0.9152290018232442\t2014-12-14 15:20:00.0\n0.5498905923260067\t2014-12-14 12:49:00.0\n0.923634058779126\t2015-02-09 06:15:28.0\n0.9997639258856127\t2014-12-16 06:05:00.0\n0.615817169563458\t2014-12-16 05:12:00.0\n0.999998473853909\t2014-12-16 03:54:00.0\n0.9999999999715783\t2014-09-17 13:10:56.0\n0.9745151547267856\t2014-09-17 15:54:27.0\n0.9959681710086028\t2014-09-17 17:04:20.0\n0.999989360379129\t2014-09-17 17:10:00.0\n0.9458209352776638\t2015-02-10 16:03:22.0\n0.6783929001698512\t2014-09-18 03:09:57.0\n0.9999999159210349\t2014-09-18 04:00:09.0\n0.9999970094782715\t2014-09-18 03:31:37.0\n0.9999999999986482\t2014-09-18 04:09:52.0\n0.6151026620627027\t2014-12-19 16:56:00.0\n0.6704296166150554\t2014-12-19 22:54:00.0\n0.9847729651477443\t2014-12-20 09:13:00.0\n0.9978644124128139\t2014-12-20 06:01:00.0\n0.7878735477567536\t2014-09-18 05:17:26.0\n0.5021167435377474\t2014-12-20 22:13:00.0\n0.6103355974089051\t2014-12-21 07:25:00.0\n1.0\t2014-12-22 00:21:00.0\n1.0\t2014-12-22 00:22:00.0\n0.8637693767203538\t2014-12-21 20:18:00.0\n0.999999999356679\t2014-09-18 11:53:29.0\n1.0\t2014-09-18 13:19:46.0\n0.9999999581086945\t2014-09-18 12:44:29.0\n1.0\t2014-09-18 15:24:52.0\n0.9999947355173051\t2014-09-18 16:10:40.0\n0.9999999872809938\t2014-09-18 17:56:56.0\n1.0\t2014-09-18 20:25:42.0\n0.9715462390955842\t2014-09-18 20:54:56.0\n0.9999581018848497\t2014-09-19 01:47:49.0\n1.0\t2014-09-19 02:43:42.0\n0.9366540796899065\t2014-09-08 17:38:00.0\n0.6123441672927888\t2014-09-08 21:31:00.0\n0.6418870853450862\t2014-09-08 21:21:00.0\n0.5630725259649112\t2014-09-08 21:09:00.0\n0.7268724501326117\t2014-09-08 21:07:00.0\n0.5775979068408191\t2014-09-08 19:36:00.0\n0.9565243032200837\t2014-09-10 15:34:00.0\n0.5282478461726923\t2014-12-27 08:53:00.0\n1.0\t2014-12-28 14:35:00.0\n0.999999999983473\t2014-09-19 05:02:04.0\n0.8337444673249139\t2014-12-26 18:35:00.0\n0.538539293156505\t2014-12-28 02:37:00.0\n0.7178339005698468\t2014-12-29 14:53:00.0\n0.9993316313096036\t2014-12-29 12:45:00.0\n0.8677982432105039\t2014-12-29 18:30:00.0\n0.9851492944301224\t2015-02-12 07:54:01.0\n0.7954937739503277\t2015-01-02 13:49:00.0\n0.9400429432522082\t2015-01-04 03:43:00.0\n0.6929761079665099\t2015-01-04 10:46:00.0\n0.9148134243044022\t2015-01-04 06:06:00.0\n0.7840484587952882\t2015-01-03 16:16:00.0\n0.5043946220659552\t2015-01-05 16:16:00.0\n0.9655279042042599\t2015-01-06 09:15:00.0\n0.9981519067290555\t2015-01-06 23:53:00.0\n0.9655279042042599\t2015-01-06 21:55:00.0\n0.9781941282452395\t2014-09-26 11:17:00.0\n0.5280774472161472\t2015-01-08 00:49:00.0\n0.8003720083357322\t2015-01-08 00:56:00.0\n0.7086339299758748\t2015-01-07 19:04:00.0\n0.5760425833326098\t2015-01-07 19:02:00.0\n0.8793875127928847\t2015-01-07 19:05:00.0\n0.9236833639819564\t2015-01-07 19:09:00.0\n0.982845616890401\t2015-02-13 00:29:28.0\n0.5602456516675228\t2015-01-09 01:04:00.0\n0.7452969580240265\t2015-01-04 17:56:00.0\n0.9747893059103059\t2015-01-10 04:46:00.0\n0.9892306159325537\t2015-01-09 19:34:00.0\n0.8640711544186102\t2015-01-10 11:45:00.0\n0.7979716218962457\t2015-01-11 07:45:00.0\n0.6365898994857268\t2015-01-11 23:02:00.0\n1.0\t2015-01-12 17:51:00.0\n1.0\t2015-04-05 13:54:05.0\n0.9999994364901175\t2014-09-19 21:26:26.0\n0.9999657577578672\t2014-09-19 22:52:51.0\n0.9999752866966857\t2014-09-20 03:10:43.0\n0.9999973332890767\t2014-09-20 03:34:14.0\n0.9999917842408278\t2014-09-20 03:42:53.0\n0.950329745636039\t2015-01-13 06:21:00.0\n0.9846285445985996\t2015-01-13 03:57:00.0\n0.7159022545060727\t2015-01-14 10:40:00.0\n0.9999831754442123\t2015-01-22 19:48:27.0\n0.9556154012582837\t2015-02-19 05:39:05.0\n0.9949433157362546\t2015-02-19 08:40:21.0\n0.9999999999999689\t2015-01-15 15:34:57.0\n0.9992195612421054\t2015-02-20 13:49:21.0\n0.999999986414055\t2015-01-15 20:53:00.0\n0.9570931458389704\t2015-01-16 07:55:00.0\n0.9482430724881482\t2015-01-16 12:34:00.0\n0.9992806987701279\t2014-09-20 09:33:03.0\n0.9999999875022737\t2014-10-07 14:01:09.0\n0.6973721839725432\t2015-01-17 13:32:00.0\n0.8722255925198626\t2015-01-17 13:12:00.0\n0.9999999853591577\t2014-09-20 11:22:21.0\n0.9999999998262843\t2014-09-20 11:20:12.0\n0.8310054405229816\t2015-01-18 11:14:00.0\n0.931074462854013\t2015-01-18 12:08:00.0\n0.9999999658350537\t2014-09-20 15:55:13.0\n0.9022419685817272\t2014-09-20 15:46:56.0\n0.9999615544106096\t2014-09-20 16:12:31.0\n0.9999797481413721\t2014-09-20 15:19:00.0\n0.92713224580301\t2015-01-20 21:49:00.0\n0.9803277280376399\t2015-01-21 15:15:00.0\n0.9989168102323054\t2015-01-21 15:09:00.0\n0.999999999999593\t2014-09-20 17:13:34.0\n0.661128135706871\t2014-09-19 21:40:00.0\n0.8198964006985551\t2014-09-12 23:02:00.0\n0.9395556667737299\t2014-09-12 22:35:00.0\n0.8771093776281347\t2015-01-22 03:14:00.0\n0.8738146259968791\t2014-09-21 02:03:35.0\n0.8418738527533195\t2014-09-21 03:28:03.0\n0.9949837986932665\t2014-09-21 07:48:54.0\n0.9999999999999989\t2014-09-21 08:12:51.0\n1.0\t2014-09-21 16:00:08.0\n1.0\t2014-09-21 14:53:02.0\n0.99999998242748\t2014-09-21 14:42:22.0\n0.9999979064499518\t2014-09-21 21:46:52.0\n0.7932418402391759\t2015-01-20 16:12:00.0\n0.9985876255258721\t2014-09-22 01:58:26.0\n1.0\t2015-01-25 20:46:00.0\n0.6184365246646273\t2015-01-26 10:46:00.0\n0.9999999999999993\t2014-09-22 05:40:21.0\n0.999999990398947\t2014-09-22 06:16:19.0\n0.8801701294138576\t2015-01-26 11:48:00.0\n0.9999999520037802\t2014-09-22 11:27:29.0\n0.9973521070705693\t2014-09-22 11:59:25.0\n0.7524704610623815\t2015-01-26 12:26:00.0\n0.9999999135304164\t2014-09-22 14:29:29.0\n0.683163467397631\t2014-09-13 16:43:00.0\n0.9999997851830669\t2014-09-22 15:08:51.0\n0.7738335418831218\t2014-09-22 08:28:00.0\n0.5835042936487764\t2015-01-28 11:37:00.0\n0.9920669419014597\t2015-01-27 00:04:00.0\n0.9998914423774358\t2014-09-22 16:15:33.0\n1.0\t2014-09-22 19:14:07.0\n0.5306812338316194\t2015-01-29 15:33:00.0\n0.999990776725035\t2014-09-23 03:36:10.0\n0.9999960002012874\t2014-09-23 07:22:27.0\n1.0\t2014-09-23 09:12:30.0\n0.9078269115438656\t2014-09-24 03:12:50.0\n0.5564339713382791\t2014-09-15 23:47:00.0\n0.998358551960947\t2015-02-01 13:13:00.0\n0.9999999712977051\t2014-09-24 10:42:02.0\n1.0\t2014-09-24 09:41:35.0\n0.5490395019890916\t2015-02-01 02:36:00.0\n1.0\t2014-09-24 20:04:56.0\n0.8418829459418531\t2014-09-24 16:22:05.0\n0.9999999208511186\t2014-09-24 20:21:53.0\n0.9999999982153522\t2014-09-24 21:37:42.0\n0.9999999995660667\t2014-09-25 01:07:57.0\n0.9999903682984693\t2014-09-25 02:33:52.0\n0.9997167855833042\t2014-09-24 23:44:25.0\n0.9999998259255128\t2014-09-25 03:21:43.0\n0.8641688093750576\t2014-09-25 07:34:33.0\n1.0\t2014-09-25 09:23:29.0\n0.9999999999998874\t2014-09-25 09:11:28.0\n0.9999755291401613\t2014-09-25 06:53:51.0\n0.9999996878177224\t2014-09-25 08:01:37.0\n1.0\t2014-09-25 08:29:16.0\n0.7530539889679073\t2015-02-02 09:08:00.0\n0.9999985982069849\t2014-09-25 12:50:41.0\n0.9999866632646737\t2014-09-25 13:56:05.0\n1.0\t2015-02-02 10:00:00.0\n1.0\t2015-02-02 10:58:00.0\n0.9996165723748116\t2014-09-26 03:50:17.0\n0.9219261248286164\t2014-09-26 08:35:16.0\n0.9146130531408464\t2014-10-23 12:21:00.0\n0.7312007203889839\t2014-09-16 14:02:00.0\n0.7066857780592588\t2015-02-03 12:49:00.0\n0.9518379107764711\t2015-02-04 13:27:00.0\n0.9591588352819536\t2015-02-05 22:58:00.0\n0.607104464537576\t2015-02-05 22:48:00.0\n1.0\t2015-02-08 00:34:00.0\n0.7162800755274409\t2014-12-10 19:19:00.0\n0.9999357758186002\t2014-09-29 06:02:18.0\n0.999999999999593\t2014-09-20 15:22:52.0\n0.9999988308824522\t2014-10-01 12:02:32.0\n0.9999990472374807\t2014-10-02 11:14:01.0\n0.9737070351546401\t2014-10-02 10:27:05.0\n0.9999999882528402\t2014-10-01 07:08:17.0\n0.9999998857756272\t2014-09-30 22:28:59.0\n0.999999981195176\t2014-10-02 11:31:15.0\n0.9999828498268538\t2014-10-01 18:52:07.0\n0.9999938626288957\t2014-10-02 14:37:48.0\n0.9999993500447032\t2014-10-03 17:06:42.0\n0.9999152696229165\t2014-10-03 06:27:39.0\n0.9999948815430332\t2014-10-03 14:52:58.0\n0.9999999851519183\t2014-10-03 20:10:03.0\n0.9999982215979669\t2014-10-03 10:03:01.0\n0.9992480117560769\t2014-10-03 07:37:29.0\n0.9917318001423981\t2014-10-03 08:36:33.0\n1.0\t2014-10-04 17:42:07.0\n0.9999998785221734\t2014-10-02 20:50:03.0\n0.9999488374583136\t2014-10-05 05:39:58.0\n0.9489807574669312\t2015-02-12 00:33:00.0\n0.7066857780592588\t2015-02-12 08:52:00.0\n0.9249081014132279\t2015-02-11 09:38:00.0\n0.7732245202367621\t2015-02-11 15:18:00.0\n0.5585788787355951\t2015-02-11 15:12:00.0\n0.8231238269344798\t2015-02-12 08:18:00.0\n0.8614411043616345\t2015-02-12 19:12:00.0\n0.690919186929675\t2015-02-12 16:20:00.0\n0.9999999999917268\t2014-10-08 00:40:48.0\n0.9999999999999989\t2014-10-08 13:43:12.0\n1.0\t2014-10-08 16:13:37.0\n0.9999704200219675\t2014-11-06 16:48:13.0\n0.7576446213525269\t2015-02-14 18:26:00.0\n0.9923895664852078\t2015-02-14 04:55:00.0\n0.9987691646400639\t2014-11-10 05:41:43.0\n0.9999575222162703\t2014-10-09 05:44:28.0\n0.973253682110525\t2014-10-01 14:06:00.0\n1.0\t2014-11-06 10:35:34.0\n0.8628916821891429\t2015-02-16 22:30:00.0\n0.999946272117855\t2014-11-10 23:39:40.0\n1.0\t2014-11-12 02:28:54.0\n1.0\t2014-11-12 10:28:19.0\n0.9999957144288074\t2015-02-18 15:52:00.0\n0.9536973736379514\t2015-02-18 17:09:00.0\n0.9300908670831866\t2014-09-23 23:16:00.0\n1.0\t2014-11-16 05:41:20.0\n0.9627306880948255\t2015-02-21 11:51:00.0\n1.0\t2015-02-22 18:04:00.0\n0.577337953429141\t2015-02-23 05:36:00.0\n0.8033525903556498\t2015-02-24 21:25:00.0\n0.9579245493197543\t2015-02-24 17:07:00.0\n0.7978648058278006\t2014-09-26 14:24:00.0\n0.9074778473718095\t2014-09-01 00:00:00.0\n0.7757095145469315\t2014-09-01 23:00:00.0\n0.9755468960254517\t2014-10-02 14:50:00.0\n0.6566189788810163\t2015-02-27 18:54:00.0\n0.9794283221752706\t2015-02-27 15:39:00.0\n0.9987716173260751\t2015-03-01 09:15:00.0\n1.0\t2015-03-01 00:57:00.0\n0.7389963699886682\t2014-09-25 23:11:27.0\n0.8940205574457973\t2015-02-24 19:38:00.0\n0.8899418820960174\t2015-02-24 19:43:00.0\n0.9744537503101225\t2015-02-24 19:48:00.0\n0.6965004276363993\t2015-02-24 22:43:00.0\n0.548881241553957\t2015-02-25 09:25:00.0\n0.5044490584493085\t2015-02-25 13:33:00.0\n0.6931429452546891\t2015-02-25 21:22:00.0\n0.5882458294117299\t2015-02-24 13:17:00.0\n0.8832475523829204\t2015-02-24 19:18:00.0\n0.5023024286051548\t2015-02-24 19:23:00.0\n0.6827754813275192\t2015-02-24 23:29:00.0\n0.5456292777313135\t2015-02-25 21:15:00.0\n0.9097269650296284\t2015-02-24 10:02:00.0\n0.7422977951542598\t2015-02-24 10:04:00.0\n0.7466948812691797\t2015-02-24 10:13:00.0\n0.9477987666991413\t2015-02-24 10:17:00.0\n0.5173682502059949\t2015-02-24 13:47:00.0\n0.551095817711\t2015-02-24 18:41:00.0\n0.9502553558336286\t2015-02-24 08:08:00.0\n0.5965035186152998\t2015-02-24 08:43:00.0\n0.5892660765170596\t2015-02-24 09:07:00.0\n0.5374786428268893\t2015-02-24 09:09:00.0\n0.7052822876716128\t2015-02-24 09:13:00.0\n0.5961209522731256\t2015-02-24 09:20:00.0\n0.5966340105537205\t2015-02-24 09:21:00.0\n0.7028572271236249\t2015-02-24 09:30:00.0\n0.80087828220184\t2015-02-24 09:41:00.0\n0.6117592689449699\t2015-02-24 08:45:00.0\n0.9972529945835531\t2015-02-24 09:00:00.0\n0.6968937335097901\t2015-03-03 12:31:00.0\n1.0\t2015-03-05 10:02:00.0\n0.5506205569080956\t2014-10-01 10:01:00.0\n0.98356029992344\t2015-03-07 18:18:00.0\n0.9873546359736687\t2015-03-07 11:40:00.0\n0.9782260215256136\t2015-03-06 14:59:00.0\n0.9998821597628741\t2014-10-20 12:51:00.0\n0.9650134358576382\t2014-10-20 13:16:00.0\n1.0\t2015-03-08 12:50:00.0\n1.0\t2015-03-08 12:50:00.0\n0.5625620147007646\t2014-09-06 14:41:00.0\n0.5491140959998679\t2014-09-06 14:54:00.0\n0.8007538115990477\t2014-10-02 17:15:00.0\n0.7130251857462225\t2015-03-12 21:22:00.0\n1.0\t2014-09-08 14:58:10.0\n0.9339383323260102\t2015-03-14 18:02:00.0\n0.5606365382083718\t2015-03-15 12:22:00.0\n1.0\t2015-03-15 23:21:00.0\n0.9922577518885586\t2014-10-04 14:39:00.0\n0.9570215212771108\t2014-09-30 12:18:00.0\n0.6450899179382966\t2015-03-16 08:05:00.0\n0.5326958116991085\t2015-03-16 02:04:00.0\n0.9796788392053258\t2015-03-17 01:01:00.0\n1.0\t2015-03-15 23:21:00.0\n0.8459519238462058\t2014-10-06 14:15:00.0\n0.9956993940863013\t2014-10-06 13:08:00.0\n0.8139465154324265\t2015-03-15 04:05:00.0\n0.8981751609161082\t2015-03-15 11:46:00.0\n0.9245499359951121\t2014-09-01 07:41:00.0\n0.5039458222384037\t2015-03-18 14:20:00.0\n0.5808166760706859\t2015-03-20 12:31:00.0\n0.8036012461290482\t2015-03-19 16:33:00.0\n1.0\t2014-12-03 16:54:23.0\n0.7626790190865645\t2014-10-10 22:11:00.0\n0.728264741192285\t2014-10-10 21:20:00.0\n0.9952076457725321\t2014-10-09 22:09:00.0\n0.9719459369515049\t2015-03-21 13:29:00.0\n1.0\t2015-03-22 16:20:00.0\n0.7709970702043543\t2015-03-22 10:53:00.0\n1.0\t2015-03-13 18:23:51.0\n0.9997920598846243\t2014-12-05 09:42:02.0\n1.0\t2014-12-05 10:35:01.0\n1.0\t2015-03-22 16:20:00.0\n0.9996516422992532\t2014-09-02 12:12:00.0\n0.8170477400230974\t2015-03-24 19:55:00.0\n0.7868059266323076\t2015-03-26 00:03:00.0\n0.6695743209376238\t2015-03-25 23:47:00.0\n1.0\t2015-03-22 16:20:00.0\n0.7174474216939971\t2014-10-17 15:43:00.0\n0.7527521702414797\t2015-03-26 22:38:00.0\n0.8891236398166754\t2015-03-26 15:05:00.0\n0.9440047835531672\t2015-03-26 16:56:00.0\n0.87632839346624\t2015-03-26 17:52:00.0\n0.9219243067315237\t2015-03-26 12:21:00.0\n0.8133515003117493\t2015-03-26 13:30:00.0\n0.5597409762413839\t2015-03-26 10:32:00.0\n0.8279921742424867\t2015-03-26 11:34:00.0\n0.9008184896730878\t2015-03-26 11:05:00.0\n0.8647128039413166\t2015-03-26 11:41:00.0\n0.622892194675218\t2015-03-28 00:29:00.0\n0.7720064127644642\t2014-10-19 13:08:00.0\n0.8288225545368548\t2014-10-19 19:41:00.0\n0.9999999825019873\t2015-03-28 22:51:00.0\n0.9998566150685793\t2014-12-10 14:00:45.0\n0.7348049200422766\t2014-10-20 22:16:00.0\n0.5178860414257731\t2014-10-20 21:24:00.0\n0.8618230583073041\t2014-10-20 20:19:00.0\n0.6648565441617107\t2014-10-21 10:21:00.0\n0.8046715428849671\t2014-10-21 15:03:00.0\n1.0\t2014-12-11 02:10:42.0\n0.9610887750643221\t2015-03-30 12:26:00.0\n0.5837909824867732\t2015-03-30 00:34:00.0\n0.8460408670946803\t2014-10-21 22:21:00.0\n0.7585144076052314\t2014-10-21 20:02:00.0\n0.8626238661576523\t2014-10-21 18:17:00.0\n0.7049284020652793\t2014-10-21 18:01:00.0\n0.9409077944001799\t2014-10-22 10:17:00.0\n0.509728168838538\t2015-06-24 19:27:00.0\n1.0\t2014-12-12 12:07:16.0\n0.5568890773303099\t2014-10-24 09:42:00.0\n0.7098625939109292\t2014-10-26 17:27:00.0\n0.9999800620428945\t2014-09-05 18:54:00.0\n0.9999863965036794\t2014-09-05 18:08:00.0\n1.0\t2014-12-13 21:55:29.0\n0.6593464085648055\t2014-10-28 18:35:00.0\n0.9626615448507778\t2014-10-28 14:18:00.0\n1.0\t2014-12-14 09:55:27.0\n0.9629250290645801\t2014-11-12 01:01:00.0\n0.5489331465411876\t2014-09-08 12:20:00.0\n0.9587861878095382\t2014-11-03 16:03:00.0\n0.9999251355468328\t2015-03-29 23:43:00.0\n0.9320468403387209\t2014-11-01 23:18:54.0\n0.9274735215366495\t2015-03-29 09:22:00.0\n0.9336538845173222\t2014-11-10 19:11:00.0\n0.9999760081598685\t2014-11-11 22:12:00.0\n0.9546926835772965\t2014-11-12 00:16:00.0\n0.9737348259331379\t2014-11-12 13:27:00.0\n0.9321537201921763\t2014-09-05 18:43:19.0\n0.97333039905553\t2014-11-13 10:23:00.0\n0.6647320754884218\t2014-11-13 13:59:00.0\n0.5215462397312057\t2014-11-12 15:24:00.0\n0.7979781853046858\t2014-11-12 13:58:00.0\n0.7837326535237962\t2014-11-14 09:25:00.0\n0.9706545916331845\t2014-11-14 15:46:00.0\n0.5069980159457308\t2014-11-14 17:22:00.0\n0.8763125493699127\t2015-01-09 10:15:00.0\n0.873354092448909\t2015-03-28 01:26:00.0\n0.9951970340824007\t2014-11-17 20:14:00.0\n0.7056387353389857\t2015-01-14 10:54:40.0\n0.779345533101339\t2015-01-14 11:00:14.0\n0.7529596730223072\t2015-01-14 11:29:52.0\n0.6387187029753185\t2015-01-14 11:22:19.0\n0.7173528228863384\t2015-01-14 11:26:15.0\n0.8693065750300218\t2015-01-14 19:54:42.0\n0.571928701105957\t2014-09-10 15:22:00.0\n0.790255510106578\t2015-04-11 21:17:32.0\n0.9999972127294223\t2015-04-12 12:40:51.0\n0.8305896797892296\t2015-01-15 13:35:49.0\n0.580023433651682\t2014-09-16 20:48:00.0\n0.6607855719588829\t2014-09-16 20:52:00.0\n0.9994134360561047\t2015-01-16 11:59:25.0\n0.7265074055785596\t2015-01-16 12:11:55.0\n0.6438641607275761\t2015-01-16 12:18:40.0\n0.6620121874520988\t2014-11-25 22:37:00.0\n0.9867545173439107\t2014-09-17 09:49:00.0\n0.6668499533400254\t2014-09-17 17:13:00.0\n0.7637645895034746\t2014-09-17 18:23:00.0\n0.5073481973755439\t2015-07-14 00:00:00.0\n0.7421712341843035\t2015-01-17 10:40:47.0\n0.8029223346829133\t2015-01-17 09:58:24.0\n0.9911673843896326\t2014-11-07 16:47:00.0\n0.9103564662971293\t2015-01-18 09:40:37.0\n0.9850594639933494\t2015-01-19 13:17:43.0\n0.9653674954829096\t2015-01-19 13:35:18.0\n0.9305109776423359\t2015-01-19 13:27:16.0\n0.9030585400245891\t2015-03-31 20:41:00.0\n0.6484242001900584\t2014-11-29 22:46:00.0\n0.882742874981817\t2015-01-19 20:04:39.0\n0.8984894295151727\t2015-01-19 20:06:16.0\n0.8592822165116807\t2014-11-12 19:25:00.0\n0.7007191233302843\t2014-11-12 17:29:00.0\n0.5600105396092082\t2014-11-12 17:32:00.0\n0.9679241966787477\t2015-01-21 00:15:21.0\n0.692177329027552\t2015-01-21 00:10:28.0\n0.9972211240047792\t2014-12-03 21:40:00.0\n0.7299797661598548\t2015-01-21 00:31:24.0\n0.7765666614388927\t2015-01-21 00:39:18.0\n0.8065871793911605\t2015-01-21 01:05:29.0\n0.8970705734720927\t2015-01-21 09:25:40.0\n0.9552303176084754\t2015-01-21 12:29:10.0\n0.9112922843995651\t2015-01-21 12:14:18.0\n0.9177266604508207\t2014-12-04 14:19:00.0\n0.9349169984584188\t2015-01-21 13:49:13.0\n0.9899745943427131\t2015-01-21 15:06:57.0\n0.9876842867309295\t2015-01-21 15:31:24.0\n0.8622288791397235\t2015-01-21 17:06:31.0\n0.9999057876599751\t2014-09-10 16:11:00.0\n0.5913873846688021\t2015-01-21 19:32:11.0\n0.6990364489423416\t2015-01-21 19:32:43.0\n0.63113617052095\t2015-01-21 21:10:09.0\n0.9638707721631814\t2014-11-29 18:07:00.0\n0.998889779936017\t2014-11-30 07:41:00.0\n0.9402449086290389\t2015-01-21 23:06:36.0\n0.9999958034522368\t2014-11-14 10:57:00.0\n0.9999006229005798\t2014-11-14 10:01:00.0\n0.9760295242008316\t2015-01-22 01:38:38.0\n0.5843438336475524\t2015-01-22 04:37:37.0\n0.6062323873520188\t2015-01-22 08:36:02.0\n0.9977062740657765\t2015-01-22 09:06:38.0\n0.9764262778499998\t2015-01-22 09:19:26.0\n0.9623853329763757\t2015-01-22 09:23:53.0\n0.9897389985334542\t2015-01-22 09:24:21.0\n0.6718842683747798\t2015-01-22 09:36:44.0\n0.5896961378606828\t2015-01-22 09:53:58.0\n0.9317239745534222\t2015-01-22 10:21:43.0\n0.6200724660649242\t2015-01-22 09:44:10.0\n0.7826151695253403\t2015-01-22 10:44:59.0\n0.8139508807197834\t2015-01-22 11:52:43.0\n0.7575068628722935\t2015-01-22 11:28:44.0\n0.9737400107094427\t2015-01-22 12:53:16.0\n0.9997652323892114\t2015-01-22 12:34:57.0\n0.5789136166188146\t2015-01-22 12:03:50.0\n0.944290338630243\t2015-01-22 12:29:37.0\n0.8961639426036908\t2015-01-22 12:23:43.0\n0.9737944955938899\t2015-01-22 12:26:51.0\n0.8819616991845844\t2015-01-22 12:37:26.0\n0.9958778521928233\t2015-01-22 12:41:33.0\n0.9195685369947062\t2015-01-22 13:09:27.0\n0.6993628113888821\t2015-01-22 13:12:19.0\n0.6949542328260302\t2015-01-22 13:57:55.0\n0.9895010536121814\t2015-01-22 14:28:32.0\n0.6166632376105309\t2015-03-31 21:00:00.0\n0.8562103302367338\t2015-03-31 21:58:00.0\n0.6652558460594886\t2015-03-31 22:55:00.0\n0.5791311077959573\t2015-04-01 12:13:00.0\n0.5105630366591182\t2015-03-31 21:19:00.0\n0.6014907155804534\t2015-03-31 22:49:00.0\n0.6828600321950941\t2015-03-31 20:46:00.0\n0.8119496479297517\t2014-12-07 17:38:00.0\n0.775311761863242\t2014-09-29 02:34:00.0\n0.5864721932499679\t2015-01-22 17:46:52.0\n0.9809170134647871\t2015-01-22 19:18:22.0\n0.6278361111557252\t2015-01-22 19:44:13.0\n0.9893176507926852\t2014-09-25 12:58:39.0\n0.7748427302541575\t2015-01-22 23:25:42.0\n0.9908652594593214\t2014-12-08 15:14:00.0\n0.6334810718620655\t2015-01-23 08:25:30.0\n0.6504700272900161\t2015-01-23 08:04:40.0\n0.7168865368151675\t2015-01-23 10:25:47.0\n0.5830547787209505\t2015-01-23 11:25:59.0\n0.7798221264500373\t2015-01-23 12:34:15.0\n0.9600690036249162\t2014-09-25 15:16:55.0\n0.7724673008416362\t2015-01-23 13:45:43.0\n0.6269191776465404\t2015-01-23 13:38:58.0\n0.9474836656779707\t2015-01-23 13:33:37.0\n0.6116159842592491\t2015-01-23 13:40:31.0\n0.9799824554160063\t2015-01-23 13:26:27.0\n0.7370358825225457\t2015-01-23 13:51:54.0\n0.5796494165928573\t2015-01-23 13:57:51.0\n0.7054867309794757\t2015-01-23 15:00:02.0\n0.9539381482744761\t2015-01-23 15:23:23.0\n0.7307398711909452\t2015-01-23 19:04:09.0\n0.9605291931121944\t2014-09-10 09:17:10.0\n0.99938571247926\t2014-09-26 05:32:43.0\n0.5554342372083858\t2014-09-26 06:23:43.0\n0.517384591828551\t2014-09-26 07:57:26.0\n0.9376663959395737\t2015-01-24 08:57:30.0\n0.8988972579997039\t2014-09-26 08:20:50.0\n0.9498364897181799\t2014-09-26 09:44:44.0\n0.9813106194583568\t2014-09-26 09:47:06.0\n0.8482955092487561\t2014-09-26 08:45:29.0\n0.9956934268163058\t2014-09-26 09:49:39.0\n0.9824301342146533\t2014-09-26 08:36:51.0\n0.9788375359329752\t2014-09-26 10:36:42.0\n0.5323108345209292\t2014-09-26 11:34:15.0\n0.6913644211745449\t2014-09-26 10:25:24.0\n0.6790531784990633\t2014-09-26 11:07:09.0\n0.7073819391833678\t2014-12-10 23:44:00.0\n0.9954417250226397\t2014-09-27 03:42:03.0\n0.962054573246473\t2014-09-27 04:49:32.0\n0.85128668590972\t2014-09-27 04:24:42.0\n0.9747240630558269\t2014-09-27 04:36:07.0\n0.9852321864876732\t2014-09-27 05:11:12.0\n0.9916921843110741\t2014-09-27 06:09:49.0\n0.9352156085399379\t2014-12-10 17:16:00.0\n0.9228689906202789\t2014-09-27 07:34:24.0\n0.7808106413947389\t2014-09-27 08:30:37.0\n0.7831976470865505\t2014-12-11 07:29:00.0\n0.8762348892090616\t2014-09-27 13:33:59.0\n0.7998571915311062\t2014-09-27 13:56:25.0\n0.974616029911603\t2014-09-27 14:35:35.0\n0.9209542719845366\t2014-09-27 14:32:01.0\n0.889848569782852\t2014-09-27 15:28:49.0\n0.999584466495451\t2014-10-31 21:26:00.0\n0.9999999999999956\t2014-11-01 00:22:00.0\n1.0\t2014-11-01 00:58:00.0\n1.0\t2014-11-01 00:12:00.0\n0.9999592068826487\t2014-10-31 23:42:00.0\n1.0\t2014-10-31 22:43:00.0\n0.5898855920103999\t2014-12-11 20:05:00.0\n1.0\t2014-10-31 22:57:00.0\n1.0\t2014-10-31 22:47:00.0\n1.0\t2014-10-31 21:08:00.0\n1.0\t2014-10-31 21:27:00.0\n0.9986355248668136\t2014-09-19 08:14:47.0\n0.6983005352148652\t2015-01-25 22:12:10.0\n1.0\t2014-11-01 20:27:00.0\n1.0\t2014-11-01 17:58:00.0\n0.5191934691005254\t2015-01-25 23:02:15.0\n1.0\t2014-11-01 15:35:00.0\n0.9999999929780787\t2014-11-01 15:56:00.0\n0.9586525598954947\t2014-11-01 15:30:00.0\n1.0\t2014-11-01 15:23:00.0\n1.0\t2014-11-01 13:34:00.0\n1.0\t2014-11-01 11:02:00.0\n0.9300018327519367\t2015-01-25 23:30:24.0\n1.0\t2014-11-01 10:17:00.0\n1.0\t2014-11-01 09:23:00.0\n1.0\t2014-11-01 09:21:00.0\n1.0\t2014-11-01 09:00:00.0\n0.9532301327834516\t2015-01-26 14:34:34.0\n0.7393786582951285\t2015-01-26 14:44:30.0\n0.585480081081235\t2015-01-26 14:38:51.0\n0.5344043419265139\t2015-01-26 14:39:41.0\n0.6600855575742204\t2015-01-26 14:41:42.0\n0.6588674657064557\t2015-01-26 15:40:52.0\n0.8769131807739882\t2015-01-26 14:51:05.0\n0.8296820979329125\t2015-01-26 15:04:29.0\n0.9999998282749643\t2014-09-10 18:11:00.0\n0.5406688843017491\t2015-01-26 15:09:48.0\n0.77658293519041\t2015-01-26 14:50:55.0\n0.9979487110416554\t2015-01-26 14:53:18.0\n0.9403257894677964\t2015-01-26 15:35:58.0\n0.7270436936275684\t2015-01-26 15:38:16.0\n0.7637563265023939\t2015-01-26 15:39:35.0\n0.6820099489889422\t2015-01-26 16:09:51.0\n0.7445025998983801\t2015-01-26 16:10:33.0\n0.8615821011354587\t2015-01-26 16:11:03.0\n0.5088652164167976\t2015-01-26 16:21:24.0\n0.5593066954311289\t2015-01-26 16:53:07.0\n0.5463723194120541\t2015-01-26 16:31:02.0\n1.0\t2014-11-01 21:44:00.0\n0.9999997586027697\t2014-11-01 20:03:00.0\n0.99999999999031\t2014-11-01 13:43:00.0\n1.0\t2014-11-01 13:48:00.0\n0.5114534736784918\t2015-04-01 21:26:00.0\n0.7090882019138905\t2015-04-01 21:46:00.0\n0.5135031052762784\t2015-04-01 00:22:00.0\n0.6369899581579319\t2015-04-01 20:54:00.0\n0.6914209675886471\t2015-04-01 00:24:00.0\n0.9907321412711835\t2015-01-26 22:05:05.0\n1.0\t2014-11-03 00:12:00.0\n1.0\t2014-11-03 00:07:00.0\n0.5889991631824563\t2015-01-26 23:06:17.0\n0.9865085959742709\t2015-01-26 23:07:11.0\n1.0\t2014-11-02 23:51:00.0\n0.9018355259371317\t2015-01-26 22:52:36.0\n0.7548783808428347\t2015-01-26 22:52:51.0\n1.0\t2014-11-03 00:25:00.0\n0.5174717608535025\t2015-01-27 00:15:50.0\n0.7603649982774913\t2015-01-27 08:12:13.0\n0.5080290650401695\t2015-01-27 08:16:00.0\n0.9749433001967709\t2015-01-27 09:10:57.0\n0.730400134399816\t2015-01-27 09:03:36.0\n0.5974759717633128\t2015-01-27 11:21:27.0\n0.7532541919896978\t2014-11-03 14:14:00.0\n0.9999999999999998\t2014-11-03 14:17:00.0\n1.0\t2014-11-03 13:56:00.0\n1.0\t2014-11-03 13:07:00.0\n1.0\t2014-11-03 12:48:00.0\n1.0\t2014-11-03 12:31:00.0\n0.9999409497594924\t2014-11-03 12:28:00.0\n0.9975824858264725\t2015-01-27 12:35:26.0\n0.728422588149873\t2015-04-03 07:10:00.0\n0.5189816815302435\t2015-01-27 13:28:26.0\n0.9970637710239134\t2015-01-27 13:03:32.0\n0.9082136367297081\t2015-01-27 14:07:26.0\n0.6506172267711497\t2015-01-27 14:31:37.0\n0.6756968229232356\t2015-01-27 14:52:12.0\n1.0\t2014-11-04 03:57:00.0\n1.0\t2014-11-04 03:45:00.0\n1.0\t2014-11-04 03:58:00.0\n0.9999999999999953\t2014-11-04 03:42:00.0\n0.9999999999999962\t2014-11-04 03:24:00.0\n0.9999999999999991\t2014-11-04 02:56:00.0\n0.9732821745348358\t2015-01-27 21:00:48.0\n0.7333033720266889\t2014-12-13 14:12:00.0\n0.6662555162223386\t2014-12-13 23:22:00.0\n0.8703897359132192\t2014-12-13 20:44:00.0\n0.6001626391589652\t2014-12-13 16:47:00.0\n1.0\t2014-11-04 14:11:00.0\n1.0\t2014-11-04 13:51:00.0\n0.9999999998183771\t2014-11-04 10:51:00.0\n1.0\t2014-11-04 10:41:00.0\n1.0\t2014-11-04 10:36:00.0\n1.0\t2014-11-04 10:39:00.0\n1.0\t2014-11-04 10:02:00.0\n1.0\t2014-11-04 10:13:00.0\n1.0\t2014-11-04 09:53:00.0\n1.0\t2014-11-04 08:25:00.0\n0.9999999523370262\t2014-11-04 08:19:00.0\n0.6234409384039296\t2014-11-04 08:20:00.0\n0.9999999924296806\t2014-11-04 08:12:00.0\n1.0\t2014-11-04 07:56:00.0\n0.7620089460646859\t2015-01-28 15:32:52.0\n0.9483249902023971\t2015-01-28 15:40:09.0\n0.9814663551959901\t2015-01-28 15:49:27.0\n0.986262456537409\t2015-01-28 15:55:41.0\n0.839295563218523\t2015-01-28 20:32:13.0\n0.6452807514265492\t2015-01-29 06:30:44.0\n0.7242771447536188\t2015-01-29 07:51:29.0\n0.9943981135889415\t2014-09-15 13:57:11.0\n0.9878088688012595\t2015-01-29 23:16:36.0\n0.6640883583880727\t2015-01-30 06:40:35.0\n0.5931886688729117\t2015-01-30 08:01:45.0\n0.5140528365494788\t2015-04-04 22:11:00.0\n0.9969288995205077\t2015-01-30 07:42:27.0\n0.9185445691413506\t2015-01-30 07:42:57.0\n0.6376892509646536\t2015-01-30 11:04:45.0\n0.829352014304206\t2015-01-30 12:00:44.0\n0.7108429653300863\t2014-09-15 15:47:16.0\n0.9976020281012453\t2015-01-30 13:15:35.0\n0.9942719481957707\t2015-04-13 03:19:37.0\n0.9536087673117056\t2015-01-30 14:32:42.0\n0.8714604675488534\t2015-04-05 13:43:00.0\n0.5041059462402803\t2015-04-05 13:21:00.0\n0.9999678123963489\t2014-09-16 12:41:21.0\n0.6941652633271563\t2015-01-30 20:05:40.0\n1.0\t2015-04-02 16:11:00.0\n0.5919420911287845\t2015-04-05 18:04:00.0\n0.9999999999999778\t2015-04-22 17:08:00.0\n1.0\t2014-09-17 07:06:19.0\n0.8960674700671666\t2015-04-05 17:58:00.0\n0.8367049830278956\t2015-01-31 14:23:22.0\n0.7999056086646789\t2014-12-20 12:03:00.0\n0.5143812362677364\t2015-01-31 22:12:42.0\n0.5065379311137916\t2015-01-31 22:29:18.0\n1.0\t2014-08-31 23:36:04.0\n0.9885932869220617\t2015-02-01 14:07:04.0\n0.5204324951176073\t2015-02-01 19:59:12.0\n0.9999995251528441\t2014-09-01 11:01:59.0\n0.5542487445914916\t2015-04-06 13:08:00.0\n0.6880730941823728\t2015-04-06 13:13:00.0\n0.8193843845635315\t2015-02-01 22:35:38.0\n1.0\t2015-04-02 16:11:00.0\n1.0\t2015-04-06 22:32:00.0\n0.6163347490853671\t2014-12-23 09:16:00.0\n1.0\t2015-05-18 11:56:13.0\n0.9744205616322342\t2015-02-02 10:52:49.0\n0.9892239725742666\t2015-02-02 10:59:01.0\n0.6170684793710599\t2015-02-02 13:14:51.0\n0.8636943372488857\t2015-04-07 22:12:00.0\n0.9808699285200284\t2015-04-07 18:22:00.0\n0.8528812108370535\t2015-04-07 18:26:00.0\n0.9982060519279655\t2015-02-02 15:52:36.0\n0.5200280660551858\t2015-04-07 13:35:00.0\n0.9788214280842608\t2015-04-08 02:38:00.0\n0.9994877891996548\t2014-09-01 23:07:52.0\n1.0\t2014-09-02 01:03:21.0\n0.8135674887732094\t2015-02-03 07:24:25.0\n0.9920967102468691\t2015-04-09 10:06:00.0\n0.9999836400811232\t2015-04-10 13:39:00.0\n0.9999857239604973\t2015-04-10 16:38:00.0\n0.5430753743990535\t2015-02-03 16:37:13.0\n0.740498853910878\t2015-02-03 17:16:09.0\n0.5716597405911884\t2015-02-03 18:04:07.0\n0.8985274336432392\t2015-02-03 19:18:33.0\n0.5979214469297169\t2015-02-03 20:44:40.0\n0.6825083721069063\t2014-11-25 09:00:00.0\n0.9999999997467561\t2014-09-24 06:50:50.0\n0.6991123132218741\t2014-12-27 23:31:00.0\n0.999957896445447\t2015-04-11 03:24:00.0\n1.0\t2014-09-02 20:31:07.0\n0.9501218818112243\t2015-02-04 11:35:15.0\n0.8835848445137202\t2015-02-04 11:30:45.0\n0.7343156266631794\t2015-02-04 11:26:32.0\n1.0\t2015-04-12 09:01:00.0\n0.846845783546059\t2015-02-04 12:33:15.0\n0.8267634993063818\t2015-02-04 12:52:14.0\n0.6118116407285172\t2015-02-04 13:15:26.0\n0.6404942261664995\t2015-02-04 13:47:55.0\n0.8354543704525489\t2015-02-04 13:52:17.0\n0.9780394414599465\t2014-09-01 19:00:00.0\n0.5723638421030264\t2015-04-13 09:33:00.0\n0.6082223678447689\t2015-02-04 18:06:14.0\n0.7109727058706597\t2015-02-04 18:36:42.0\n0.9999999990578674\t2014-09-03 07:47:02.0\n0.9999997005621959\t2014-12-28 06:49:54.0\n0.589612623629991\t2015-04-15 20:19:00.0\n0.9958506077770134\t2014-09-01 00:00:00.0\n0.5132442819610289\t2015-01-02 16:39:00.0\n1.0\t2015-04-06 22:32:00.0\n0.7354776889176242\t2015-04-15 14:11:00.0\n0.8897188176391044\t2015-02-05 09:47:27.0\n0.7425637491672423\t2015-02-05 09:57:09.0\n0.6601740063751725\t2015-02-05 09:59:35.0\n0.6789786158791671\t2015-02-05 09:52:21.0\n0.974734506396155\t2015-04-16 15:31:00.0\n0.6887879405440741\t2015-02-05 10:56:15.0\n0.9976719207884925\t2015-04-17 02:24:00.0\n0.9433904550999113\t2015-02-05 10:52:54.0\n0.9906196179134453\t2015-01-04 23:52:00.0\n0.980945365130595\t2015-04-17 00:57:00.0\n0.7172373517464941\t2015-04-17 07:02:00.0\n0.9208547948464625\t2015-02-05 12:06:01.0\n0.9290061568817556\t2015-02-05 12:49:27.0\n0.9439996278967335\t2015-02-05 12:53:29.0\n0.9166069836721296\t2015-02-05 12:42:13.0\n0.9469827079090962\t2015-02-05 12:47:21.0\n0.7933378800004108\t2015-02-05 12:14:39.0\n0.7749674599421865\t2015-01-06 08:24:00.0\n0.7739392226081125\t2015-01-06 12:00:00.0\n0.5556681509666456\t2015-01-06 09:37:00.0\n0.7581981172083796\t2015-01-06 09:31:00.0\n0.8473802073060732\t2015-01-06 09:28:00.0\n0.7763411417314453\t2015-02-05 13:59:14.0\n0.9671063357152934\t2015-02-05 13:43:04.0\n0.8499368334792106\t2015-02-05 14:49:30.0\n0.5998374610871889\t2015-01-07 16:55:00.0\n0.9241967254391242\t2015-02-05 16:55:20.0\n0.8792262498202176\t2015-02-05 16:44:23.0\n0.9931493217384347\t2015-04-18 19:40:00.0\n0.9999429864212037\t2015-04-18 15:35:00.0\n0.9999999999973193\t2014-09-03 22:14:19.0\n0.9984764907270114\t2014-09-03 22:08:04.0\n0.9006619735941387\t2015-02-05 18:22:55.0\n0.9896266295269147\t2015-04-19 21:39:00.0\n0.8482240426878123\t2015-02-05 22:20:40.0\n0.9728471095505522\t2015-04-20 01:30:00.0\n1.0\t2015-04-12 09:01:00.0\n0.9999999999999998\t2014-09-04 17:45:42.0\n0.9828627838824123\t2015-01-08 22:37:00.0\n0.6253012500401719\t2015-02-06 09:02:06.0\n0.9994551105994658\t2014-09-04 22:59:35.0\n0.703142479922406\t2015-02-06 10:07:59.0\n0.5131418245862779\t2015-02-06 13:09:38.0\n0.8052127029120599\t2015-02-06 15:51:51.0\n0.7928746297776458\t2015-02-06 15:59:03.0\n0.9282305526131429\t2014-09-27 14:36:00.0\n0.7461626573185056\t2014-09-27 14:37:00.0\n0.7713101210529687\t2014-09-27 14:38:00.0\n0.688411280941504\t2014-09-27 14:39:00.0\n0.7291152032762065\t2014-09-27 14:48:00.0\n0.5284800461373099\t2014-09-27 15:11:00.0\n0.870614583750142\t2014-09-27 17:41:00.0\n0.5566791580503804\t2015-02-06 17:40:08.0\n0.8461366436158795\t2015-02-06 17:47:56.0\n0.9006425659784252\t2015-02-06 17:55:22.0\n0.7495134436508528\t2015-02-06 21:33:08.0\n0.6355792027275661\t2015-02-06 21:48:00.0\n0.7527810035491118\t2015-02-06 21:53:08.0\n0.6354164618632534\t2015-02-06 22:03:50.0\n0.9999992044826795\t2014-09-05 09:35:04.0\n0.9999964841426493\t2015-06-10 21:06:00.0\n0.5250453952769816\t2015-02-07 06:00:36.0\n0.7281231305024585\t2015-02-07 09:05:33.0\n0.9895470849031729\t2014-09-27 20:20:00.0\n0.9256396071060737\t2014-09-27 21:18:00.0\n0.9729175794038811\t2014-09-27 21:56:00.0\n0.9802674242011662\t2014-09-28 00:03:00.0\n0.9998810014975745\t2014-09-28 01:28:00.0\n0.9838586911633825\t2014-09-28 07:37:00.0\n0.5743014016910141\t2014-09-28 09:17:00.0\n0.9936437208151239\t2015-04-24 00:18:00.0\n0.9041765390786299\t2015-02-07 16:38:54.0\n0.8607271251869011\t2015-02-07 16:28:48.0\n0.9577462516695685\t2015-02-07 18:08:51.0\n0.9999917625839262\t2014-09-06 01:17:52.0\n0.9565728902409787\t2015-02-07 18:47:01.0\n0.6771807553682619\t2015-04-24 18:50:00.0\n0.9598291056847126\t2015-04-25 07:07:00.0\n0.9250321395310515\t2014-09-06 04:06:18.0\n0.8600259022547073\t2015-01-09 12:09:00.0\n0.7632587959756688\t2015-04-26 13:00:00.0\n0.8660455990050653\t2015-04-27 05:45:00.0\n0.6269732000279193\t2015-04-28 00:17:00.0\n0.8202925244562929\t2015-02-08 11:37:56.0\n0.9236214390262919\t2015-04-28 21:32:00.0\n0.5658891566074051\t2015-02-08 14:50:16.0\n0.9561917597126193\t2015-02-08 17:01:47.0\n0.998548764741225\t2014-09-07 03:14:41.0\n0.882551510603517\t2015-04-30 20:06:00.0\n0.9993107230899462\t2014-09-07 11:08:15.0\n0.9999139502314448\t2014-09-07 13:58:12.0\n0.8164492978248097\t2015-02-09 03:03:04.0\n0.8162544689280317\t2015-02-09 00:40:02.0\n0.6414889649097745\t2015-02-09 01:26:09.0\n\n\u003cfont color\u003dred\u003eResults are limited by 1000.\u003c/font\u003e"
+      },
+      "dateCreated": "Aug 4, 2016 5:59:01 PM",
+      "dateStarted": "Aug 4, 2016 6:44:35 PM",
+      "dateFinished": "Aug 4, 2016 6:44:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470336215011_-145216919",
+      "id": "20160804-184335_327089886",
+      "dateCreated": "Aug 4, 2016 6:43:35 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "mongo push",
+  "id": "2BSCPGPUT",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

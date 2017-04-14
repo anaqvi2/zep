@@ -1,0 +1,823 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.sql.functions.udf\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.SQLContext\nimport org.apache.spark.{SparkConf, SparkContext}\nimport com.mongodb.casbah.{WriteConcern \u003d\u003e MongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\n\nimport org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer",
+      "dateUpdated": "Oct 12, 2016 7:04:58 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475785411202_34516170",
+      "id": "20161006-202331_1584235868",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.sql.functions.udf\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.SQLContext\nimport org.apache.spark.{SparkConf, SparkContext}\nimport com.mongodb.casbah.{WriteConcern\u003d\u003eMongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\nimport org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer\n"
+      },
+      "dateCreated": "Oct 6, 2016 8:23:31 PM",
+      "dateStarted": "Oct 12, 2016 7:04:58 PM",
+      "dateFinished": "Oct 12, 2016 7:05:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var forum \u003d sqlContext.jsonFile(\"/opt/sup/RS_2015/RS\")",
+      "dateUpdated": "Oct 12, 2016 7:05:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475783752393_-1192642877",
+      "id": "20161006-195552_237080146",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\nforum: org.apache.spark.sql.DataFrame \u003d [adserver_click_url: string, adserver_imp_pixel: string, archived: boolean, author: string, author_flair_css_class: string, author_flair_text: string, created: bigint, created_utc: string, disable_comments: boolean, distinguished: string, domain: string, downs: bigint, edited: string, from: string, from_id: string, from_kind: string, gilded: bigint, hide_score: boolean, href_url: string, id: string, imp_pixel: string, is_self: boolean, link_flair_css_class: string, link_flair_text: string, locked: boolean, media: struct\u003ccontent:string,event_id:string,height:bigint,oembed:struct\u003cauthor_name:string,author_url:string,cache_age:bigint,description:string,height:bigint,html:string,mean_alpha:double,provider_name:string,provider_url:string,thumbnail_heig..."
+      },
+      "dateCreated": "Oct 6, 2016 7:55:52 PM",
+      "dateStarted": "Oct 6, 2016 7:57:09 PM",
+      "dateFinished": "Oct 6, 2016 8:14:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val forum2 \u003d forum.select(\"created_utc\", \"title\", \"selftext\", \"id\", \"subreddit\", \"author\", \"retrieved_on\").\nwithColumn(\"created_utc\", from_unixtime($\"created_utc\".cast(\"String\"))).\nwithColumn(\"retrieved_on\", from_unixtime($\"retrieved_on\".cast(\"String\"))).\nwithColumn(\"t\", concat_ws(\" \", $\"selftext\", $\"title\")).\nwithColumn(\"t2\", regexp_replace(lower($\"t\"), \"\"\"[\\p{Punct}]\"\"\", \" \"))\n.drop(\"t\")",
+      "dateUpdated": "Oct 6, 2016 8:31:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475783756437_1592016420",
+      "id": "20161006-195556_1426504854",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "forum2: org.apache.spark.sql.DataFrame \u003d [created_utc: string, title: string, selftext: string, id: string, subreddit: string, author: string, retrieved_on: string, t2: string]\n"
+      },
+      "dateCreated": "Oct 6, 2016 7:55:56 PM",
+      "dateStarted": "Oct 6, 2016 8:31:54 PM",
+      "dateFinished": "Oct 6, 2016 8:31:54 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val space \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else text.split(\" \")\n})\n\nvar builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"10.0.1.205\"), Database -\u003e \"EpiOne\", Collection -\u003e\"reddit_tax\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nvar readConfig \u003d builder.build()\nval master \u003d sqlContext.fromMongoDB(readConfig).select(\"ProductName\", \"MinCatName\").withColumn(\"ProductName\", regexp_replace(lower($\"ProductName\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).withColumn(\"size\", size(space($\"ProductName\"))).sort(desc(\"size\"))",
+      "dateUpdated": "Oct 9, 2016 2:01:41 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475784848965_-103052081",
+      "id": "20161006-201408_1030316697",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "space: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,ArrayType(StringType,true),List(StringType))\nbuilder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e EpiOne, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e reddit_tax, host -\u003e List(10.0.1.205)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@c679adc6\nmaster: org.apache.spark.sql.DataFrame \u003d [ProductName: string, MinCatName: string, size: int]\n"
+      },
+      "dateCreated": "Oct 6, 2016 8:14:08 PM",
+      "dateStarted": "Oct 9, 2016 2:01:41 AM",
+      "dateFinished": "Oct 9, 2016 2:01:44 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"10.0.1.205\"), Database -\u003e \"twitter\", Collection -\u003e\"symptoms\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\nval symptoms \u003d sqlContext.fromMongoDB(readConfig).select(\"name\", \"synonyms\", \"_id\").where(size($\"synonyms\") \u003e 0).withColumn(\"synonyms\", explode($\"synonyms\"))\n.withColumn(\"synonyms\", regexp_replace(lower($\"synonyms\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).withColumn(\"size\", size(space($\"synonyms\"))).sort(desc(\"size\")).filter($\"_id\".isin(2186, 2415, 1244, 381, 1369, 2416, 197, 1342, 1372, 1374, 2417,1375, 384, 1384 ))",
+      "dateUpdated": "Oct 9, 2016 2:01:48 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475785393921_909419845",
+      "id": "20161006-202313_1441598480",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e symptoms, host -\u003e List(10.0.1.205)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@c1871eb1\nsymptoms: org.apache.spark.sql.DataFrame \u003d [name: string, synonyms: string, _id: int, size: int]\n"
+      },
+      "dateCreated": "Oct 6, 2016 8:23:13 PM",
+      "dateStarted": "Oct 9, 2016 2:01:48 AM",
+      "dateFinished": "Oct 9, 2016 2:01:50 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val symp \u003d symptoms.collect()\nval prod \u003d master.collect()\n\nval p_syn \u003d prod.map(x\u003d\u003e x(0).toString).toSet\nval s_syn \u003d symp.map(x\u003d\u003e x(1).toString).toSet\n\nvar pa :Map[String,String] \u003d Map()\n\nvar sa :Map[String,String] \u003d Map()\n\n\nfor(i \u003c- prod){\n    pa+\u003d (i(0).toString -\u003e i(1).toString)\n}\n\nfor(i \u003c- symp){\n    sa+\u003d (i(1).toString -\u003e i(0).toString)\n}",
+      "dateUpdated": "Oct 9, 2016 2:01:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475785428739_1975605019",
+      "id": "20161006-202348_316451324",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "symp: Array[org.apache.spark.sql.Row] \u003d Array([maladministration,not the way i have been taking it,381,8], [wrong drug used,used my preventer instead of my reliever,384,7], [wrong drug used,been taking two of the wrong medicine,384,7], [incorrect dose,took all that was in that bottle,197,7], [maladministration,feel like i m doing it wrong,381,7], [maladministration,put my medicine in my thing wrong,381,7], [incorrect dose,surprised if i don t overdose,197,6], [maladministration,think i m doing something wrong,381,6], [maladministration,don t know how to use,381,6], [Accidental exposure to product by child,accidental exposure to product by child,2415,6], [accidental exposure to product,squirted propofol in your eye,2186,5], [accidental exposure to product,got in on my hands,2186,5], [acc...prod: Array[org.apache.spark.sql.Row] \u003d Array([good neighbor pharmacy tussin dm max   cough   chest congestion   maximum strength   non drowsy   mixed berry flavor,Miscellaneous Cold and Cough Preparations,26], [good neighbor pharmacy flu   severe cold   cough   berry infused with menthol   green tea flavors   daytime,Acetaminophen with Decongestant and/or Antihistamine,25], [sodium sulfacetamide 9  and sulfur 4 5  wash kit with sunscreen   sodium sulfacetamide 9  and sulfur 4 5  wash,Antibiotics,25], [tite seal gasket and joint sealing compound  light weight  solder seal gunk t20 66   75   85   90,Miscellaneous Gastrointestinal Preparations,25], [tite seal gasket and joint sealing compound  medium weight  solder seal gunk t25 66   75   85   90,Miscellaneous Gastrointestinal Preparation...p_syn: scala.collection.immutable.Set[String] \u003d Set(glutofac, biltricide, femol, alkam compound, novoclair, good neighbor pharmacy docusate calcium, tussafed hcg, \"40  slang term for oxycontin pill \", phosphates, thera vite m, \"fruit salad  slang term \", tussin cf cough formula alcohol free, pms clotrimazole and betamethasone, selenimin 50, \"k sol 10 \", \"calcipotriene and betamethasone dipropionate 0 005  0 064 \", sinapils, m o s   sulfate 25, \"aristocort a 0 025 \", leader oral saline laxative   unflavored, sinusaid maximum strength, trimetrexate, compoz, alti salbutamol inhalation aerosol, dolodent, aero otic hc, axitinib, trim water   raspberry vanilla, korean ginseng, advanced formula decongestant, os cal 250   d, visine tired eye relief, triaminic cold and allergy, hyper hep, prosol...s_syn: scala.collection.immutable.Set[String] \u003d Set(take way too much, wong dose, got it on my hands, surprised if i don t overdose, accidental exposure to product by child, took 8, took the wrong, take too much, think i ve overdosed, incorrect product formulation administered, overdosin, wrong 1, incorrect drug dosage form administered, think i just accidentally overdosed, mixed up our prescriptions, incorrect dosage, blue inhaler instead of, got in my eyes, real high dosage, using the inhaler wrong, taken soooo much, kid accidentally swallowed, waaay too many, got on my hands, high amounts, someone else s medication, probably overdosed, hope i didn t od, taking twice my dosage, taking too much, accidentally popped a, use an inhaler wrong, used it wrong, mixed up our medications, took ...pa: Map[String,String] \u003d Map()\nsa: Map[String,String] \u003d Map()\n"
+      },
+      "dateCreated": "Oct 6, 2016 8:23:48 PM",
+      "dateStarted": "Oct 9, 2016 2:01:53 AM",
+      "dateFinished": "Oct 9, 2016 2:02:01 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sa",
+      "dateUpdated": "Oct 12, 2016 6:51:48 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476298261352_-667438727",
+      "id": "20161012-185101_1961735262",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res101: Map[String,String] \u003d Map(stoma site rash -\u003e stoma site rash, need sold today -\u003e UE: Product sale by user, red circles around my eyes -\u003e red skin, weren t helping -\u003e ineffective, ill just -\u003e masking entity, bad reactions -\u003e nonspecific reaction, piss my pants -\u003e urinary incontinence, was taking -\u003e UE: Switching from product, inflammatory -\u003e inflammation, got me seeing shit -\u003e hallucination, losing it s benefits -\u003e tolerance, arm hurtz -\u003e injection site pain, isn t doing me no justice -\u003e ineffective, arm is so swollen -\u003e Injection site reaction, abnormal hair growth -\u003e abnormal hair growth, nic base -\u003e UE: Custom e-liquid, peripheral edema -\u003e edema peripheral, peripheral coldness -\u003e cold hands/feet, from tysabri -\u003e UE: Switch to product, swollen breast -\u003e breast swelling, doze off..."
+      },
+      "dateCreated": "Oct 12, 2016 6:51:01 PM",
+      "dateStarted": "Oct 12, 2016 6:51:48 PM",
+      "dateFinished": "Oct 12, 2016 6:51:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val ns \u003d Array(master.select(\"size\").take(1)(0)(0).toString.toInt, symptoms.select(\"size\").take(1)(0)(0).toString.toInt)\nval nsize \u003d ns.max",
+      "dateUpdated": "Oct 9, 2016 2:02:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475785554542_1697183089",
+      "id": "20161006-202554_1384990552",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "ns: Array[Int] \u003d Array(26, 8)\nnsize: Int \u003d 26\n"
+      },
+      "dateCreated": "Oct 6, 2016 8:25:54 PM",
+      "dateStarted": "Oct 9, 2016 2:02:12 AM",
+      "dateFinished": "Oct 9, 2016 2:02:14 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val regex \u003d s_syn.mkString(\"\\\\b\", \"\\\\b|\\\\b\", \"\\\\b\")\nval forum3 \u003d forum2.filter($\"t2\" rlike regex)",
+      "dateUpdated": "Oct 9, 2016 2:02:43 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475786609018_2067040629",
+      "id": "20161006-204329_217725826",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "regex: String \u003d \\btake way too much\\b|\\bwong dose\\b|\\bgot it on my hands\\b|\\bsurprised if i don t overdose\\b|\\baccidental exposure to product by child\\b|\\btook 8\\b|\\btook the wrong\\b|\\btake too much\\b|\\bthink i ve overdosed\\b|\\bincorrect product formulation administered\\b|\\boverdosin\\b|\\bwrong 1\\b|\\bincorrect drug dosage form administered\\b|\\bthink i just accidentally overdosed\\b|\\bmixed up our prescriptions\\b|\\bincorrect dosage\\b|\\bblue inhaler instead of\\b|\\bgot in my eyes\\b|\\breal high dosage\\b|\\busing the inhaler wrong\\b|\\btaken soooo much\\b|\\bkid accidentally swallowed\\b|\\bwaaay too many\\b|\\bgot on my hands\\b|\\bhigh amounts\\b|\\bsomeone else s medication\\b|\\bprobably overdosed\\b|\\bhope i didn t od\\b|\\btaking twice my dosage\\b|\\btaking too much\\b|\\baccidentally popped a\\b|\\buse an in..."
+      },
+      "dateCreated": "Oct 6, 2016 8:43:29 PM",
+      "dateStarted": "Oct 9, 2016 2:02:21 AM",
+      "dateFinished": "Oct 9, 2016 2:02:21 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer\n\nval tokenizer \u003d new Tokenizer().setInputCol(\"t2\").setOutputCol(\"words\")\n\nvar tokenized \u003d tokenizer.transform(forum3).withColumn(\"w2\", $\"words\")\n\nfor(i \u003c- 1 to nsize){\n\n    var num \u003d Array(\"ngram\", i).mkString\n\n    var ngi \u003d new NGram().setInputCol(\"words\").setOutputCol(num).setN(i)\n\n    tokenized \u003d ngi.transform(tokenized)\n    tokenized \u003d tokenized.withColumn(\"test\", tokenized(num).cast(\"String\")).withColumn(\"w2\", concat($\"w2\".cast(\"String\"), $\"test\")).drop(\"test\").drop(num)\n}",
+      "dateUpdated": "Oct 7, 2016 12:33:23 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475785840209_1314183910",
+      "id": "20161006-203040_1653000557",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer\ntokenizer: org.apache.spark.ml.feature.Tokenizer \u003d tok_163cba894d8b\ntokenized: org.apache.spark.sql.DataFrame \u003d [created_utc: string, title: string, selftext: string, id: string, subreddit: string, author: string, retrieved_on: string, t2: string, words: array\u003cstring\u003e, w2: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Oct 6, 2016 8:30:40 PM",
+      "dateStarted": "Oct 7, 2016 12:33:23 AM",
+      "dateFinished": "Oct 7, 2016 12:33:25 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val matcher \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else {\n    val words \u003d text.split(\",\").toSet\n    val pc \u003d p_syn \u0026 words\n    val cc \u003d s_syn \u0026 words\n    Map(\"prod\" -\u003e (pc.toArray collect pa).distinct, \"con\" -\u003e (cc.toArray collect sa).distinct, \"prod2\" -\u003e pc.toArray, \"con2\" -\u003e cc.toArray)\n    }\n})",
+      "dateUpdated": "Oct 9, 2016 2:02:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475785886931_-2067881515",
+      "id": "20161006-203126_413708313",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "matcher: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,MapType(StringType,ArrayType(StringType,true),true),List(StringType))\n"
+      },
+      "dateCreated": "Oct 6, 2016 8:31:26 PM",
+      "dateStarted": "Oct 9, 2016 2:02:56 AM",
+      "dateFinished": "Oct 9, 2016 2:02:57 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end \u003d tokenized.withColumn(\"temp\", matcher($\"w2\")).withColumn(\"pr\", $\"temp\"(\"prod\")).withColumn(\"s\", $\"temp\"(\"con\"))\n.withColumn(\"pr_syn\", $\"temp\"(\"prod2\")).withColumn(\"s_syn\", $\"temp\"(\"con2\"))\n.drop(\"temp\").drop(\"w2\").drop(\"words\").drop(\"t2\").withColumn(\"type\", lit(\"submission\"))",
+      "dateUpdated": "Oct 7, 2016 2:58:52 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475785955607_-580534213",
+      "id": "20161006-203235_1682610771",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end: org.apache.spark.sql.DataFrame \u003d [created_utc: string, title: string, selftext: string, id: string, subreddit: string, author: string, retrieved_on: string, pr: array\u003cstring\u003e, s: array\u003cstring\u003e, pr_syn: array\u003cstring\u003e, s_syn: array\u003cstring\u003e, type: string]\n"
+      },
+      "dateCreated": "Oct 6, 2016 8:32:35 PM",
+      "dateStarted": "Oct 7, 2016 2:58:52 AM",
+      "dateFinished": "Oct 7, 2016 2:58:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end30 \u003d end.filter(size($\"pr\")\u003e0 \u0026\u0026 size($\"s\")\u003e0)",
+      "dateUpdated": "Oct 7, 2016 3:02:52 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475800537178_-42955074",
+      "id": "20161007-003537_343431166",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end30: org.apache.spark.sql.DataFrame \u003d [created_utc: string, title: string, selftext: string, id: string, subreddit: string, author: string, retrieved_on: string, pr: array\u003cstring\u003e, s: array\u003cstring\u003e, pr_syn: array\u003cstring\u003e, s_syn: array\u003cstring\u003e, type: string]\n"
+      },
+      "dateCreated": "Oct 7, 2016 12:35:37 AM",
+      "dateStarted": "Oct 7, 2016 3:02:52 AM",
+      "dateFinished": "Oct 7, 2016 3:02:52 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\n\nval saveConfig \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"10.0.1.205\"), Database -\u003e \"twitter\", Collection -\u003e\"reddit_submission_2015_2\", \nSamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\n\nend30.saveToMongodb(saveConfig.build)",
+      "dateUpdated": "Oct 9, 2016 12:05:06 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475799722933_-1466888327",
+      "id": "20161007-002202_850635590",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "saveConfig: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e reddit_submission_2015_2, host -\u003e List(10.0.1.205)))\n"
+      },
+      "dateCreated": "Oct 7, 2016 12:22:02 AM",
+      "dateStarted": "Oct 7, 2016 3:02:56 AM",
+      "dateFinished": "Oct 7, 2016 12:10:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var forumRC \u003d sqlContext.jsonFile(\"/opt/sup/RC_2015/\")",
+      "dateUpdated": "Oct 9, 2016 2:03:07 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 123.52272033691406,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475800333716_1800288774",
+      "id": "20161007-003213_14665453",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\nforumRC: org.apache.spark.sql.DataFrame \u003d [approved_by: string, archived: boolean, author: string, author_flair_css_class: string, author_flair_text: string, banned_by: string, body: string, body_html: string, controversiality: bigint, created: bigint, created_utc: string, distinguished: string, downs: bigint, edited: string, gilded: bigint, id: string, likes: string, link_id: string, mod_reports: array\u003cstring\u003e, name: string, num_reports: string, parent_id: string, removal_reason: string, replies: string, report_reasons: string, retrieved_on: bigint, saved: boolean, score: bigint, score_hidden: boolean, stickied: boolean, subreddit: string, subreddit_id: string, ups: bigint, user_reports: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Oct 7, 2016 12:32:13 AM",
+      "dateStarted": "Oct 9, 2016 2:03:05 AM",
+      "dateFinished": "Oct 9, 2016 3:07:11 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val forumRC2 \u003d forumRC.select(\"created_utc\", \"body\", \"id\", \"subreddit\", \"author\", \"retrieved_on\").\nwithColumn(\"created_utc\", from_unixtime($\"created_utc\".cast(\"String\"))).\nwithColumn(\"retrieved_on\", from_unixtime($\"retrieved_on\".cast(\"String\"))).\n// withColumn(\"t\", concat_ws(\" \", $\"selftext\", $\"title\"))\nwithColumn(\"t2\", regexp_replace(lower($\"body\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).\nwithColumn(\"type\", lit(\"comment\"))\n// .drop(\"t\")",
+      "dateUpdated": "Oct 9, 2016 3:41:15 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475851075981_-1157150286",
+      "id": "20161007-143755_31176667",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "forumRC2: org.apache.spark.sql.DataFrame \u003d [created_utc: string, body: string, id: string, subreddit: string, author: string, retrieved_on: string, t2: string, type: string]\n"
+      },
+      "dateCreated": "Oct 7, 2016 2:37:55 PM",
+      "dateStarted": "Oct 9, 2016 3:41:15 AM",
+      "dateFinished": "Oct 9, 2016 3:41:16 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "forumRC2.count()",
+      "dateUpdated": "Oct 7, 2016 4:00:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475856001104_246094586",
+      "id": "20161007-160001_500826803",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res286: Long \u003d 668424825\n"
+      },
+      "dateCreated": "Oct 7, 2016 4:00:01 PM",
+      "dateStarted": "Oct 7, 2016 4:00:07 PM",
+      "dateFinished": "Oct 7, 2016 4:51:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val forumRC3 \u003d forumRC2.filter($\"t2\" rlike regex)",
+      "dateUpdated": "Oct 9, 2016 3:41:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475851112078_-780050391",
+      "id": "20161007-143832_236785235",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "forumRC3: org.apache.spark.sql.DataFrame \u003d [created_utc: string, body: string, id: string, subreddit: string, author: string, retrieved_on: string, t2: string, type: string]\n"
+      },
+      "dateCreated": "Oct 7, 2016 2:38:32 PM",
+      "dateStarted": "Oct 9, 2016 3:41:28 AM",
+      "dateFinished": "Oct 9, 2016 3:41:28 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "forumRC3.show()",
+      "dateUpdated": "Oct 9, 2016 3:41:32 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475861581748_1520382794",
+      "id": "20161007-173301_1454623182",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+-------------------+--------------------+-------+-------------------+----------------+-------------------+--------------------+-------+\n|        created_utc|                body|     id|          subreddit|          author|       retrieved_on|                  t2|   type|\n+-------------------+--------------------+-------+-------------------+----------------+-------------------+--------------------+-------+\n|2015-04-21 12:41:55|I have broken var...|cqjk0rf|femalefashionadvice|  QueenElizatits|2015-05-25 00:52:52|i have broken var...|comment|\n|2015-04-21 12:42:15|Ya, but basal rat...|cqjk10j|     SubredditDrama|    snallygaster|2015-05-25 00:52:55|ya  but basal rat...|comment|\n|2015-04-21 12:42:23|To an extent, the...|cqjk14i|  RedditLaqueristas|    coffeekittie|2015-05-25 00:52:57|to an extent  the...|comment|\n|2015-04-21 12:42:25|Get the bored pac...|cqjk155|             cigars|    dickmcgirkin|2015-05-25 00:52:57|get the bored pac...|comment|\n|2015-04-21 12:42:41|I agree. Navas ge...|cqjk1d9|               MCFC|        Homonavn|2015-05-25 00:53:00|i agree  navas ge...|comment|\n|2015-04-21 12:42:56|Haha, brilliant.....|cqjk1jt|                aww|       anupsaund|2015-05-25 00:53:02|haha  brilliant  ...|comment|\n|2015-04-21 12:42:58|This will not low...|cqjk1kx|                DIY|  fantasy_viking|2015-05-25 00:53:03|this will not low...|comment|\n|2015-04-21 12:43:13|Thanks for readin...|cqjk1ro|          BabyBumps| phantomrhiannon|2015-05-25 00:53:05|thanks for readin...|comment|\n|2015-04-21 12:43:17|what do you expec...|cqjk1tv|             gaming|    hyde16341634|2015-05-25 00:53:06|what do you expec...|comment|\n|2015-04-21 12:43:19|:) yes too many b...|cqjk1uc|                aww|sudheerkankipati|2015-05-25 00:53:06|   yes too many b...|comment|\n|2015-04-21 12:43:20|Guessing on OP\u0027s ...|cqjk1uz|              funny|        Robbomot|2015-05-25 00:53:06|guessing on op s ...|comment|\n|2015-04-21 12:43:47|I played way too ...|cqjk292|           pcgaming|         jacenat|2015-05-25 00:53:11|i played way too ...|comment|\n|2015-04-21 12:43:56|No, he needed to ...|cqjk2df|       TheOriginals|         cteavin|2015-05-25 00:53:13|no  he needed to ...|comment|\n|2015-04-21 12:43:57|There were signs ...|cqjk2dt|             travel|     SixLegsGood|2015-05-25 00:53:13|there were signs ...|comment|\n|2015-04-21 12:44:08|Thanks for the ex...|cqjk2ja|      AdviceAnimals|  MichaelStrauss|2015-05-25 00:53:15|thanks for the ex...|comment|\n|2015-04-21 12:44:17|Doesn\u0027t playing o...|cqjk2nx|fivenightsatfreddys|          fail87|2015-05-25 00:53:17|doesn t playing o...|comment|\n|2015-04-21 12:44:20|The game makes to...|cqjk2p5|          TapTitans|          cwk390|2015-05-25 00:53:17|the game makes to...|comment|\n|2015-04-21 12:44:27|This stock has ma...|cqjk2so|        pennystocks|          njpete|2015-05-25 00:53:18|this stock has ma...|comment|\n|2015-04-21 12:44:28|They should be pa...|cqjk2tq|          AskReddit|         jack821|2015-05-25 00:53:19|they should be pa...|comment|\n|2015-04-21 12:44:28|I think there\u0027s a...|cqjk2u3|           XWingTMG|            bl1y|2015-05-25 00:53:19|i think there s a...|comment|\n+-------------------+--------------------+-------+-------------------+----------------+-------------------+--------------------+-------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Oct 7, 2016 5:33:01 PM",
+      "dateStarted": "Oct 9, 2016 3:41:32 AM",
+      "dateFinished": "Oct 9, 2016 3:41:35 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val tokenizer \u003d new Tokenizer().setInputCol(\"t2\").setOutputCol(\"words\")\nvar tokenizedRC \u003d tokenizer.transform(forumRC3).withColumn(\"w2\", $\"words\")\n\nfor(i \u003c- 1 to nsize){\n\n    var num \u003d Array(\"ngram\", i).mkString\n\n    var ngi \u003d new NGram().setInputCol(\"words\").setOutputCol(num).setN(i)\n\n    tokenizedRC \u003d ngi.transform(tokenizedRC)\n    tokenizedRC \u003d tokenizedRC.withColumn(\"test\", tokenizedRC(num).cast(\"String\")).withColumn(\"w2\", concat($\"w2\".cast(\"String\"), $\"test\")).drop(\"test\").drop(num)\n}\n\nval endRC \u003d tokenizedRC.withColumn(\"temp\", matcher($\"w2\")).withColumn(\"pr\", $\"temp\"(\"prod\")).withColumn(\"s\", $\"temp\"(\"con\"))\n.withColumn(\"pr_syn\", $\"temp\"(\"prod2\")).withColumn(\"s_syn\", $\"temp\"(\"con2\"))\n.drop(\"temp\").drop(\"w2\").drop(\"words\").drop(\"t2\")\n\n",
+      "dateUpdated": "Oct 9, 2016 3:43:22 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475851390233_-1426229329",
+      "id": "20161007-144310_165089345",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "tokenizer: org.apache.spark.ml.feature.Tokenizer \u003d tok_5330347138eb\ntokenizedRC: org.apache.spark.sql.DataFrame \u003d [created_utc: string, body: string, id: string, subreddit: string, author: string, retrieved_on: string, t2: string, type: string, words: array\u003cstring\u003e, w2: array\u003cstring\u003e]\nendRC: org.apache.spark.sql.DataFrame \u003d [created_utc: string, body: string, id: string, subreddit: string, author: string, retrieved_on: string, type: string, pr: array\u003cstring\u003e, s: array\u003cstring\u003e, pr_syn: array\u003cstring\u003e, s_syn: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Oct 7, 2016 2:43:10 PM",
+      "dateStarted": "Oct 9, 2016 3:43:22 AM",
+      "dateFinished": "Oct 9, 2016 3:43:25 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end30RC \u003d endRC.filter(size($\"pr\")\u003e0 \u0026\u0026 size($\"s\")\u003e0)\nend30RC.show()",
+      "dateUpdated": "Oct 9, 2016 3:43:41 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475984609692_1890988167",
+      "id": "20161009-034329_1460869432",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end30RC: org.apache.spark.sql.DataFrame \u003d [created_utc: string, body: string, id: string, subreddit: string, author: string, retrieved_on: string, type: string, pr: array\u003cstring\u003e, s: array\u003cstring\u003e, pr_syn: array\u003cstring\u003e, s_syn: array\u003cstring\u003e]\n+-------------------+--------------------+-------+-------------------+---------------+-------------------+-------+--------------------+-------------------+--------------------+-----------+\n|        created_utc|                body|     id|          subreddit|         author|       retrieved_on|   type|                  pr|                  s|              pr_syn|      s_syn|\n+-------------------+--------------------+-------+-------------------+---------------+-------------------+-------+--------------------+-------------------+--------------------+-----------+\n|2015-04-21 12:41:55|I have broken var...|cqjk0rf|femalefashionadvice| QueenElizatits|2015-05-25 00:52:52|comment|[Botanical Produc...|   [incorrect dose]|        [if, normal]| [too many]|\n|2015-04-21 12:42:15|Ya, but basal rat...|cqjk10j|     SubredditDrama|   snallygaster|2015-05-25 00:52:55|comment|[Miscellaneous To...|   [incorrect dose]|              [burn]| [too much]|\n|2015-04-21 12:42:23|To an extent, the...|cqjk14i|  RedditLaqueristas|   coffeekittie|2015-05-25 00:52:57|comment|[Botanical Produc...|   [incorrect dose]|[if, correct, sam...| [too much]|\n|2015-04-21 12:42:58|This will not low...|cqjk1kx|                DIY| fantasy_viking|2015-05-25 00:53:03|comment|[Botanical Produc...|   [incorrect dose]|          [if, heat]| [too much]|\n|2015-04-21 12:43:13|Thanks for readin...|cqjk1ro|          BabyBumps|phantomrhiannon|2015-05-25 00:53:05|comment|    [Other Vitamins]|   [incorrect dose]|                 [d]| [too much]|\n|2015-04-21 12:43:17|what do you expec...|cqjk1tv|             gaming|   hyde16341634|2015-05-25 00:53:06|comment|[Botanical Produc...|   [incorrect dose]|       [if, has, dm]| [too much]|\n|2015-04-21 12:43:47|I played way too ...|cqjk292|           pcgaming|        jacenat|2015-05-25 00:53:11|comment|[Miscellaneous Ve...|   [incorrect dose]|       [deliver, cs]| [too much]|\n|2015-04-21 12:43:56|No, he needed to ...|cqjk2df|       TheOriginals|        cteavin|2015-05-25 00:53:13|comment|[Botanical Produc...|   [incorrect dose]|             [if, d]| [too much]|\n|2015-04-21 12:44:20|The game makes to...|cqjk2p5|          TapTitans|         cwk390|2015-05-25 00:53:17|comment|[Nonsteroidal Ant...|   [incorrect dose]|             [point]|  [to much]|\n|2015-04-21 12:44:27|This stock has ma...|cqjk2so|        pennystocks|         njpete|2015-05-25 00:53:18|comment|[Botanical Produc...|   [incorrect dose]|         [has, know]| [too much]|\n|2015-04-21 12:44:28|I think there\u0027s a...|cqjk2u3|           XWingTMG|           bl1y|2015-05-25 00:53:19|comment|[Botanical Produc...|   [incorrect dose]|  [if, has, know, d]| [too much]|\n|2015-04-21 12:44:48|OK, so I\u0027ve read ...|cqjk344|          polyamory|  RissaWasTaken|2015-05-25 00:53:23|comment|[Nonsteroidal Ant...|   [incorrect dose]|[point, if, sleep...| [too many]|\n|2015-04-21 12:44:55|I get the anger, ...|cqjk37t|          childfree|   monstresnark|2015-05-25 00:53:24|comment|[Botanical Produc...|   [incorrect dose]|         [has, know]| [too much]|\n|2015-04-21 12:44:59|I think you\u0027re re...|cqjk3a4|      battlefield_4|         RazY70|2015-05-25 00:53:25|comment|[Miscellaneous St...|   [incorrect dose]|               [don]| [too much]|\n|2015-04-21 12:45:37|Brahimi is a good...|cqjk3tc|      worldfootball|  PussyAssNigga|2015-05-25 00:53:32|comment|[Miscellaneous St...|   [incorrect dose]|                [im]| [too much]|\n|2015-04-21 12:46:05|I was looking at ...|cqjk46c|             london| deepfriedtoast|2015-05-25 00:53:36|comment|[Botanical Products]|[maladministration]|                [if]|[wrong way]|\n|2015-04-21 12:46:09|Great. Reverse ra...|cqjk48s|           CoonTown|      H8gdniggs|2015-05-25 00:53:37|comment|[Miscellaneous Ga...|   [incorrect dose]|           [correct]| [too many]|\n|2015-04-21 12:46:16|Ooh the delicious...|cqjk4cz|         Guildwars2|         ohTaik|2015-05-25 00:53:39|comment|[Ophthalmic Prepa...|   [incorrect dose]|           [salt, d]| [too many]|\n|2015-04-21 12:46:28|Not sure this is ...|cqjk4is|          xxfitness|           wpdb|2015-05-25 00:53:41|comment|       [Antibiotics]|   [incorrect dose]|             [today]| [too much]|\n|2015-04-21 12:46:31|It could be that ...|cqjk4ki|          childfree|   robbersdog49|2015-05-25 00:53:41|comment|[Botanical Products]|   [incorrect dose]|                [if]| [too much]|\n+-------------------+--------------------+-------+-------------------+---------------+-------------------+-------+--------------------+-------------------+--------------------+-----------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Oct 9, 2016 3:43:29 AM",
+      "dateStarted": "Oct 9, 2016 3:43:41 AM",
+      "dateFinished": "Oct 9, 2016 3:43:50 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end30RC.count()",
+      "dateUpdated": "Oct 9, 2016 3:44:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475984654633_1702353937",
+      "id": "20161009-034414_1308244274",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res22: Long \u003d 2966459\n"
+      },
+      "dateCreated": "Oct 9, 2016 3:44:14 AM",
+      "dateStarted": "Oct 9, 2016 3:44:20 AM",
+      "dateFinished": "Oct 10, 2016 9:42:05 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\n\nval saveConfig \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"10.0.1.205\"), Database -\u003e \"twitter\", Collection -\u003e\"reddit_comments_2015\", \nSamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\n\nend30RC.saveToMongodb(saveConfig.build)",
+      "dateUpdated": "Oct 10, 2016 4:04:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475984501912_-253571554",
+      "id": "20161009-034141_1792628647",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "saveConfig: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e reddit_comments_2015, host -\u003e List(10.0.1.205)))\n"
+      },
+      "dateCreated": "Oct 9, 2016 3:41:41 AM",
+      "dateStarted": "Oct 10, 2016 4:04:16 PM",
+      "dateFinished": "Oct 12, 2016 1:21:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476115456312_-532579747",
+      "id": "20161010-160416_1228635864",
+      "dateCreated": "Oct 10, 2016 4:04:16 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "mike reddit 2015",
+  "id": "2BYQ9VHFQ",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

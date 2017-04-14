@@ -1,0 +1,108 @@
+{
+  "paragraphs": [
+    {
+      "text": "val red \u003d spark.read.json(\"/opt/reddit\")",
+      "dateUpdated": "Aug 19, 2016 7:35:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471588435969_466159197",
+      "id": "20160819-063355_1101805731",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\u003cconsole\u003e:27: error: not found: value spark\n         val red \u003d spark.read.json(\"/opt/reddit\")\n                   ^\n"
+      },
+      "dateCreated": "Aug 19, 2016 6:33:55 AM",
+      "dateStarted": "Aug 19, 2016 7:35:33 AM",
+      "dateFinished": "Aug 19, 2016 7:35:33 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "2+2",
+      "dateUpdated": "Aug 19, 2016 3:35:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471588447011_-2007776231",
+      "id": "20160819-063407_754597390",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res12: Int \u003d 4\n"
+      },
+      "dateCreated": "Aug 19, 2016 6:34:07 AM",
+      "dateStarted": "Aug 19, 2016 3:35:55 PM",
+      "dateFinished": "Aug 19, 2016 3:35:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471588896461_594323264",
+      "id": "20160819-064136_416368452",
+      "dateCreated": "Aug 19, 2016 6:41:36 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "reddit",
+  "id": "2BT2Y5441",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

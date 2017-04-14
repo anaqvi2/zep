@@ -1,0 +1,195 @@
+{
+  "paragraphs": [
+    {
+      "text": "2+2",
+      "dateUpdated": "Oct 3, 2016 8:29:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475525060311_-1581709489",
+      "id": "20161003-200420_1767210181",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res2: Int \u003d 4\n"
+      },
+      "dateCreated": "Oct 3, 2016 8:04:20 PM",
+      "dateStarted": "Oct 3, 2016 8:29:36 PM",
+      "dateFinished": "Oct 3, 2016 8:29:37 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " case class Address(firstName: String, text: String)\n  val addresses \u003d Seq(\n    Address(\"Bob\", \"I love mexico\"),\n    Address(\"Bob\", \"I love colarado\"),\n    Address(\"Bob\", \"I love spain\"),\n    Address(\"Bob\", \"I love japan\"),\n    Address(\"Bob\", \"I love paris\"),\n    Address(\"Bob\", \"I love usa\"),\n    Address(\"Bob\", \"I love china\"),\n    Address(\"Bob\", \"I love london\"),\n    Address(\"Bob\", \"I love boston\"),\n    Address(\"Bob\", \"I love new york\"),\n    Address(\"Bob\", \"I love california\"),\n    Address(\"Bob\", \"I love canada\"),\n    Address(\"Bob\", \"I love africa\"),\n    Address(\"Bob\", \"I love australia\"),\n    Address(\"Bob\", \"I love portugal\")\n  )",
+      "dateUpdated": "Oct 3, 2016 8:29:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475525062930_660991850",
+      "id": "20161003-200422_1923277325",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "defined class Address\naddresses: Seq[Address] \u003d List(Address(Bob,I love mexico), Address(Bob,I love colarado), Address(Bob,I love spain), Address(Bob,I love japan), Address(Bob,I love paris), Address(Bob,I love usa), Address(Bob,I love china), Address(Bob,I love london), Address(Bob,I love boston), Address(Bob,I love new york), Address(Bob,I love california), Address(Bob,I love canada), Address(Bob,I love africa), Address(Bob,I love australia), Address(Bob,I love portugal))\n"
+      },
+      "dateCreated": "Oct 3, 2016 8:04:22 PM",
+      "dateStarted": "Oct 3, 2016 8:29:36 PM",
+      "dateFinished": "Oct 3, 2016 8:29:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val df \u003d addresses.toDF",
+      "dateUpdated": "Oct 3, 2016 8:29:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475525159294_-1555776426",
+      "id": "20161003-200559_1109007035",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df: org.apache.spark.sql.DataFrame \u003d [firstName: string, text: string]\n"
+      },
+      "dateCreated": "Oct 3, 2016 8:05:59 PM",
+      "dateStarted": "Oct 3, 2016 8:29:38 PM",
+      "dateFinished": "Oct 3, 2016 8:29:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.count()",
+      "dateUpdated": "Oct 3, 2016 8:29:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475525172743_507262500",
+      "id": "20161003-200612_257855760",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res6: Long \u003d 15\n"
+      },
+      "dateCreated": "Oct 3, 2016 8:06:12 PM",
+      "dateStarted": "Oct 3, 2016 8:29:40 PM",
+      "dateFinished": "Oct 3, 2016 8:29:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Oct 3, 2016 8:29:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475525180853_1988176341",
+      "id": "20161003-200620_1017031988",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Oct 3, 2016 8:06:20 PM",
+      "dateStarted": "Oct 3, 2016 8:29:43 PM",
+      "dateFinished": "Oct 3, 2016 8:29:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "new",
+  "id": "2BWC4Z38Y",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

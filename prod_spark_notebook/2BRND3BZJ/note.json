@@ -1,0 +1,298 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\nimport com.mongodb.casbah.{WriteConcern \u003d\u003e MongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray",
+      "dateUpdated": "Sep 15, 2016 1:18:26 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470138497198_-190132405",
+      "id": "20160802-114817_851634082",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\nimport com.mongodb.casbah.{WriteConcern\u003d\u003eMongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\n"
+      },
+      "dateCreated": "Aug 2, 2016 11:48:17 AM",
+      "dateStarted": "Sep 15, 2016 1:18:26 PM",
+      "dateFinished": "Sep 15, 2016 1:18:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var df \u003d sqlContext\n  .read\n  .format(\"org.apache.spark.sql.cassandra\")\n  .options(Map( \"table\" -\u003e \"news\", \"keyspace\" -\u003e \"processed_news\"))\n  .load()\n  .cache()\n  \n\n  ",
+      "dateUpdated": "Sep 15, 2016 2:26:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470138553767_1326071065",
+      "id": "20160802-114913_1716994086",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df: org.apache.spark.sql.DataFrame \u003d [ds: string, ymds: int, rdt: timestamp, id: string, ae: map\u003cstring,array\u003cint\u003e\u003e, ae_v: string, alert_category_list: array\u003cstring\u003e, alert_category_list_ids: array\u003cint\u003e, authors: array\u003cstring\u003e, cc: string, classification: string, classification_id: int, company: array\u003cstring\u003e, company_v: string, cr: timestamp, description: string, dom: string, dup_count: int, dup_of: string, feed: string, feed_id: int, geo_geoname_id: int, girder_item_id: string, hm_metas: array\u003cstruct\u003calert_meta_id:string,case_count_date:timestamp,suspected_cases:int,suspected_deaths:int,confirmed_cases:int,confirmed_deaths:int,disease_name:string,disease_id:int,disease_category:string,disease_category_id:int,meta_category_list:array\u003cstring\u003e,meta_category_list_ids:array\u003cint\u003e,ruled_out:..."
+      },
+      "dateCreated": "Aug 2, 2016 11:49:13 AM",
+      "dateStarted": "Sep 15, 2016 2:26:41 PM",
+      "dateFinished": "Sep 15, 2016 2:26:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " var df_company \u003d df\n   .filter(size($\"company\")\u003e0)\n   .cache()",
+      "dateUpdated": "Aug 2, 2016 2:21:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470138638885_-1621936304",
+      "id": "20160802-115038_1658349898",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df_company: org.apache.spark.sql.DataFrame \u003d [ds: string, yrmonth: int, retrieved_on: timestamp, id: string, alert_category_list: array\u003cstring\u003e, alert_category_list_ids: array\u003cint\u003e, authors: array\u003cstring\u003e, cc: string, classification: string, classification_id: int, company: array\u003cstring\u003e, company_v: string, cr: timestamp, description: string, dom: string, dup_count: int, dup_of: string, feed: string, feed_id: int, geo_geoname_id: int, girder_item_id: string, hide: int, hm_metas: array\u003cstruct\u003calert_meta_id:string,case_count_date:timestamp,suspected_cases:int,suspected_deaths:int,confirmed_cases:int,confirmed_deaths:int,disease_name:string,disease_id:int,disease_category:string,disease_category_id:int,meta_category_list:array\u003cstring\u003e,meta_category_list_ids:array\u003cint\u003e,ruled_out:int,species..."
+      },
+      "dateCreated": "Aug 2, 2016 11:50:38 AM",
+      "dateStarted": "Aug 2, 2016 2:21:20 PM",
+      "dateFinished": "Aug 2, 2016 2:21:21 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_company.show(20)",
+      "dateUpdated": "Aug 2, 2016 3:11:18 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470138661853_-1128288141",
+      "id": "20160802-115101_476264634",
+      "result": "org.apache.thrift.transport.TTransportException",
+      "dateCreated": "Aug 2, 2016 11:51:01 AM",
+      "dateStarted": "Aug 2, 2016 3:11:18 PM",
+      "dateFinished": "Aug 2, 2016 3:11:18 PM",
+      "status": "ERROR",
+      "errorMessage": "org.apache.thrift.transport.TTransportException\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:132)\n\tat org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)\n\tat org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.recv_interpret(RemoteInterpreterService.java:249)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:233)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:269)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:279)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:328)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val tocoords \u003d udf((lng:Double, lat:Double) \u003d\u003e  {\n   Array(lng, lat)\n})\n\n\nval df_coords \u003d df_company.withColumn(\"coords\", tocoords($\"place_lng\", $\"place_lat\"))\nvar df_hw \u003d df_company\n  .withColumn(\"date\", df_company(\"cr\"))\n  .withColumn(\"summary\", df_company(\"t\"))\n  .withColumn(\"domain_url\", df_company(\"url\"))  \n  .withColumn(\"coord\", (df_company(\"place_lng\"), df_company(\"place_lat\")))\n  .select(\"girder_item_id\", \"date\", \"description\", \"feed\", \"url\", \"domain_url\", \"title\", \"country\", \"place_name\", \"company\", \"topic\", \"sentiment\", \"coord\", \"impact\", \"summary\", \"type\")",
+      "dateUpdated": "Aug 2, 2016 3:21:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470139717360_-407548948",
+      "id": "20160802-120837_1201241138",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df_hw: org.apache.spark.sql.DataFrame \u003d [girder_item_id: string, date: timestamp, description: string, feed: string, url: string, domain_url: string, title: string, place_name: string, company: array\u003cstring\u003e, topic: array\u003cstring\u003e, sentiment: string, coords: array\u003cdouble\u003e, summary: string, type: string]\n+--------------------+--------------------+--------------------+----+--------------------+--------------------+--------------------+--------------------+-------+-----+---------+------+-------+----+\n|      girder_item_id|                date|         description|feed|                 url|          domain_url|               title|          place_name|company|topic|sentiment|coords|summary|type|\n+--------------------+--------------------+--------------------+----+--------------------+--------------------+--------------------+--------------------+-------+-----+---------+------+-------+----+\n|56f99b0f1b86af520...|1977-12-27 00:00:...|                null|null|http://query.nyti...|http://query.nyti...|Nat\u0027l Basketball ...|                null|     []|   []|     null|  null|   null|news|\n|56fa87061b86af72c...|1977-12-05 00:00:...|WASHINGTON, Dec. ...|null|http://query.nyti...|http://query.nyti...|Congress Question...|UNITED STATES|UNI...|     []|   []|     null|  null|   null|news|\n|56fa87061b86af72c...|1977-12-05 00:00:...|WASHINGTON, Dec. ...|null|http://query.nyti...|http://query.nyti...|Congress Question...|       UNITED STATES|     []|   []|     null|  null|   null|news|\n+--------------------+--------------------+--------------------+----+--------------------+--------------------+--------------------+--------------------+-------+-----+---------+------+-------+----+\nonly showing top 3 rows\n\n"
+      },
+      "dateCreated": "Aug 2, 2016 12:08:37 PM",
+      "dateStarted": "Aug 2, 2016 1:03:40 PM",
+      "dateFinished": "Aug 2, 2016 1:03:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"10.0.0.11\"), Database -\u003e \"dev-obit_database\", Collection -\u003e\"healthwatch02\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\n\nval healthwatch \u003d sqlContext.fromMongoDB(readConfig)",
+      "dateUpdated": "Aug 2, 2016 12:01:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470138684113_453612157",
+      "id": "20160802-115124_334434299",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e dev-obit_database, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e healthwatch02, host -\u003e List(10.0.0.11)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@6427ac3c\nhealthwatch: org.apache.spark.sql.DataFrame \u003d [domain_url: string, title: string, description: string, coord: array\u003carray\u003cdouble\u003e\u003e, girder_item_id: string, company: string, country: string, summary: double, impact: double, type: string, _id: string, date: string, feed: string, topic: string, url: string, place_name: string, sentiment: double]\n"
+      },
+      "dateCreated": "Aug 2, 2016 11:51:24 AM",
+      "dateStarted": "Aug 2, 2016 12:01:15 PM",
+      "dateFinished": "Aug 2, 2016 12:01:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val saveConfig \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"dev-one-mongo.epidemi.co\"), Database -\u003e \"EpiOne\", Collection -\u003e\"healthwatch_mb\", SamplingRatio -\u003e 1.0, \nWriteConcern -\u003e \"normal\"))\n\ndf_company.saveToMongodb(saveConfig.build)",
+      "dateUpdated": "Aug 2, 2016 12:06:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470139275282_1581357679",
+      "id": "20160802-120115_1855950630",
+      "dateCreated": "Aug 2, 2016 12:01:15 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nimport os\nfrom pyspark import SparkContext, SparkConf\nfrom pyspark.sql import SQLContext\nzeppelinHome \u003d os.getcwd()\nsqlContext \u003d SQLContext(sc)\nrdd \u003d sqlContext.read.format(\"org.apache.spark.sql.cassandra\").options(table\u003d\"news\", keyspace\u003d\"processed_news\").load()",
+      "dateUpdated": "Sep 15, 2016 2:18:34 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473947900725_1280898640",
+      "id": "20160915-135820_992846735",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 15, 2016 1:58:20 PM",
+      "dateStarted": "Sep 15, 2016 2:18:34 PM",
+      "dateFinished": "Sep 15, 2016 2:18:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473947990325_57335841",
+      "id": "20160915-135950_54063870",
+      "dateCreated": "Sep 15, 2016 1:59:50 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/matt/test1",
+  "id": "2BRND3BZJ",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

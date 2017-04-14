@@ -1,0 +1,1062 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\n# Please Run the Cell Below to See the Status",
+      "dateUpdated": "Sep 6, 2016 7:58:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473191368349_-1229951262",
+      "id": "20160906-194928_2144222576",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch1\u003ePlease Run the Cell Below to See the Status\u003c/h1\u003e\n"
+      },
+      "dateCreated": "Sep 6, 2016 7:49:28 PM",
+      "dateStarted": "Sep 6, 2016 7:57:59 PM",
+      "dateFinished": "Sep 6, 2016 7:57:59 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nk\u003c-as.numeric(gsub(\"/opt/spark_aug/processed009.txt\", \"\", system(\"wc -l /opt/spark_aug/processed009.txt\", intern\u003dT)))\nprint(paste0(k, \": Out of 10110275: \", round((k/10110275)*100, digits\u003d2), \"%\", \": Completed\"))",
+      "dateUpdated": "Oct 3, 2016 7:37:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473191313181_1161034934",
+      "id": "20160906-194833_273901558",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 6, 2016 7:48:33 PM",
+      "dateStarted": "Oct 3, 2016 7:37:32 PM",
+      "dateFinished": "Oct 3, 2016 7:37:43 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ntime\u003c-c();\npercent\u003c-c();",
+      "dateUpdated": "Oct 2, 2016 12:24:49 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475367688232_-1866066457",
+      "id": "20161002-002128_294492388",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Oct 2, 2016 12:21:28 AM",
+      "dateStarted": "Oct 2, 2016 12:24:49 AM",
+      "dateFinished": "Oct 2, 2016 12:24:49 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nwhile(k \u003c 10110275){\ntime\u003c-append(time, Sys.time() -14400)\nk\u003c-as.numeric(gsub(\"/opt/spark_aug/processed009.txt\", \"\", system(\"wc -l /opt/spark_aug/processed009.txt\", intern\u003dT)))\npercent\u003c-append(percent, round((k/10110275)*100, digits\u003d2))\nplot(time, percent, type\u003d\"o\", col\u003d\"blue\", main\u003d\"Dashboard Processing Old Classifer\")\nSys.sleep(10)\n}",
+      "dateUpdated": "Oct 2, 2016 12:27:09 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475367262145_189477826",
+      "id": "20161002-001422_1643902447",
+      "result": "org.apache.thrift.transport.TTransportException",
+      "dateCreated": "Oct 2, 2016 12:14:22 AM",
+      "dateStarted": "Oct 2, 2016 12:27:09 AM",
+      "dateFinished": "Oct 2, 2016 12:28:05 AM",
+      "status": "FINISHED",
+      "errorMessage": "org.apache.thrift.transport.TTransportException\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:132)\n\tat org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)\n\tat org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.recv_interpret(RemoteInterpreterService.java:249)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:233)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:269)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:279)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:328)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n#### Please do not write in cells below",
+      "dateUpdated": "Sep 6, 2016 7:57:21 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473191806804_-791063848",
+      "id": "20160906-195646_413256157",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch4\u003ePlease do not write in cells below\u003c/h4\u003e\n"
+      },
+      "dateCreated": "Sep 6, 2016 7:56:46 PM",
+      "dateStarted": "Sep 6, 2016 7:57:17 PM",
+      "dateFinished": "Sep 6, 2016 7:57:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ndf\u003c-read.table(\"/home/spark/hello.txt\", sep\u003d\"\\n\")",
+      "dateUpdated": "Sep 12, 2016 4:49:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473259814249_-1608085640",
+      "id": "20160907-145014_1974214728",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 7, 2016 2:50:14 PM",
+      "dateStarted": "Sep 12, 2016 4:49:25 PM",
+      "dateFinished": "Sep 12, 2016 4:49:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ndf2\u003c-df[grep(\"dup\", as.character(df$V1)),]\nhead(df2)",
+      "dateUpdated": "Sep 12, 2016 5:31:09 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473701386389_1430319918",
+      "id": "20160912-172946_1219509045",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "factor(0)\n248657 Levels: {tg:1,ind:0.00010009470715028,u:AutoTagger.2016-09-06cut0.7,feed_id:1,s:[166,93],symptoms:[hepatitis,infection]} …"
+      },
+      "dateCreated": "Sep 12, 2016 5:29:46 PM",
+      "dateStarted": "Sep 12, 2016 5:31:09 PM",
+      "dateFinished": "Sep 12, 2016 5:31:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ntg\u003c-as.numeric(gsub(\"tg:|\\\\{\", \"\", unname(sapply(as.character(df$V1), function(x) unlist(strsplit(x, \",\"))[1]))))\nind\u003c-as.numeric(gsub(\"ind:\", \"\", unname(sapply(as.character(df$V1), function(x) unlist(strsplit(x, \",\"))[2]))))\nhead(tg)\nhead(ind)",
+      "dateUpdated": "Sep 12, 2016 4:49:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473259917362_1985269873",
+      "id": "20160907-145157_2099623959",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "[1] 1 7 7 7 2 7\n[1] -0.19372997  0.32523831  0.07054734  0.29474255  0.70519531  0.35566041"
+      },
+      "dateCreated": "Sep 7, 2016 2:51:57 PM",
+      "dateStarted": "Sep 12, 2016 4:49:35 PM",
+      "dateFinished": "Sep 12, 2016 4:50:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nnrow(df)",
+      "dateUpdated": "Sep 12, 2016 4:50:14 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473261923656_-308185505",
+      "id": "20160907-152523_445307075",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "[1] 525456"
+      },
+      "dateCreated": "Sep 7, 2016 3:25:23 PM",
+      "dateStarted": "Sep 12, 2016 4:50:14 PM",
+      "dateFinished": "Sep 12, 2016 4:50:14 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nlibrary(mongolite)\ncon\u003c-mongo(\"temp_june_tweets2\", url\u003d\"mongodb://ec2-52-3-66-136.compute-1.amazonaws.com:27017/twitter\")\ndfx\u003c-con$find(fields\u003d\u0027{\"_id\":\"1\", \"t\":\"1\"}\u0027)",
+      "dateUpdated": "Sep 12, 2016 4:58:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473699178168_-1870798809",
+      "id": "20160912-165258_1210122117",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "Found 1000 records…\n Found 2000 records…\n Found 3000 records…\n Found 4000 records…\n Found 5000 records…\n Found 6000 records…\n Found 7000 records…\n Found 8000 records…\n Found 9000 records…\n Found 10000 records…\n Found 11000 records…\n Found 12000 records…\n Found 13000 records…\n Found 14000 records…\n Found 15000 records…\n Found 16000 records…\n Found 17000 records…\n Found 18000 records…\n Found 19000 records…\n Found 20000 records…\n Found 21000 records…\n Found 22000 records…\n Found 23000 records…\n Found 24000 records…\n Found 25000 records…\n Found 26000 records…\n Found 27000 records…\n Found 28000 records…\n Found 29000 records…\n Found 30000 records…\n Found 31000 records…\n Found 32000 records…\n Found 33000 records…\n Found 34000 records…\n Found 35000 records…\n Found 36000 records…\n Found 37000 records…\n Found 38000 records…\n Found 39000 records…\n Found 40000 records…\n Found 41000 records…\n Found 42000 records…\n Found 43000 records…\n Found 44000 records…\n Found 45000 records…\n Found 46000 records…\n Found 47000 records…\n Found 48000 records…\n Found 49000 records…\n Found 50000 records…\n Found 51000 records…\n Found 52000 records…\n Found 53000 records…\n Found 54000 records…\n Found 55000 records…\n Found 56000 records…\n Found 57000 records…\n Found 58000 records…\n Found 59000 records…\n Found 60000 records…\n Found 61000 records…\n Found 62000 records…\n Found 63000 records…\n Found 64000 records…\n Found 65000 records…\n Found 66000 records…\n Found 67000 records…\n Found 68000 records…\n Found 69000 records…\n Found 70000 records…\n Found 71000 records…\n Found 72000 records…\n Found 73000 records…\n Found 74000 records…\n Found 75000 records…\n Found 76000 records…\n Found 77000 records…\n Found 78000 records…\n Found 79000 records…\n Found 80000 records…\n Found 81000 records…\n Found 82000 records…\n Found 83000 records…\n Found 84000 records…\n Found 85000 records…\n Found 86000 records…\n Found 87000 records…\n Found 88000 records…\n Found 89000 records…\n Found 90000 records…\n Found 91000 records…\n Found 92000 records…\n Found 93000 records…\n Found 94000 records…\n Found 95000 records…\n Found 96000 records…\n Found 97000 records…\n Found 98000 records…\n Found 99000 records…\n Found 1e+05 records…\n Found 101000 records…\n Found 102000 records…\n Found 103000 records…\n Found 104000 records…\n Found 105000 records…\n Found 106000 records…\n Found 107000 records…\n Found 108000 records…\n Found 109000 records…\n Found 110000 records…\n Found 111000 records…\n Found 112000 records…\n Found 113000 records…\n Found 114000 records…\n Found 115000 records…\n Found 116000 records…\n Found 117000 records…\n Found 118000 records…\n Found 119000 records…\n Found 120000 records…\n Found 121000 records…\n Found 122000 records…\n Found 123000 records…\n Found 124000 records…\n Found 125000 records…\n Found 126000 records…\n Found 127000 records…\n Found 128000 records…\n Found 129000 records…\n Found 130000 records…\n Found 131000 records…\n Found 132000 records…\n Found 133000 records…\n Found 134000 records…\n Found 135000 records…\n Found 136000 records…\n Found 137000 records…\n Found 138000 records…\n Found 139000 records…\n Found 140000 records…\n Found 141000 records…\n Found 142000 records…\n Found 143000 records…\n Found 144000 records…\n Found 145000 records…\n Found 146000 records…\n Found 147000 records…\n Found 148000 records…\n Found 149000 records…\n Found 150000 records…\n Found 151000 records…\n Found 152000 records…\n Found 153000 records…\n Found 154000 records…\n Found 155000 records…\n Found 156000 records…\n Found 157000 records…\n Found 158000 records…\n Found 159000 records…\n Found 160000 records…\n Found 161000 records…\n Found 162000 records…\n Found 163000 records…\n Found 164000 records…\n Found 165000 records…\n Found 166000 records…\n Found 167000 records…\n Found 168000 records…\n Found 169000 records…\n Found 170000 records…\n Found 171000 records…\n Found 172000 records…\n Found 173000 records…\n Found 174000 records…\n Found 175000 records…\n Found 176000 records…\n Found 177000 records…\n Found 178000 records…\n Found 179000 records…\n Found 180000 records…\n Found 181000 records…\n Found 182000 records…\n Found 183000 records…\n Found 184000 records…\n Found 185000 records…\n Found 186000 records…\n Found 187000 records…\n Found 188000 records…\n Found 189000 records…\n Found 190000 records…\n Found 191000 records…\n Found 192000 records…\n Found 193000 records…\n Found 194000 records…\n Found 195000 records…\n Found 196000 records…\n Found 197000 records…\n Found 198000 records…\n Found 199000 records…\n Found 2e+05 records…\n Found 201000 records…\n Found 202000 records…\n Found 203000 records…\n Found 204000 records…\n Found 205000 records…\n Found 206000 records…\n Found 207000 records…\n Found 208000 records…\n Found 209000 records…\n Found 210000 records…\n Found 211000 records…\n Found 212000 records…\n Found 213000 records…\n Found 214000 records…\n Found 215000 records…\n Found 216000 records…\n Found 217000 records…\n Found 218000 records…\n Found 219000 records…\n Found 220000 records…\n Found 221000 records…\n Found 222000 records…\n Found 223000 records…\n Found 224000 records…\n Found 225000 records…\n Found 226000 records…\n Found 227000 records…\n Found 228000 records…\n Found 229000 records…\n Found 230000 records…\n Found 231000 records…\n Found 232000 records…\n Found 233000 records…\n Found 234000 records…\n Found 235000 records…\n Found 236000 records…\n Found 237000 records…\n Found 238000 records…\n Found 239000 records…\n Found 240000 records…\n Found 241000 records…\n Found 242000 records…\n Found 243000 records…\n Found 244000 records…\n Found 245000 records…\n Found 246000 records…\n Found 247000 records…\n Found 248000 records…\n Found 249000 records…\n Found 250000 records…\n Found 251000 records…\n Found 252000 records…\n Found 253000 records…\n Found 254000 records…\n Found 255000 records…\n Found 256000 records…\n Found 257000 records…\n Found 258000 records…\n Found 259000 records…\n Found 260000 records…\n Found 261000 records…\n Found 262000 records…\n Found 263000 records…\n Found 264000 records…\n Found 265000 records…\n Found 266000 records…\n Found 267000 records…\n Found 268000 records…\n Found 269000 records…\n Found 270000 records…\n Found 271000 records…\n Found 272000 records…\n Found 273000 records…\n Found 274000 records…\n Found 275000 records…\n Found 276000 records…\n Found 277000 records…\n Found 278000 records…\n Found 279000 records…\n Found 280000 records…\n Found 281000 records…\n Found 282000 records…\n Found 283000 records…\n Found 284000 records…\n Found 285000 records…\n Found 286000 records…\n Found 287000 records…\n Found 288000 records…\n Found 289000 records…\n Found 290000 records…\n Found 291000 records…\n Found 292000 records…\n Found 293000 records…\n Found 294000 records…\n Found 295000 records…\n Found 296000 records…\n Found 297000 records…\n Found 298000 records…\n Found 299000 records…\n Found 3e+05 records…\n Found 301000 records…\n Found 302000 records…\n Found 303000 records…\n Found 304000 records…\n Found 305000 records…\n Found 306000 records…\n Found 307000 records…\n Found 308000 records…\n Found 309000 records…\n Found 310000 records…\n Found 311000 records…\n Found 312000 records…\n Found 313000 records…\n Found 314000 records…\n Found 315000 records…\n Found 316000 records…\n Found 317000 records…\n Found 318000 records…\n Found 319000 records…\n Found 320000 records…\n Found 321000 records…\n Found 322000 records…\n Found 323000 records…\n Found 324000 records…\n Found 325000 records…\n Found 326000 records…\n Found 327000 records…\n Found 328000 records…\n Found 329000 records…\n Found 330000 records…\n Found 331000 records…\n Found 332000 records…\n Found 333000 records…\n Found 334000 records…\n Found 335000 records…\n Found 336000 records…\n Found 337000 records…\n Found 338000 records…\n Found 339000 records…\n Found 340000 records…\n Found 341000 records…\n Found 342000 records…\n Found 343000 records…\n Found 344000 records…\n Found 345000 records…\n Found 346000 records…\n Found 347000 records…\n Found 348000 records…\n Found 349000 records…\n Found 350000 records…\n Found 351000 records…\n Found 352000 records…\n Found 353000 records…\n Found 354000 records…\n Found 355000 records…\n Found 356000 records…\n Found 357000 records…\n Found 358000 records…\n Found 359000 records…\n Found 360000 records…\n Found 361000 records…\n Found 362000 records…\n Found 363000 records…\n Found 364000 records…\n Found 365000 records…\n Found 366000 records…\n Found 367000 records…\n Found 368000 records…\n Found 369000 records…\n Found 370000 records…\n Found 371000 records…\n Found 372000 records…\n Found 373000 records…\n Found 374000 records…\n Found 375000 records…\n Found 376000 records…\n Found 377000 records…\n Found 378000 records…\n Found 379000 records…\n Found 380000 records…\n Found 381000 records…\n Found 382000 records…\n Found 383000 records…\n Found 384000 records…\n Found 385000 records…\n Found 386000 records…\n Found 387000 records…\n Found 388000 records…\n Found 389000 records…\n Found 390000 records…\n Found 391000 records…\n Found 392000 records…\n Found 393000 records…\n Found 394000 records…\n Found 395000 records…\n Found 396000 records…\n Found 397000 records…\n Found 398000 records…\n Found 399000 records…\n Found 4e+05 records…\n Found 401000 records…\n Found 402000 records…\n Found 403000 records…\n Found 404000 records…\n Found 405000 records…\n Found 406000 records…\n Found 407000 records…\n Found 408000 records…\n Found 409000 records…\n Found 410000 records…\n Found 411000 records…\n Found 412000 records…\n Found 413000 records…\n Found 414000 records…\n Found 415000 records…\n Found 416000 records…\n Found 417000 records…\n Found 418000 records…\n Found 419000 records…\n Found 420000 records…\n Found 421000 records…\n Found 422000 records…\n Found 423000 records…\n Found 424000 records…\n Found 425000 records…\n Found 426000 records…\n Found 427000 records…\n Found 428000 records…\n Found 429000 records…\n Found 430000 records…\n Found 431000 records…\n Found 432000 records…\n Found 433000 records…\n Found 434000 records…\n Found 435000 records…\n Found 436000 records…\n Found 437000 records…\n Found 438000 records…\n Found 439000 records…\n Found 440000 records…\n Found 441000 records…\n Found 442000 records…\n Found 443000 records…\n Found 444000 records…\n Found 445000 records…\n Found 446000 records…\n Found 447000 records…\n Found 448000 records…\n Found 449000 records…\n Found 450000 records…\n Found 451000 records…\n Found 452000 records…\n Found 453000 records…\n Found 454000 records…\n Found 455000 records…\n Found 456000 records…\n Found 457000 records…\n Found 458000 records…\n Found 459000 records…\n Found 460000 records…\n Found 461000 records…\n Found 462000 records…\n Found 463000 records…\n Found 464000 records…\n Found 465000 records…\n Found 466000 records…\n Found 467000 records…\n Found 468000 records…\n Found 469000 records…\n Found 470000 records…\n Found 471000 records…\n Found 472000 records…\n Found 473000 records…\n Found 474000 records…\n Found 475000 records…\n Found 476000 records…\n Found 477000 records…\n Found 478000 records…\n Found 479000 records…\n Found 480000 records…\n Found 481000 records…\n Found 482000 records…\n Found 483000 records…\n Found 484000 records…\n Found 485000 records…\n Found 486000 records…\n Found 487000 records…\n Found 488000 records…\n Found 489000 records…\n Found 490000 records…\n Found 491000 records…\n Found 492000 records…\n Found 493000 records…\n Found 494000 records…\n Found 495000 records…\n Found 496000 records…\n Found 497000 records…\n Found 498000 records…\n Found 499000 records…\n Found 5e+05 records…\n Found 501000 records…\n Found 502000 records…\n Found 503000 records…\n Found 504000 records…\n Found 505000 records…\n Found 506000 records…\n Found 507000 records…\n Found 508000 records…\n Found 509000 records…\n Found 510000 records…\n Found 511000 records…\n Found 512000 records…\n Found 513000 records…\n Found 514000 records…\n Found 515000 records…\n Found 516000 records…\n Found 517000 records…\n Found 518000 records…\n Found 519000 records…\n Found 520000 records…\n Found 521000 records…\n Found 522000 records…\n Found 523000 records…\n Found 524000 records…\n Found 525000 records…\n Found 525455 records…\n Imported 525455 records. Simplifying into dataframe…"
+      },
+      "dateCreated": "Sep 12, 2016 4:52:58 PM",
+      "dateStarted": "Sep 12, 2016 4:55:00 PM",
+      "dateFinished": "Sep 12, 2016 4:55:13 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ndfx$id2\u003c-sapply(dfx$`_id`, function(x) paste(unlist(x), collapse \u003d \"\"))\n",
+      "dateUpdated": "Sep 12, 2016 5:05:18 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473699897323_-2102373319",
+      "id": "20160912-170457_1255288030",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 12, 2016 5:04:57 PM",
+      "dateStarted": "Sep 12, 2016 5:05:18 PM",
+      "dateFinished": "Sep 12, 2016 5:05:24 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ndf5\u003c-as.data.frame(dfx[,c(\"id2\")])\ndf5$tg\u003c-tg[-1]\ndf5$ind\u003c-ind[-1]\nnames(df5)\u003c-c(\"id\", \"tg\", \"ind\")",
+      "dateUpdated": "Sep 12, 2016 5:05:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473260786920_1406079927",
+      "id": "20160907-150626_522639882",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 7, 2016 3:06:26 PM",
+      "dateStarted": "Sep 12, 2016 5:05:32 PM",
+      "dateFinished": "Sep 12, 2016 5:05:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nhead(df5$tg)",
+      "dateUpdated": "Sep 12, 2016 5:17:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473700028714_572968029",
+      "id": "20160912-170708_1970073602",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "[1] 7 7 7 2 7 7"
+      },
+      "dateCreated": "Sep 12, 2016 5:07:08 PM",
+      "dateStarted": "Sep 12, 2016 5:17:08 PM",
+      "dateFinished": "Sep 12, 2016 5:17:08 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ncon2\u003c-mongo(\"fdaTweets\", url\u003d\"mongodb://ec2-52-3-66-136.compute-1.amazonaws.com:27017/twitter\")\ncon2$find(query\u003dpaste0(\u0027{\"_id\":\"\u0027, df5$id[10000], \u0027\"}\u0027), fields\u003d\u0027{\"_id\":\"1\", \"ind\":\"1\", \"tg\":\"1\"}\u0027)",
+      "dateUpdated": "Sep 12, 2016 5:37:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473274130818_-536475781",
+      "id": "20160907-184850_900178347",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "Found 1 records…\n Imported 1 records. Simplifying into dataframe…\n                       _id tg       ind\n1 5769b8700aeb3d520a60d9d6  1 0.5850864"
+      },
+      "dateCreated": "Sep 7, 2016 6:48:50 PM",
+      "dateStarted": "Sep 12, 2016 5:37:15 PM",
+      "dateFinished": "Sep 12, 2016 5:37:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nj\u003c-con2$find(limit\u003d100)\nsapply(j, mode)\ncon2$count()",
+      "dateUpdated": "Sep 12, 2016 5:36:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473700370743_924138674",
+      "id": "20160912-171250_1164581905",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "Found 100 records…\n Imported 100 records. Simplifying into dataframe…\n       lang         src         uid           f        flrs         acr \n“character” “character” “character” “character”   “numeric”   “numeric” \n          t          cr        flng          tg           v         ind \n“character”   “numeric”   “numeric”   “numeric”   “logical”   “numeric” \n      edits          pr         loc         sid           s           i \n     “list”      “list” “character” “character”      “list”   “numeric” \n        pii          ue       rawid       ccloc   profanity           0 \n     “list”      “list”      “list” “character”      “list” “character” \n[1] 89266711"
+      },
+      "dateCreated": "Sep 12, 2016 5:12:50 PM",
+      "dateStarted": "Sep 12, 2016 5:36:33 PM",
+      "dateFinished": "Sep 12, 2016 5:36:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nfor(j in 1:100){\ny\u003c-list(\"tg\"\u003ddf5$tg[j])\ncon2$update(query \u003d paste0(\u0027{\"_id\":\"\u0027,  df5$id[j], \u0027\" }\u0027),update \u003d paste0(\u0027{\"$set\":\u0027, toJSON(y), \u0027}\u0027))\n}",
+      "dateUpdated": "Sep 12, 2016 5:35:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473268026090_-1759326493",
+      "id": "20160907-170706_1900178703",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 7, 2016 5:07:06 PM",
+      "dateStarted": "Sep 12, 2016 5:34:17 PM",
+      "dateFinished": "Sep 12, 2016 5:34:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nnames(k)",
+      "dateUpdated": "Sep 7, 2016 7:05:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473262930178_-1594748600",
+      "id": "20160907-154210_1236631199",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "[1] “_id”         “type”        “lang”        “src”         “loc”\u003cbr /\u003e\n [6] “flng”        “ds”          “id”          “url”         “rec_metric” \n[11] “user_metric” “t”           “uid”         “cr”          “acr”\u003cbr /\u003e\n[16] “flrs”        “pr”          “s”           “ue”          “pii”\u003cbr /\u003e\n[21] “tg”          “ind”"
+      },
+      "dateCreated": "Sep 7, 2016 3:42:10 PM",
+      "dateStarted": "Sep 7, 2016 7:05:28 PM",
+      "dateFinished": "Sep 7, 2016 7:05:36 PM",
+      "status": "ABORT",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\n\nsu spark \u0026 ssh spark@52.90.151.116 php /data/medwatcher-data-science/api/cli.php --pr --s --ue --classifier twitter \u003c  /home/spark/tweets_text.txt \u003e /home/spark/processed.txt",
+      "dateUpdated": "Sep 28, 2016 3:11:09 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sh",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473193664830_-2121487271",
+      "id": "20160906-202744_1705758063",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Permission denied (publickey).\r\nExitValue: 255"
+      },
+      "dateCreated": "Sep 6, 2016 8:27:44 PM",
+      "dateStarted": "Sep 28, 2016 3:11:10 AM",
+      "dateFinished": "Sep 28, 2016 3:11:10 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nlibrary(mongolite)\ncon\u003c-mongo(\"temp_june_tweets2\", url\u003d\"mongodb://ec2-52-3-66-136.compute-1.amazonaws.com:27017/twitter\")\ndf2\u003c-con$find(fields\u003d\u0027{}\u0027)\ndf2$t2\u003c-gsub(\"[^[:alnum:]]\", \" \", df2$t)\nlibrary(jsonlite)\ndf2$id2\u003c-sapply(df2$`_id`, function(x) paste(unlist(x), collapse \u003d \"\"))\n\nk\u003c-fromJSON(\u0027{ \"_id\": { \"$in\": [2396, 2398, 2657, 2393, 2397, 2656, 2658, 2659, 2660] }}\u0027)\nk$`_id`$`$in`\u003c-df2$id2[1:300000]\n\ncon\u003c-mongo(\"fdaTweets\", url\u003d\"mongodb://ec2-52-3-66-136.compute-1.amazonaws.com:27017/twitter\")\ndf3\u003c-con$find(query\u003dpaste0(toJSON(k)), fields\u003d\u0027{\"_id\":\"1\", \"t\":\"1\", \"pr\":\"1\", \"v\":\"1\"}\u0027)\n\nk$`_id`$`$in`\u003c-df2$id2[300001:nrow(df2)]\ndf4\u003c-con$find(query\u003dpaste0(toJSON(k)), fields\u003d\u0027{\"_id\":\"1\", \"t\":\"1\", \"pr\":\"1\", \"v\":\"1\"}\u0027)\n\n",
+      "dateUpdated": "Sep 14, 2016 4:44:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472491570098_1012670738",
+      "id": "20160829-172610_1477235402",
+      "result": "org.apache.thrift.transport.TTransportException",
+      "dateCreated": "Aug 29, 2016 5:26:10 PM",
+      "dateStarted": "Sep 14, 2016 4:44:35 PM",
+      "dateFinished": "Sep 14, 2016 4:53:29 PM",
+      "status": "FINISHED",
+      "errorMessage": "org.apache.thrift.transport.TTransportException\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:132)\n\tat org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)\n\tat org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.recv_interpret(RemoteInterpreterService.java:249)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:233)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:269)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:279)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:328)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ndf4$v\u003c-NA\ndfx\u003c-rbind(df3, df4)\nnrow(dfx)\ndfx$tg\u003c-NA\ndfx$ind\u003c-NA\nnames(dfx)\nx \u003c- lapply(dfx$t, function(x) {\n  x \u003d gsub(\u0027http\\\\S+\\\\s*\u0027, \u0027\u0027, x) ## Remove URLs\n  x \u003d gsub(\u0027\\\\b+RT\u0027, \u0027\u0027, x) ## Remove RT\n  #x \u003d gsub(\u0027#\\\\S+\u0027, \u0027\u0027, x) ## Remove Hashtags\n  #x \u003d gsub(\u0027@\\\\S+\u0027, \u0027\u0027, x) ## Remove Mentions\n  x \u003d gsub(\u0027[[:cntrl:]]\u0027, \u0027\u0027, x) ## Remove Controls and special characters\n  x \u003d gsub(\"\\\\d\", \u0027\u0027, x) ## Remove Controls and special characters\n  x \u003d gsub(\u0027[[:punct:]]\u0027, \u0027\u0027, x) ## Remove Punctuations\n  x \u003d gsub(\"^[[:space:]]*\",\"\",x) ## Remove leading whitespaces\n  x \u003d gsub(\"[[:space:]]*$\",\"\",x) ## Remove trailing whitespaces\n  x \u003d gsub(\u0027 +\u0027,\u0027 \u0027,x) ## Remove extra whitespaces\n})\ndfx$t2\u003c-unlist(x)",
+      "dateUpdated": "Sep 7, 2016 3:22:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472491576295_-951102972",
+      "id": "20160829-172616_1989831132",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "[1] 525455\n[1] “_id” “t”   “pr”  “v”   “tg”  “ind”"
+      },
+      "dateCreated": "Aug 29, 2016 5:26:16 PM",
+      "dateStarted": "Sep 7, 2016 3:22:04 PM",
+      "dateFinished": "Sep 7, 2016 3:23:22 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nj\u003c-dfx[,c(\"_id\", \"t2\")]\nj$t\u003c-paste0(j[,1], \";;\", j[,2])\nj[,1]\u003c-NULL\nj[,1]\u003c-NULL\nhead(j)\n",
+      "dateUpdated": "Sep 6, 2016 7:44:53 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473190844239_-1354945393",
+      "id": "20160906-194044_1719518205",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "1                                                                                   5769b62b0aeb3d520a60b2c7;;Osenixo Lol no respect for your elders None at all\n2                         5769b62b0aeb3d520a60b2c8;;steveusdin Brian Druker tells the story of Gleevec one of the best in modern medicine Taming a deadly cancer\n3                                                                                  5769b62b0aeb3d520a60b2c9;;В первый день осени в Хабаровске будет тепло и ясно\n4 5769b62b0aeb3d520a60b2ca;;Baby woke me up to say she was hungry Im up her nappy changed amp dentinox given so no shes decided shes not hungry amp asleep again\n5                                                                                   5769b62b0aeb3d520a60b2cb;;В начале осени в Японии откроются фермерские рынки\n6                                        5769b62b0aeb3d520a60b2cc;;New MusicFirst Class by Skyla MacfireDa Hunger n Da Hustle video out now Marvins Prayer Video"
+      },
+      "dateCreated": "Sep 6, 2016 7:40:44 PM",
+      "dateStarted": "Sep 6, 2016 7:44:10 PM",
+      "dateFinished": "Sep 6, 2016 7:44:11 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\n\nwrite.table(j, \"/home/syed/sup.txt\", sep\u003d\"\\t\")",
+      "dateUpdated": "Sep 6, 2016 7:45:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473191106290_814251938",
+      "id": "20160906-194506_2003649920",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 6, 2016 7:45:06 PM",
+      "dateStarted": "Sep 6, 2016 7:45:32 PM",
+      "dateFinished": "Sep 6, 2016 7:45:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\n\nx\u003c-fromJSON((system(\"su - spark -c \\\"ssh spark@52.90.151.116 php /data/medwatcher-data-science/api/cli.php --pr --s --ue --classifier twitter \u003c\u003c\u003c \\\"advil test this is a test advil\\\"\\\"\", intern\u003dT)))[c(\"tg\", \"ind\")]",
+      "dateUpdated": "Aug 29, 2016 6:19:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472493003601_1927427358",
+      "id": "20160829-175003_1775622864",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 29, 2016 5:50:03 PM",
+      "dateStarted": "Aug 29, 2016 6:19:31 PM",
+      "dateFinished": "Aug 29, 2016 6:19:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ntagger\u003dfunction(y){\n    tryCatch({\nb\u003c-fromJSON(system(paste0(\"su - spark -c \\\"ssh spark@52.90.151.116 php /data/medwatcher-data-science/api/cli.php --pr --s --ue --classifier twitter \u003c\u003c\u003c \\\"\", as.character(dfx$t2[y]), \"\\\"\\\"\"), intern\u003dT))[c(\"tg\", \"ind\")]\ndfx$tg[y]\u003c\u003c-b$tg\ndfx$ind[y]\u003c\u003c-b$ind\nif(i %% 1000 \u003d\u003d 0){\n  j\u003c-as.data.frame(paste((i), \"Rows Inserted\"))\n  names(j)\u003c-\"sup\"\n  j\u003c-con$insert(j)\n}\n}, error\u003dfunction(e){NULL})\n}",
+      "dateUpdated": "Sep 2, 2016 7:59:53 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472494823414_-1394472220",
+      "id": "20160829-182023_1232654221",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 29, 2016 6:20:23 PM",
+      "dateStarted": "Sep 2, 2016 7:59:53 PM",
+      "dateFinished": "Sep 2, 2016 7:59:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ncon\u003c-mongo(\"old_counts\", url\u003d\"mongodb://ec2-52-3-66-136.compute-1.amazonaws.com:27017/twitter\")",
+      "dateUpdated": "Sep 2, 2016 7:59:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472693836732_-440529197",
+      "id": "20160901-013716_1623177637",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 1, 2016 1:37:16 AM",
+      "dateStarted": "Sep 2, 2016 7:59:57 PM",
+      "dateFinished": "Sep 2, 2016 7:59:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ni\u003c-1\nwhile(i \u003c\u003d nrow(dfx)){ \n  r\u003c-paste(dfx$t2[i:(i+999)], collapse\u003d\"\\\\n\")\n  y\u003c-fromJSON(system(paste0(\"su - spark -c \\\"ssh spark@52.90.151.116 php /data/medwatcher-data-science/api/cli.php --pr --s --ue --classifier twitter \u003c\u003c\u003c \\\"\", r, \"\\\"\\\"\"), intern\u003dT))[c(\"tg\", \"ind\")]\n  dfx$tg[i:(i+999)]\u003c-y$tg\n  dfx$ind[i:(i+999)]\u003c-y$ind\n  j\u003c-as.data.frame(paste((i+999), \"Rows Inserted\"))\n  names(j)\u003c-\"sup\"\n  j\u003c-con$insert(j)\n  i\u003c-i+1000\n}",
+      "dateUpdated": "Sep 1, 2016 1:40:34 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472693813286_-748728390",
+      "id": "20160901-013653_189535264",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "Complete! Processed total of 1 rows."
+      },
+      "dateCreated": "Sep 1, 2016 1:36:53 AM",
+      "dateStarted": "Sep 1, 2016 1:40:34 AM",
+      "dateFinished": "Sep 1, 2016 1:53:09 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\ninvisible(sapply(1:nrow(dfx), tagger))",
+      "dateUpdated": "Sep 2, 2016 8:00:10 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472494774664_1744248011",
+      "id": "20160829-181934_690312811",
+      "result": "org.apache.thrift.transport.TTransportException",
+      "dateCreated": "Aug 29, 2016 6:19:34 PM",
+      "dateStarted": "Sep 1, 2016 2:22:55 AM",
+      "dateFinished": "Sep 1, 2016 2:03:17 PM",
+      "status": "FINISHED",
+      "errorMessage": "org.apache.thrift.transport.TTransportException\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:132)\n\tat org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)\n\tat org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.recv_interpret(RemoteInterpreterService.java:249)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:233)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:269)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:279)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:328)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nprint(y)",
+      "dateUpdated": "Sep 1, 2016 1:57:57 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472694998333_-864623176",
+      "id": "20160901-015638_1581921650",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "$tg\n[1] 1"
+      },
+      "dateCreated": "Sep 1, 2016 1:56:38 AM",
+      "dateStarted": "Sep 1, 2016 1:57:57 AM",
+      "dateFinished": "Sep 1, 2016 1:57:57 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nprint(\"tg scores\")\nhead(dfx$tg, 100)\nprint(\"ind scores\")\nhead(dfx$ind, 100)",
+      "dateUpdated": "Sep 1, 2016 1:56:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472495593078_-2041519702",
+      "id": "20160829-183313_1991441122",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "[1] “tg scores”\n  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n [71] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n[1] “ind scores”\n  [1] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n  [7] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [13] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [19] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [25] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [31] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [37] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [43] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [49] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [55] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [61] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [67] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [73] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [79] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [85] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [91] -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999 -0.1734999\n [97] -0.1734999 -0.1734999 -0.1734999 -0.1734999"
+      },
+      "dateCreated": "Aug 29, 2016 6:33:13 PM",
+      "dateStarted": "Sep 1, 2016 1:56:00 AM",
+      "dateFinished": "Sep 1, 2016 1:56:00 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\nhead(dfx)",
+      "dateUpdated": "Sep 1, 2016 1:27:10 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472491847926_1295844284",
+      "id": "20160829-173047_2127230531",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003cpre\u003e\u003ccode\u003eError in head(dfx): object \u0027dfx\u0027 not found\n\u003c/code\u003e\u003c/pre\u003e"
+      },
+      "dateCreated": "Aug 29, 2016 5:30:47 PM",
+      "dateStarted": "Sep 1, 2016 1:27:10 AM",
+      "dateFinished": "Sep 1, 2016 1:27:32 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1472693230615_928779580",
+      "id": "20160901-012710_526049279",
+      "dateCreated": "Sep 1, 2016 1:27:10 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Old MWS Tagger",
+  "id": "2BVR3KBVV",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {
+    "looknfeel": "default"
+  },
+  "info": {}
+}

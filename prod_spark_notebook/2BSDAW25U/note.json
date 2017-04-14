@@ -1,0 +1,507 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\nimport com.mongodb.casbah.{WriteConcern \u003d\u003e MongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray",
+      "dateUpdated": "Aug 2, 2016 2:15:59 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470074691854_1130690900",
+      "id": "20160801-180451_676048482",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\nimport com.mongodb.casbah.{WriteConcern\u003d\u003eMongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\n"
+      },
+      "dateCreated": "Aug 1, 2016 6:04:51 PM",
+      "dateStarted": "Aug 2, 2016 2:15:59 PM",
+      "dateFinished": "Aug 2, 2016 2:16:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var df \u003d sqlContext\n  .read\n  .format(\"org.apache.spark.sql.cassandra\")\n  .options(Map( \"table\" -\u003e \"news\", \"keyspace\" -\u003e \"processed_news\"))\n  .load()\n  .filter($\"ds\"\u003d\u003d\u003d\"HealthMap\" \u0026\u0026 $\"yrmonth\".isin(201601, 201602, 201603, 201604, 201605, 201606, 201607, 201501, 201602, 201603, 201604, 201605, 201506, 201507, 201508, 201509, 201510, 201511, 201512, 201401, 201402, 201403, 201404, 201405, 201406, 201407, 201408, 201409, 201410, 201411))\n  .withColumn(\"t22\", concat_ws(\" \", $\"t\", $\"raw_t\", $\"description\", $\"title\"))\n  .withColumn(\"t2\", regexp_replace(lower($\"t22\"), \"\"\"[\\p{Punct}]\"\"\", \" \"))\n  .select(\"ds\", \"yrmonth\", \"retrieved_on\", \"id\", \"t2\")\n  .filter(\"t2 is not null\")\n  .cache()",
+      "dateUpdated": "Aug 2, 2016 2:16:14 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470074698553_-1003141824",
+      "id": "20160801-180458_2117779520",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df: org.apache.spark.sql.DataFrame \u003d [ds: string, yrmonth: int, retrieved_on: timestamp, id: string, t2: string]\n"
+      },
+      "dateCreated": "Aug 1, 2016 6:04:58 PM",
+      "dateStarted": "Aug 2, 2016 2:16:14 PM",
+      "dateFinished": "Aug 2, 2016 2:16:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.count()",
+      "dateUpdated": "Aug 2, 2016 2:17:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470074748358_431430293",
+      "id": "20160801-180548_1154472898",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res4: Long \u003d 5070\n"
+      },
+      "dateCreated": "Aug 1, 2016 6:05:48 PM",
+      "dateStarted": "Aug 2, 2016 2:17:00 PM",
+      "dateFinished": "Aug 2, 2016 2:17:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val space \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else text.split(\" \")\n})",
+      "dateUpdated": "Aug 1, 2016 8:34:58 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470074949113_-1674945697",
+      "id": "20160801-180909_1742987415",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "space: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,ArrayType(StringType,true),List(StringType))\n"
+      },
+      "dateCreated": "Aug 1, 2016 6:09:09 PM",
+      "dateStarted": "Aug 1, 2016 8:34:58 PM",
+      "dateFinished": "Aug 1, 2016 8:34:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"10.0.0.11\"), Database -\u003e \"dev-obit_database\", Collection -\u003e\"disease\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\n\nval disease \u003d sqlContext.fromMongoDB(readConfig).select(\"synonyms\", \"name\", \"_id\").where(size($\"synonyms\") \u003e 0).withColumn(\"synonyms\", explode($\"synonyms\")).withColumn(\"synonyms\", regexp_replace(lower($\"synonyms\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).withColumn(\"size\", size(space($\"synonyms\"))).sort(desc(\"size\"))",
+      "dateUpdated": "Aug 1, 2016 8:36:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470078004071_177967780",
+      "id": "20160801-190004_120628979",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e dev-obit_database, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e disease, host -\u003e List(10.0.0.11)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@34704f86\ndisease: org.apache.spark.sql.DataFrame \u003d [synonyms: string, name: string, _id: double, size: int]\n"
+      },
+      "dateCreated": "Aug 1, 2016 7:00:04 PM",
+      "dateStarted": "Aug 1, 2016 8:36:17 PM",
+      "dateFinished": "Aug 1, 2016 8:36:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "disease.show(false)",
+      "dateUpdated": "Aug 1, 2016 8:35:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470078078761_394504790",
+      "id": "20160801-190118_1296395503",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+------------------------------------------------------------------------------+------------------------------+-----+----+\n|synonyms                                                                      |name                          |_id  |size|\n+------------------------------------------------------------------------------+------------------------------+-----+----+\n|rickettsia tick borne spotted fever r africae r conorii r rickettsii and other|Rocky Mountain Spotted Fever  |115.0|13  |\n|rickettsia tick borne spotted fever tick typhus rmsf african tick bite fever  |Rickettsia                    |225.0|12  |\n|inflammatory bowel disease new onset post travel crohns or ulcerative colitis |Colitis                       |235.0|11  |\n|amebas other e hartmani e nana e coli e polecki                               |Amebiasis                     |3.0  |10  |\n|rickettsia tick borne spotted fever tick typhus rmsf atbf msf                 |Rickettsia                    |225.0|10  |\n|cause of the illness had not yet been determined                              |Undiagnosed                   |162.0|9   |\n|skin soft tissue infection secondary bacterial of existing lesion             |Other Human Disease           |249.0|9   |\n|diarrhea chronic responsive to anti parasitic drugs                           |Diarrhea                      |34.0 |7   |\n|creeping eruption other than hookworm related clm                             |Hookworm                      |64.0 |7   |\n|malaria drug resistant chloroquine resistant p falciparum                     |Malaria                       |80.0 |7   |\n|malaria drug resistant chloroquine resistant p vivax                          |Malaria                       |80.0 |7   |\n|malaria drug resistant primaquine resistant p vivax                           |Malaria                       |80.0 |7   |\n|malaria drug resistant quinine resistant p falciparum                         |Malaria                       |80.0 |7   |\n|fatigue   1 month not febrile                                                 |Chronic/Non-Infectious Disease|202.0|7   |\n|fatigue   1 month not febrile                                                 |Chronic/Non-Infectious Disease|202.0|7   |\n|febrile illness unspecified   3 weeks                                         |Fever                         |216.0|7   |\n|febrile illness unspecified   3 weeks                                         |Fever                         |216.0|7   |\n|bartonella henselae other than cat scratch disease                            |Bartonella                    |232.0|7   |\n|cholera toxigenic v cholera o1 o139                                           |Cholera                       |20.0 |6   |\n|encephalitis acute no proven viral etiology                                   |Encephalitis                  |44.0 |6   |\n+------------------------------------------------------------------------------+------------------------------+-----+----+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 1, 2016 7:01:18 PM",
+      "dateStarted": "Aug 1, 2016 8:35:02 PM",
+      "dateFinished": "Aug 1, 2016 8:35:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "case class words(t2: String)\nval df\u003dsc.makeRDD(Seq(words(\"amebas other e hartmani e nana e coli e polecki\"), words(\"malaria drug resistant quinine resistant p falciparum\"), words(\"malaria drug resistant chloroquine resistant p falciparum\"))).toDF\n",
+      "dateUpdated": "Aug 1, 2016 8:34:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470081892317_-1095820934",
+      "id": "20160801-200452_518030953",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "defined class words\ndf: org.apache.spark.sql.DataFrame \u003d [t2: string]\n"
+      },
+      "dateCreated": "Aug 1, 2016 8:04:52 PM",
+      "dateStarted": "Aug 1, 2016 8:34:29 PM",
+      "dateFinished": "Aug 1, 2016 8:34:29 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val prod \u003d disease.collect()\n\nval p_syn \u003d prod.map(x\u003d\u003e x(0).toString).toSet\n\nvar pa :Map[String,String] \u003d Map()\n\n\nfor(i \u003c- prod){\n    pa+\u003d (i(0).toString -\u003e i(1).toString)\n}",
+      "dateUpdated": "Aug 1, 2016 8:36:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470078178534_1175065074",
+      "id": "20160801-190258_148796159",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "prod: Array[org.apache.spark.sql.Row] \u003d Array([rickettsia tick borne spotted fever r africae r conorii r rickettsii and other,Rocky Mountain Spotted Fever,115.0,13], [rickettsia tick borne spotted fever tick typhus rmsf african tick bite fever,Rickettsia,225.0,12], [inflammatory bowel disease new onset post travel crohns or ulcerative colitis,Colitis,235.0,11], [amebas other e hartmani e nana e coli e polecki,Amebiasis,3.0,10], [rickettsia tick borne spotted fever tick typhus rmsf atbf msf,Rickettsia,225.0,10], [cause of the illness had not yet been determined,Undiagnosed,162.0,9], [skin soft tissue infection secondary bacterial of existing lesion,Other Human Disease,249.0,9], [diarrhea chronic responsive to anti parasitic drugs,Diarrhea,34.0,7], [creeping eruption other than hookworm r...p_syn: scala.collection.immutable.Set[String] \u003d Set(pdcov, peste des petits ruminants, mycoplasma bovis, rotavirus, peritonsillar abscess, australian encephalitis, q fever, cre, groundnut ringspot virus, diarrhea acute unspecified, die off, bite spider, kala azar, melioidosis, squirrel pox, african trypanosomiasis, not diagnosed disease, potato wart, lactose intolerance post infectious, pontic fever, brugia malayi, hemorrhagic fever, chytrid fungus, club root, typhoid, mystery deadly illness, adem, mycobacterium abscessus, pneumonia fungal, rhinovirus, agalactia, aster yellows, cryptococcal, cholera infected swine, helminth intestinal not diarrhea unspecified, type specific stroke, dyscentry, shigella s dysenteriae, evh 1, urethritis non gonococcal, shot dead, rickettsia typhi flea born...pa: Map[String,String] \u003d Map()\n"
+      },
+      "dateCreated": "Aug 1, 2016 7:02:58 PM",
+      "dateStarted": "Aug 1, 2016 8:36:37 PM",
+      "dateFinished": "Aug 1, 2016 8:36:38 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val ns \u003d Array(disease.select(\"size\").take(1)(0)(0).toString.toInt)\nval nsize \u003d ns.max",
+      "dateUpdated": "Aug 1, 2016 8:37:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470078440813_-278360861",
+      "id": "20160801-190720_130152426",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "ns: Array[Int] \u003d Array(13)\nnsize: Int \u003d 13\n"
+      },
+      "dateCreated": "Aug 1, 2016 7:07:20 PM",
+      "dateStarted": "Aug 1, 2016 8:37:04 PM",
+      "dateFinished": "Aug 1, 2016 8:37:05 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer\n\nval tokenizer \u003d new Tokenizer().setInputCol(\"t2\").setOutputCol(\"words\")\n\nvar tokenized \u003d tokenizer.transform(df)\n\nfor(i \u003c- 1 to nsize){\n\n    var num \u003d Array(\"ngram\", i).mkString\n\n    var ngi \u003d new NGram().setInputCol(\"words\").setOutputCol(num).setN(i)\n\n    tokenized \u003d ngi.transform(tokenized)\n    tokenized \u003d tokenized.withColumn(\"test\", tokenized(num).cast(\"String\")).withColumn(\"w2\", concat($\"words\".cast(\"String\"), $\"test\")).drop(num).drop(\"test\")\n}",
+      "dateUpdated": "Aug 1, 2016 8:37:09 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470078477541_-1589707706",
+      "id": "20160801-190757_1272143677",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer\ntokenizer: org.apache.spark.ml.feature.Tokenizer \u003d tok_a2bbc3db1dba\ntokenized: org.apache.spark.sql.DataFrame \u003d [ds: string, yrmonth: int, retrieved_on: timestamp, id: string, t2: string, words: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Aug 1, 2016 7:07:57 PM",
+      "dateStarted": "Aug 1, 2016 8:37:09 PM",
+      "dateFinished": "Aug 1, 2016 8:37:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val matcher \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else {\n    val words \u003d text.split(\",\").toSet\n    val pc \u003d p_syn \u0026 words\n    Map(\"disease\" -\u003e (pc.toArray collect pa).distinct)\n    }\n})",
+      "dateUpdated": "Aug 1, 2016 8:39:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470078533562_-2135019491",
+      "id": "20160801-190853_442368984",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "matcher: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,MapType(StringType,ArrayType(StringType,true),true),List(StringType))\n"
+      },
+      "dateCreated": "Aug 1, 2016 7:08:53 PM",
+      "dateStarted": "Aug 1, 2016 8:39:05 PM",
+      "dateFinished": "Aug 1, 2016 8:39:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end \u003d tokenized.withColumn(\"temp\", matcher($\"w2\")).withColumn(\"disease\", $\"temp\"(\"disease\")).drop(\"words\").drop(\"w2\").drop(\"temp\")",
+      "dateUpdated": "Aug 1, 2016 8:39:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470078567826_1428986192",
+      "id": "20160801-190927_659325016",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end: org.apache.spark.sql.DataFrame \u003d [ds: string, yrmonth: int, retrieved_on: timestamp, id: string, t2: string, disease: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Aug 1, 2016 7:09:27 PM",
+      "dateStarted": "Aug 1, 2016 8:39:08 PM",
+      "dateFinished": "Aug 1, 2016 8:39:08 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end.filter(size($\"disease\")\u003e0).select(\"ds\", \"yrmonth\", \"retrieved_on\", \"id\", \"disease\").show(1000, false)",
+      "dateUpdated": "Aug 1, 2016 8:39:09 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470078592614_-935833790",
+      "id": "20160801-190952_1705119258",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+---------+-------+---------------------+-------+-------------------------------------------------------------------------------------------------------------------------+\n|ds       |yrmonth|retrieved_on         |id     |disease                                                                                                                  |\n+---------+-------+---------------------+-------+-------------------------------------------------------------------------------------------------------------------------+\n|HealthMap|201501 |2015-01-01 00:07:39.0|3065671|[Staph]                                                                                                                  |\n|HealthMap|201501 |2015-01-01 01:00:57.0|3065709|[African Swine Fever, Chronic/Non-Infectious Disease, Fever]                                                             |\n|HealthMap|201501 |2015-01-01 01:00:59.0|3065710|[Influenza]                                                                                                              |\n|HealthMap|201501 |2015-01-01 01:01:02.0|3065711|[Influenza]                                                                                                              |\n|HealthMap|201501 |2015-01-01 01:01:04.0|3065712|[Influenza]                                                                                                              |\n|HealthMap|201501 |2015-01-01 03:23:50.0|3064249|[Avian Influenza, Influenza, Avian Influenza H7N9]                                                                       |\n|HealthMap|201501 |2015-01-01 14:19:20.0|3065051|[Poisoning, Foodborne Illness, Chronic/Non-Infectious Disease, African Swine Fever, Undiagnosed, P. aeruginosa, Diarrhea]|\n|HealthMap|201501 |2015-01-01 19:22:40.0|3061029|[Influenza, Fever, Influenza H1N1, Avian Influenza H5N1]                                                                 |\n|HealthMap|201604 |2016-04-07 00:00:00.0|4145298|[African Swine Fever]                                                                                                    |\n|HealthMap|201604 |2016-04-07 00:00:00.0|4145305|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201604 |2016-04-07 00:00:00.0|4145427|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201604 |2016-04-08 00:00:00.0|4147286|[Tuberculosis]                                                                                                           |\n|HealthMap|201604 |2016-04-08 00:00:00.0|4147905|[African Swine Fever]                                                                                                    |\n|HealthMap|201604 |2016-04-12 00:00:00.0|4154349|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201604 |2016-04-12 00:00:00.0|4154612|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201604 |2016-04-20 00:00:00.0|4172218|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201604 |2016-04-25 00:00:00.0|4183100|[African Swine Fever]                                                                                                    |\n|HealthMap|201604 |2016-04-26 00:00:00.0|4184412|[African Swine Fever]                                                                                                    |\n|HealthMap|201604 |2016-04-26 00:00:00.0|4184695|[Pests]                                                                                                                  |\n|HealthMap|201604 |2016-04-28 00:00:00.0|4189351|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201605 |2016-05-04 00:00:00.0|4200823|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201605 |2016-05-04 00:00:00.0|4201917|[African Swine Fever]                                                                                                    |\n|HealthMap|201605 |2016-05-05 00:00:00.0|4203681|[African Swine Fever]                                                                                                    |\n|HealthMap|201605 |2016-05-05 00:00:00.0|4204845|[Pests]                                                                                                                  |\n|HealthMap|201605 |2016-05-06 00:00:00.0|4206923|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201605 |2016-05-10 00:00:00.0|4212328|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201605 |2016-05-10 00:00:00.0|4212420|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201605 |2016-05-10 00:00:00.0|4212860|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201605 |2016-05-10 00:00:00.0|4212976|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201605 |2016-05-11 00:00:00.0|4214707|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201605 |2016-05-11 00:00:00.0|4214785|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201605 |2016-05-11 00:00:00.0|4215123|[Zika virus]                                                                                                             |\n|HealthMap|201605 |2016-05-11 00:00:00.0|4215554|[Zika virus]                                                                                                             |\n|HealthMap|201605 |2016-05-12 00:00:00.0|4216821|[Zika virus]                                                                                                             |\n|HealthMap|201605 |2016-05-12 00:00:00.0|4217137|[Zika virus, Influenza, Dengue, Herpes]                                                                                  |\n|HealthMap|201605 |2016-05-12 00:00:00.0|4218218|[Zika virus, Influenza, Fever, Dengue, Herpes]                                                                           |\n|HealthMap|201605 |2016-05-12 00:00:00.0|4218349|[Zika virus, Dengue, Herpes]                                                                                             |\n|HealthMap|201605 |2016-05-12 00:00:00.0|4218448|[Zika virus]                                                                                                             |\n|HealthMap|201605 |2016-05-12 00:00:00.0|4218600|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201605 |2016-05-12 00:00:00.0|4218602|[Zika virus]                                                                                                             |\n|HealthMap|201605 |2016-05-12 00:00:00.0|4218941|[Zika virus, Herpes]                                                                                                     |\n|HealthMap|201605 |2016-05-13 00:00:00.0|4219191|[Zika virus, Fever, Dengue]                                                                                              |\n|HealthMap|201605 |2016-05-13 00:00:00.0|4219397|[Zika virus, Influenza]                                                                                                  |\n|HealthMap|201605 |2016-05-13 00:00:00.0|4219824|[Influenza, Zika virus]                                                                                                  |\n|HealthMap|201605 |2016-05-13 00:00:00.0|4219943|[Zika virus, Influenza, Herpes]                                                                                          |\n|HealthMap|201605 |2016-05-13 00:00:00.0|4220457|[Influenza, Zika virus, Fever, Dengue]                                                                                   |\n|HealthMap|201605 |2016-05-13 00:00:00.0|4220967|[Influenza, African Swine Fever]                                                                                         |\n|HealthMap|201605 |2016-05-13 00:00:00.0|4221053|[African Swine Fever]                                                                                                    |\n|HealthMap|201605 |2016-05-14 00:00:00.0|4221779|[Zika virus]                                                                                                             |\n|HealthMap|201605 |2016-05-15 00:00:00.0|4223099|[Zika virus, Influenza]                                                                                                  |\n|HealthMap|201605 |2016-05-15 00:00:00.0|4223428|[Zika virus]                                                                                                             |\n|HealthMap|201605 |2016-05-16 00:00:00.0|4224407|[Zika virus]                                                                                                             |\n|HealthMap|201605 |2016-05-16 00:00:00.0|4224663|[Zika virus]                                                                                                             |\n|HealthMap|201605 |2016-05-16 00:00:00.0|4224670|[Influenza, Dengue, Herpes]                                                                                              |\n|HealthMap|201605 |2016-05-16 00:00:00.0|4225290|[Influenza]                                                                                                              |\n|HealthMap|201605 |2016-05-16 00:00:00.0|4225631|[African Swine Fever]                                                                                                    |\n|HealthMap|201605 |2016-05-17 00:00:00.0|4226610|[African Swine Fever]                                                                                                    |\n|HealthMap|201605 |2016-05-17 00:00:00.0|4226785|[Murray Valley encephalitis ]                                                                                            |\n|HealthMap|201605 |2016-05-17 00:00:00.0|4226903|[Influenza, Zika virus]                                                                                                  |\n|HealthMap|201605 |2016-05-17 00:00:00.0|4227831|[African Swine Fever]                                                                                                    |\n|HealthMap|201605 |2016-05-17 00:00:00.0|4228003|[African Swine Fever]                                                                                                    |\n|HealthMap|201605 |2016-05-19 00:00:00.0|4232237|[Zika virus]                                                                                                             |\n|HealthMap|201606 |2016-06-02 00:00:00.0|4262300|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201606 |2016-06-03 00:00:00.0|4263539|[HIV/AIDS]                                                                                                               |\n|HealthMap|201606 |2016-06-03 00:00:00.0|4263660|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201606 |2016-06-03 00:00:00.0|4263934|[Pests]                                                                                                                  |\n|HealthMap|201607 |2016-07-01 00:01:55.0|4320198|[Zika virus]                                                                                                             |\n|HealthMap|201607 |2016-07-01 00:03:22.0|4320205|[Pelvic Inflammatory Disease]                                                                                            |\n|HealthMap|201607 |2016-07-01 00:03:25.0|4320206|[Pelvic Inflammatory Disease]                                                                                            |\n|HealthMap|201607 |2016-07-01 00:17:06.0|4317986|[Respiratory Syncytial Virus, Influenza H3N2, Influenza, Influenza H1N1]                                                 |\n|HealthMap|201607 |2016-07-01 00:17:13.0|4318657|[Poisoning]                                                                                                              |\n|HealthMap|201607 |2016-07-01 17:14:28.0|4319761|[E. coli]                                                                                                                |\n|HealthMap|201607 |2016-07-01 21:26:19.0|4319975|[African Swine Fever, Other Animal Disease]                                                                              |\n|HealthMap|201607 |2016-07-06 00:00:00.0|4329415|[Environmental]                                                                                                          |\n|HealthMap|201607 |2016-07-06 00:00:00.0|4329520|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201607 |2016-07-06 00:00:00.0|4329523|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201607 |2016-07-06 00:00:00.0|4329528|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201607 |2016-07-06 00:00:00.0|4329589|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201607 |2016-07-06 00:00:00.0|4329758|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201607 |2016-07-06 00:00:00.0|4329841|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201607 |2016-07-07 00:00:00.0|4330261|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201607 |2016-07-07 00:00:00.0|4330621|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-07 00:00:00.0|4331726|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-07 00:00:00.0|4331835|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-07 00:00:00.0|4331893|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-07 00:00:00.0|4331995|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-07 00:00:00.0|4331997|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-07 00:00:00.0|4332078|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-08 00:00:00.0|4333040|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201607 |2016-07-08 00:00:00.0|4333633|[Conflict]                                                                                                               |\n|HealthMap|201607 |2016-07-10 00:00:00.0|4335624|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-10 00:00:00.0|4335971|[Pests, African Swine Fever]                                                                                             |\n|HealthMap|201607 |2016-07-11 00:00:00.0|4336686|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-11 00:00:00.0|4336948|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201607 |2016-07-11 00:00:00.0|4337029|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-12 00:00:00.0|4339109|[Environmental]                                                                                                          |\n|HealthMap|201607 |2016-07-12 00:00:00.0|4339112|[SARS]                                                                                                                   |\n|HealthMap|201607 |2016-07-13 00:00:00.0|4341423|[Chronic/Non-Infectious Disease]                                                                                         |\n|HealthMap|201607 |2016-07-13 00:00:00.0|4342640|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-13 00:00:00.0|4342649|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-14 00:00:00.0|4344897|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-14 00:00:00.0|4344906|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-14 00:00:00.0|4344914|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-14 00:00:00.0|4345513|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-15 00:00:00.0|4346837|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-15 00:00:00.0|4347302|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-15 00:00:00.0|4347732|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-15 00:00:00.0|4347881|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-18 00:00:00.0|4352214|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-18 00:00:00.0|4352337|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-18 00:00:00.0|4352965|[African Swine Fever]                                                                                                    |\n|HealthMap|201607 |2016-07-19 00:00:00.0|4354658|[African Swine Fever]                                                                                                    |\n+---------+-------+---------------------+-------+-------------------------------------------------------------------------------------------------------------------------+\n\n"
+      },
+      "dateCreated": "Aug 1, 2016 7:09:52 PM",
+      "dateStarted": "Aug 1, 2016 8:39:09 PM",
+      "dateFinished": "Aug 1, 2016 8:39:13 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Aug 1, 2016 8:33:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470081950833_321902142",
+      "id": "20160801-200550_2084266511",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 1, 2016 8:05:50 PM",
+      "dateStarted": "Aug 1, 2016 8:34:07 PM",
+      "dateFinished": "Aug 1, 2016 8:34:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "healthmap sue",
+  "id": "2BSDAW25U",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

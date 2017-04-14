@@ -1,0 +1,341 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext",
+      "dateUpdated": "Sep 26, 2016 8:22:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474603513800_-112805828",
+      "id": "20160923-040513_1105629391",
+      "result": "org.apache.zeppelin.interpreter.InterpreterException: org.apache.thrift.transport.TTransportException: java.net.ConnectException: Connection refused",
+      "dateCreated": "Sep 23, 2016 4:05:13 AM",
+      "dateStarted": "Sep 26, 2016 8:22:21 PM",
+      "dateFinished": "Sep 26, 2016 8:22:53 PM",
+      "status": "ERROR",
+      "errorMessage": "java.net.ConnectException: Connection refused\n\tat java.net.PlainSocketImpl.socketConnect(Native Method)\n\tat java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)\n\tat java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)\n\tat java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)\n\tat java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)\n\tat java.net.Socket.connect(Socket.java:579)\n\tat org.apache.thrift.transport.TSocket.open(TSocket.java:182)\n\tat org.apache.zeppelin.interpreter.remote.ClientFactory.create(ClientFactory.java:51)\n\tat org.apache.zeppelin.interpreter.remote.ClientFactory.create(ClientFactory.java:37)\n\tat org.apache.commons.pool2.BasePooledObjectFactory.makeObject(BasePooledObjectFactory.java:60)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:861)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:435)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:363)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.getClient(RemoteInterpreterProcess.java:184)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.init(RemoteInterpreter.java:163)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.getFormType(RemoteInterpreter.java:328)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.getFormType(LazyOpenInterpreter.java:105)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:260)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:328)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var prod22 \u003d sqlContext.read\n    .format(\"com.databricks.spark.csv\")\n    .option(\"header\", \"true\") // Use first line of all files as header\n    .option(\"inferSchema\", \"true\") // Automatically infer data types\n    .load(\"/opt/finalsup2.csv\")\n    .drop(\"\")\n    .withColumn(\"sentiment\", $\"sentiment\".cast(\"double\"))",
+      "dateUpdated": "Sep 26, 2016 3:39:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474603529124_1615668477",
+      "id": "20160923-040529_1955750922",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "prod22: org.apache.spark.sql.DataFrame \u003d [cr: string, url: string, title: string, description: string, company: string, topic: string, keyword: string, id: int, sentiment: double]\n"
+      },
+      "dateCreated": "Sep 23, 2016 4:05:29 AM",
+      "dateStarted": "Sep 26, 2016 3:39:33 PM",
+      "dateFinished": "Sep 26, 2016 3:39:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "prod22.show()",
+      "dateUpdated": "Sep 26, 2016 3:39:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474603566326_1147105613",
+      "id": "20160923-040606_828537296",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+----------+------+--------+--------------+----------+--------+----------+---+---------+\n|        cr|   url|   title|   description|   company|   topic|   keyword| id|sentiment|\n+----------+------+--------+--------------+----------+--------+----------+---+---------+\n|1990-01-11| url 1| title 1| description 1|company -1|topic -1|keyword -1|  1|     -1.0|\n|1990-01-11| url 2| title 2| description 2| company 1| topic 1| keyword 1|  2|      1.0|\n|1990-01-11| url 3| title 3| description 3|company -1|topic -1|keyword -1|  3|     -1.0|\n|1990-01-11| url 4| title 4| description 4|company -1|topic -1|keyword -1|  4|     -1.0|\n|1990-01-11| url 5| title 5| description 5|company -1|topic -1|keyword -1|  5|     -1.0|\n|1990-01-11| url 6| title 6| description 6| company 1| topic 1| keyword 1|  6|      1.0|\n|1990-01-11| url 7| title 7| description 7| company 0| topic 0| keyword 0|  7|      0.0|\n|1990-01-11| url 8| title 8| description 8| company 1| topic 1| keyword 1|  8|      1.0|\n|1990-01-11| url 9| title 9| description 9|company -1|topic -1|keyword -1|  9|     -1.0|\n|1990-01-11|url 10|title 10|description 10|company -1|topic -1|keyword -1| 10|     -1.0|\n|1990-01-11|url 11|title 11|description 11| company 0| topic 0| keyword 0| 11|      0.0|\n|1990-01-11|url 12|title 12|description 12| company 0| topic 0| keyword 0| 12|      0.0|\n|1990-01-11|url 13|title 13|description 13| company 1| topic 1| keyword 1| 13|      1.0|\n|1990-01-11|url 14|title 14|description 14| company 1| topic 1| keyword 1| 14|      1.0|\n|1990-01-11|url 15|title 15|description 15|company -1|topic -1|keyword -1| 15|     -1.0|\n|1990-01-11|url 16|title 16|description 16| company 0| topic 0| keyword 0| 16|      0.0|\n|1990-01-11|url 17|title 17|description 17| company 1| topic 1| keyword 1| 17|      1.0|\n|1990-01-11|url 18|title 18|description 18| company 1| topic 1| keyword 1| 18|      1.0|\n|1990-01-11|url 19|title 19|description 19| company 0| topic 0| keyword 0| 19|      0.0|\n|1990-01-11|url 20|title 20|description 20| company 1| topic 1| keyword 1| 20|      1.0|\n+----------+------+--------+--------------+----------+--------+----------+---+---------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 23, 2016 4:06:06 AM",
+      "dateStarted": "Sep 26, 2016 3:39:49 PM",
+      "dateFinished": "Sep 26, 2016 3:39:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "prod22.createCassandraTable(\"testing\", \"syed_test\", \npartitionKeyColumns \u003d Some(Seq(\"id\")))",
+      "dateUpdated": "Sep 26, 2016 3:42:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474603618057_-1025694019",
+      "id": "20160923-040658_695518533",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 23, 2016 4:06:58 AM",
+      "dateStarted": "Sep 26, 2016 3:42:50 PM",
+      "dateFinished": "Sep 26, 2016 3:43:12 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "prod22.write\n  .format(\"org.apache.spark.sql.cassandra\")\n  .mode(\"append\")\n  .options(Map( \"table\" -\u003e \"syed_test\", \"keyspace\" -\u003e \"testing6\"))\n  .save()",
+      "dateUpdated": "Sep 26, 2016 3:44:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474603896306_-595161644",
+      "id": "20160923-041136_773471324",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 23, 2016 4:11:36 AM",
+      "dateStarted": "Sep 26, 2016 3:43:22 PM",
+      "dateFinished": "Sep 26, 2016 3:49:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val c \u003d prod22.count()\n\nval j \u003d (c / 2000000) + 1\n\nval p \u003d 100.0 / j\n\nval x \u003d Array.fill(j.toInt)(p)\n\nval s \u003d prod22.randomSplit(x, seed\u003d0)",
+      "dateUpdated": "Sep 23, 2016 4:28:25 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474603963051_-248594830",
+      "id": "20160923-041243_50713902",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "c: Long \u003d 10000000\nj: Long \u003d 6\np: Double \u003d 16.666666666666668\nx: Array[Double] \u003d Array(16.666666666666668, 16.666666666666668, 16.666666666666668, 16.666666666666668, 16.666666666666668, 16.666666666666668)\ns: Array[org.apache.spark.sql.DataFrame] \u003d Array([cr: string, url: string, title: string, description: string, company: string, topic: string, keyword: string, id: int, sentiment: double], [cr: string, url: string, title: string, description: string, company: string, topic: string, keyword: string, id: int, sentiment: double], [cr: string, url: string, title: string, description: string, company: string, topic: string, keyword: string, id: int, sentiment: double], [cr: string, url: string, title: string, description: string, company: string, topic: string, keyword: string, id: int, sentiment: double], [cr: string, url: string, title: string, description: string, company: string, topic: string, keyword: string, id: int, sentiment: double], [cr: string, url: string, title: string, descrip..."
+      },
+      "dateCreated": "Sep 23, 2016 4:12:43 AM",
+      "dateStarted": "Sep 23, 2016 4:28:25 AM",
+      "dateFinished": "Sep 23, 2016 4:28:43 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.redislabs.provider.redis._",
+      "dateUpdated": "Sep 23, 2016 4:27:49 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474604866436_340313408",
+      "id": "20160923-042746_1720510064",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.redislabs.provider.redis._\n"
+      },
+      "dateCreated": "Sep 23, 2016 4:27:46 AM",
+      "dateStarted": "Sep 23, 2016 4:27:49 AM",
+      "dateFinished": "Sep 23, 2016 4:27:49 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.{Logging, SparkConf, SparkContext}\nval sc2 \u003d new SparkContext(\n    new SparkConf()\n      .set(\"spark.driver.allowMultipleContexts\", \"true\")\n      .set(\"redis.host\", \"int-redis.epidemi.co\")\n      .set(\"redis.port\", \"6379\")\n  )",
+      "dateUpdated": "Sep 23, 2016 4:30:08 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474604938858_-438879735",
+      "id": "20160923-042858_1351500857",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.{Logging, SparkConf, SparkContext}\nsc2: org.apache.spark.SparkContext \u003d org.apache.spark.SparkContext@91f91b7\n"
+      },
+      "dateCreated": "Sep 23, 2016 4:28:58 AM",
+      "dateStarted": "Sep 23, 2016 4:30:08 AM",
+      "dateFinished": "Sep 23, 2016 4:30:08 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i \u003c- 0 to (s.length -1)){\n    val y \u003d Array(\"Test\", i, \"t\").mkString\n    val hello \u003d s(i).toJSON.toDF.withColumn(\"id\", when($\"_1\"\u003d\u003d\u003d\"sup\", y).otherwise(y)).groupBy(\"id\").agg(collect_list(\"_1\").cast(\"String\").alias(\"value\")).withColumn(\"value\", regexp_replace($\"value\", \"},\", \"};\")).withColumn(\"value\", regexp_replace($\"value\", \"\\\\[|\\\\]\", \"\"))\n    val sup \u003d hello.rdd.map(x \u003d\u003e \"\\\\[|\\\\]\".r.replaceAllIn(x.toString, \"\").split(\"t,\")).map(x\u003d\u003e (x(0), x(1)))\n    sc2.toRedisKV(sup)\n}",
+      "dateUpdated": "Sep 23, 2016 4:30:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474604710953_1812565204",
+      "id": "20160923-042510_1986712318",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 23, 2016 4:25:10 AM",
+      "dateStarted": "Sep 23, 2016 4:30:18 AM",
+      "dateFinished": "Sep 23, 2016 4:36:07 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474605018649_546400901",
+      "id": "20160923-043018_862692305",
+      "dateCreated": "Sep 23, 2016 4:30:18 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "testing scyla",
+  "id": "2BWTN5U6N",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

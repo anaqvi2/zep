@@ -1,0 +1,720 @@
+{
+  "paragraphs": [
+    {
+      "text": "// Mongo\nimport com.mongodb.casbah.{WriteConcern \u003d\u003e MongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray",
+      "dateUpdated": "Aug 22, 2016 5:53:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470165179403_1061795599",
+      "id": "20160802-191259_169472745",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.mongodb.casbah.{WriteConcern\u003d\u003eMongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\n"
+      },
+      "dateCreated": "Aug 2, 2016 7:12:59 PM",
+      "dateStarted": "Aug 22, 2016 5:53:02 PM",
+      "dateFinished": "Aug 22, 2016 5:53:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var prod22 \u003d sqlContext.read\n    .format(\"com.databricks.spark.csv\")\n    .option(\"header\", \"true\") // Use first line of all files as header\n    .option(\"inferSchema\", \"true\") // Automatically infer data types\n    .load(\"/home/syed/challenge_R.csv\")\n",
+      "dateUpdated": "Aug 22, 2016 6:29:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470165197503_-1929211703",
+      "id": "20160802-191317_1738159006",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "prod22: org.apache.spark.sql.DataFrame \u003d [t: string, source: string, id: double]\n"
+      },
+      "dateCreated": "Aug 2, 2016 7:13:17 PM",
+      "dateStarted": "Aug 22, 2016 6:29:49 PM",
+      "dateFinished": "Aug 22, 2016 6:29:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "prod22.show()",
+      "dateUpdated": "Aug 22, 2016 6:29:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470165308840_-700923003",
+      "id": "20160802-191508_245962129",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+-------+----+\n|                   t| source|  id|\n+--------------------+-------+----+\n|Focalin IR + or -...|dsForum| 2.0|\n|Ritalin compared ...|dsForum| 3.0|\n|Quit oxycontin 2+...|dsForum| 4.0|\n|less abusive and ...|dsForum| 5.0|\n|New adderall user...|dsForum| 7.0|\n|Focalin vs Ritali...|dsForum| 9.0|\n|Ethylphenidate Ex...|dsForum|10.0|\n|Isolating MAOI Pr...|dsForum|12.0|\n|How To Ease Adder...|dsForum|13.0|\n|trapped in the st...|dsForum|14.0|\n|How To: Make Adde...|dsForum|21.0|\n|Glycine experienc...|dsForum|22.0|\n|Duration of effec...|dsForum|24.0|\n|Help! Sudden High...|dsForum|25.0|\n|What daily dosage...|dsForum|26.0|\n|ritalin IR extrac...|dsForum|27.0|\n|MDPPP 3,4-methyle...|dsForum|28.0|\n|Safety of Ritalin...|dsForum|29.0|\n|My Zoloft is depr...|dsForum|33.0|\n|Working inside th...|dsForum|34.0|\n+--------------------+-------+----+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 2, 2016 7:15:08 PM",
+      "dateStarted": "Aug 22, 2016 6:29:52 PM",
+      "dateFinished": "Aug 22, 2016 6:29:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var chall \u003d sqlContext.read\n    .format(\"com.databricks.spark.csv\")\n    .option(\"header\", \"true\") // Use first line of all files as header\n    .option(\"inferSchema\", \"true\") // Automatically infer data types\n    .load(\"/home/syed/rechallenge.csv\")\n",
+      "dateUpdated": "Aug 22, 2016 6:29:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470166300759_1738590816",
+      "id": "20160802-193140_501197813",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "chall: org.apache.spark.sql.DataFrame \u003d [REGEXP: string, : string]\n"
+      },
+      "dateCreated": "Aug 2, 2016 7:31:40 PM",
+      "dateStarted": "Aug 22, 2016 6:29:57 PM",
+      "dateFinished": "Aug 22, 2016 6:29:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "chall \u003d chall.withColumn(\"sup\", concat($\"REGEXP\", $\"\"))",
+      "dateUpdated": "Aug 22, 2016 6:30:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470243899740_631347102",
+      "id": "20160803-170459_2091573415",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "chall: org.apache.spark.sql.DataFrame \u003d [REGEXP: string, : string, sup: string]\n"
+      },
+      "dateCreated": "Aug 3, 2016 5:04:59 PM",
+      "dateStarted": "Aug 22, 2016 6:30:03 PM",
+      "dateFinished": "Aug 22, 2016 6:30:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val p_syn2 \u003d  chall.select(\"REGEXP\").rdd.map(r \u003d\u003e r(0)).collect()\n\nval regex \u003d p_syn2.mkString(\"(\", \"|\", \")\").r",
+      "dateUpdated": "Aug 22, 2016 6:30:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470243322552_-766304446",
+      "id": "20160803-165522_159758674",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "p_syn2: Array[Any] \u003d Array(\\bstop.*disappear.*(start.*re-?appear|start.*re-?occur|start.*re-?cur|start.*return|start.*deteriorate|start.*worse|start.*again|start.*back|start.*appear|start.*relapse|re-?start.*re-?appear|re-?start.*re-?occur|re-?start.*re-?cur|re-?start.*return|re-?start.*deteriorate|re-?start.*worse|re-?start.*again|re-?start.*back|re-?start.*appear|re-?start.*relapse|resum.*re-?appear|resum.*re-?occur|resum.*re-?cur|resum.*return|resum.*deteriorate|resum.*worse|resum.*again|resum.*back|resum.*appear|resum.*relapse|again.*re-?appear|again.*re-?occur|again.*re-?cur|again.*return|again.*deteriorate|again.*worse|again.*again|again.*back|again.*appear|again.*relapse|back.*re-?appear|back.*re-?occur|back.*re-?cur|back.*return|back.*deteriorate|back.*worse|back.*again|back.*ba...regex: scala.util.matching.Regex \u003d (\\bstop.*disappear.*(start.*re-?appear|start.*re-?occur|start.*re-?cur|start.*return|start.*deteriorate|start.*worse|start.*again|start.*back|start.*appear|start.*relapse|re-?start.*re-?appear|re-?start.*re-?occur|re-?start.*re-?cur|re-?start.*return|re-?start.*deteriorate|re-?start.*worse|re-?start.*again|re-?start.*back|re-?start.*appear|re-?start.*relapse|resum.*re-?appear|resum.*re-?occur|resum.*re-?cur|resum.*return|resum.*deteriorate|resum.*worse|resum.*again|resum.*back|resum.*appear|resum.*relapse|again.*re-?appear|again.*re-?occur|again.*re-?cur|again.*return|again.*deteriorate|again.*worse|again.*again|again.*back|again.*appear|again.*relapse|back.*re-?appear|back.*re-?occur|back.*re-?cur|back.*return|back.*deteriorate|back.*worse|back.*again..."
+      },
+      "dateCreated": "Aug 3, 2016 4:55:22 PM",
+      "dateStarted": "Aug 22, 2016 6:30:08 PM",
+      "dateFinished": "Aug 22, 2016 6:30:08 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val space \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else regex.findAllIn(text).toArray\n})",
+      "dateUpdated": "Aug 22, 2016 6:30:12 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470243327677_-1595038252",
+      "id": "20160803-165527_1657836009",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "space: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,ArrayType(StringType,true),List(StringType))\n"
+      },
+      "dateCreated": "Aug 3, 2016 4:55:27 PM",
+      "dateStarted": "Aug 22, 2016 6:30:12 PM",
+      "dateFinished": "Aug 22, 2016 6:30:12 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end \u003d prod22.withColumn(\"Match_All\", space(lower($\"t\")))",
+      "dateUpdated": "Aug 22, 2016 6:30:14 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470243504582_-1363710574",
+      "id": "20160803-165824_198798334",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end: org.apache.spark.sql.DataFrame \u003d [t: string, source: string, id: double, Match_All: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Aug 3, 2016 4:58:24 PM",
+      "dateStarted": "Aug 22, 2016 6:30:14 PM",
+      "dateFinished": "Aug 22, 2016 6:30:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end2 \u003d end.filter(size($\"Match_All\")\u003e0)",
+      "dateUpdated": "Aug 22, 2016 6:30:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470243549244_534083896",
+      "id": "20160803-165909_1373655348",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end2: org.apache.spark.sql.DataFrame \u003d [t: string, source: string, id: double, Match_All: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Aug 3, 2016 4:59:09 PM",
+      "dateStarted": "Aug 22, 2016 6:30:17 PM",
+      "dateFinished": "Aug 22, 2016 6:30:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end2.show()",
+      "dateUpdated": "Aug 22, 2016 6:30:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470247679820_1587658247",
+      "id": "20160803-180759_1870046493",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+-------+-----+--------------------+\n|                   t| source|   id|           Match_All|\n+--------------------+-------+-----+--------------------+\n|Glycine experienc...|dsForum| 22.0|[halted correspon...|\n|not worth experim...|dsForum| 86.0|[stopped taking s...|\n|not worth experim...|dsForum| 88.0|[stopped taking s...|\n|alpha-PVP Small D...|dsForum|102.0|[took a real smal...|\n|First timer on Ri...|dsForum|106.0|[take note that c...|\n|About to start wi...|dsForum|171.0|[withdrawl -- hi ...|\n|Help with Opiate ...|dsForum|181.0|[withdrawal expec...|\n|How to switch to ...|dsForum|182.0|[discontinue the ...|\n|Are these withdra...|dsForum|192.0|[withdrawals? pos...|\n|tapering has begu...|dsForum|193.0|[withdrawal sympt...|\n|A lengthy backsto...|dsForum|196.0|[stop. i like tel...|\n|DXM - NMDA Antago...|dsForum|256.0|[withdrawal . the...|\n|Oxynorm (IR oxyco...|dsForum|269.0|[taken off the ma...|\n|I think I experie...|dsForum|288.0|[withdrawal and s...|\n|No positive effec...|dsForum|299.0|[stop re-uptake.....|\n|Imodium addiction...|dsForum|311.0|[withdrawal is no...|\n|Nothing has ever ...|dsForum|325.0|[off my add meds ...|\n|Addicted to Loper...|dsForum|337.0|[withdrawal . tha...|\n|Bupropion (Wellbu...|dsForum|345.0|[discontinued due...|\n|I\u0027m done!! Would ...|dsForum|411.0|[withdrawal is sc...|\n+--------------------+-------+-----+--------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 3, 2016 6:07:59 PM",
+      "dateStarted": "Aug 22, 2016 6:30:22 PM",
+      "dateFinished": "Aug 22, 2016 6:30:24 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val saveConfig \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.6.146.93\"), Database -\u003e \"twitter\", Collection -\u003e\"rechallenge_dsForum\", SamplingRatio -\u003e 1.0, \nWriteConcern -\u003e \"normal\"))\n\nend2.saveToMongodb(saveConfig.build)",
+      "dateUpdated": "Aug 17, 2016 9:22:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470247690125_-702751955",
+      "id": "20160803-180810_754356232",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "saveConfig: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e rechallenge_dsForum, host -\u003e List(52.6.146.93)))\n"
+      },
+      "dateCreated": "Aug 3, 2016 6:08:10 PM",
+      "dateStarted": "Aug 17, 2016 9:22:19 PM",
+      "dateFinished": "Aug 17, 2016 9:26:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end3 \u003d end2.unionAll(end20)",
+      "dateUpdated": "Aug 22, 2016 6:03:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471888958370_413956955",
+      "id": "20160822-180238_1129746441",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end3: org.apache.spark.sql.DataFrame \u003d [t: string, source: string, id: double, Match_All: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Aug 22, 2016 6:02:38 PM",
+      "dateStarted": "Aug 22, 2016 6:03:02 PM",
+      "dateFinished": "Aug 22, 2016 6:03:02 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end20.count()",
+      "dateUpdated": "Aug 22, 2016 6:11:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471888986225_1153859738",
+      "id": "20160822-180306_447420734",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res41: Long \u003d 894\n"
+      },
+      "dateCreated": "Aug 22, 2016 6:03:06 PM",
+      "dateStarted": "Aug 22, 2016 6:11:05 PM",
+      "dateFinished": "Aug 22, 2016 6:12:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var dechall \u003d sqlContext.read\n    .format(\"com.databricks.spark.csv\")\n    .option(\"header\", \"true\") // Use first line of all files as header\n    .option(\"inferSchema\", \"true\") // Automatically infer data types\n    .load(\"/home/syed/dechallenge2.csv\")",
+      "dateUpdated": "Aug 22, 2016 6:30:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470244912948_-2108638116",
+      "id": "20160803-172152_316614846",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "dechall: org.apache.spark.sql.DataFrame \u003d [REGEXP: string]\n"
+      },
+      "dateCreated": "Aug 3, 2016 5:21:52 PM",
+      "dateStarted": "Aug 22, 2016 6:30:33 PM",
+      "dateFinished": "Aug 22, 2016 6:30:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val p_syn2 \u003d  dechall.select(\"REGEXP\").rdd.map(r \u003d\u003e r(0)).collect()\n\nval regex \u003d p_syn2.mkString(\"(\", \"|\", \")\").r",
+      "dateUpdated": "Aug 22, 2016 6:30:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470244919349_-1583239684",
+      "id": "20160803-172159_514603830",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "p_syn2: Array[Any] \u003d Array(\\bstop([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear, \\bdiscontinue([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear, \\boff\\b[^.]+meds[^.]*\\.([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear, \\boff\\b[^.]+medication[^.]*\\.([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear, \\bwithdraw([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear, \\bhalt([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear, \\binterrupt([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear, \\bpause([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear, \\bdecrease([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear, \\btook[^.]+off[^.]*\\.([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear, \\btake[^.]+off[^.]*\\.([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear, \\bstop([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)go awa...regex: scala.util.matching.Regex \u003d (\\bstop([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear|\\bdiscontinue([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear|\\boff\\b[^.]+meds[^.]*\\.([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear|\\boff\\b[^.]+medication[^.]*\\.([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear|\\bwithdraw([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear|\\bhalt([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear|\\binterrupt([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear|\\bpause([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear|\\bdecrease([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear|\\btook[^.]+off[^.]*\\.([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear|\\btake[^.]+off[^.]*\\.([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)disappear|\\bstop([^.]*|[^.]*\\.[^.]*|[^.]*\\.[^.]*\\.[^.]*)go away|..."
+      },
+      "dateCreated": "Aug 3, 2016 5:21:59 PM",
+      "dateStarted": "Aug 22, 2016 6:30:36 PM",
+      "dateFinished": "Aug 22, 2016 6:30:37 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val space \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else regex.findAllIn(text).toArray\n})",
+      "dateUpdated": "Aug 22, 2016 6:30:40 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471890551443_333411974",
+      "id": "20160822-182911_438954516",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "space: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,ArrayType(StringType,true),List(StringType))\n"
+      },
+      "dateCreated": "Aug 22, 2016 6:29:11 PM",
+      "dateStarted": "Aug 22, 2016 6:30:40 PM",
+      "dateFinished": "Aug 22, 2016 6:30:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end \u003d prod22.withColumn(\"Match_All\", space(lower($\"t\")))",
+      "dateUpdated": "Aug 22, 2016 6:30:43 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470248527244_-1482288285",
+      "id": "20160803-182207_1473188241",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end: org.apache.spark.sql.DataFrame \u003d [t: string, source: string, id: double, Match_All: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Aug 3, 2016 6:22:07 PM",
+      "dateStarted": "Aug 22, 2016 6:30:43 PM",
+      "dateFinished": "Aug 22, 2016 6:30:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end20 \u003d end.filter(size($\"Match_All\")\u003e0)",
+      "dateUpdated": "Aug 22, 2016 6:30:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470248542694_1164814796",
+      "id": "20160803-182222_582949583",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end20: org.apache.spark.sql.DataFrame \u003d [t: string, source: string, id: double, Match_All: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Aug 3, 2016 6:22:22 PM",
+      "dateStarted": "Aug 22, 2016 6:30:46 PM",
+      "dateFinished": "Aug 22, 2016 6:30:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end2.show()",
+      "dateUpdated": "Aug 22, 2016 6:32:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470249407704_344569012",
+      "id": "20160803-183647_667308188",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+-------+-----+--------------------+\n|                   t| source|   id|           Match_All|\n+--------------------+-------+-----+--------------------+\n|Glycine experienc...|dsForum| 22.0|[halted correspon...|\n|not worth experim...|dsForum| 86.0|[stopped taking s...|\n|not worth experim...|dsForum| 88.0|[stopped taking s...|\n|alpha-PVP Small D...|dsForum|102.0|[took a real smal...|\n|First timer on Ri...|dsForum|106.0|[take note that c...|\n|About to start wi...|dsForum|171.0|[withdrawl -- hi ...|\n|Help with Opiate ...|dsForum|181.0|[withdrawal expec...|\n|How to switch to ...|dsForum|182.0|[discontinue the ...|\n|Are these withdra...|dsForum|192.0|[withdrawals? pos...|\n|tapering has begu...|dsForum|193.0|[withdrawal sympt...|\n|A lengthy backsto...|dsForum|196.0|[stop. i like tel...|\n|DXM - NMDA Antago...|dsForum|256.0|[withdrawal . the...|\n|Oxynorm (IR oxyco...|dsForum|269.0|[taken off the ma...|\n|I think I experie...|dsForum|288.0|[withdrawal and s...|\n|No positive effec...|dsForum|299.0|[stop re-uptake.....|\n|Imodium addiction...|dsForum|311.0|[withdrawal is no...|\n|Nothing has ever ...|dsForum|325.0|[off my add meds ...|\n|Addicted to Loper...|dsForum|337.0|[withdrawal . tha...|\n|Bupropion (Wellbu...|dsForum|345.0|[discontinued due...|\n|I\u0027m done!! Would ...|dsForum|411.0|[withdrawal is sc...|\n+--------------------+-------+-----+--------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 3, 2016 6:36:47 PM",
+      "dateStarted": "Aug 22, 2016 6:32:36 PM",
+      "dateFinished": "Aug 22, 2016 6:32:38 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val saveConfig \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.6.146.93\"), Database -\u003e \"twitter\", Collection -\u003e\"dechallenge\", SamplingRatio -\u003e 1.0, \nWriteConcern -\u003e \"normal\"))\n\nend20.saveToMongodb(saveConfig.build)",
+      "dateUpdated": "Aug 22, 2016 6:34:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470248551141_2011277700",
+      "id": "20160803-182231_1316371980",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "saveConfig: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e dechallenge, host -\u003e List(52.6.146.93)))\n"
+      },
+      "dateCreated": "Aug 3, 2016 6:22:31 PM",
+      "dateStarted": "Aug 22, 2016 6:34:15 PM",
+      "dateFinished": "Aug 22, 2016 6:35:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470248555121_-749310982",
+      "id": "20160803-182235_67222665",
+      "dateCreated": "Aug 3, 2016 6:22:35 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "challenge",
+  "id": "2BTDP4BJT",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

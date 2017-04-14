@@ -1,0 +1,275 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext",
+      "dateUpdated": "Oct 19, 2016 9:18:40 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476906370109_-1540742016",
+      "id": "20161019-194610_1159305185",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\n"
+      },
+      "dateCreated": "Oct 19, 2016 7:46:10 PM",
+      "dateStarted": "Oct 19, 2016 9:18:40 PM",
+      "dateFinished": "Oct 19, 2016 9:18:59 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val df \u003d sqlContext.jsonFile(\"/opt/sup/submissions/RS_2014-01\")",
+      "dateUpdated": "Oct 19, 2016 9:19:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476906390460_1556718137",
+      "id": "20161019-194630_384397688",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\ndf: org.apache.spark.sql.DataFrame \u003d [adserver_click_url: string, adserver_imp_pixel: string, archived: boolean, author: string, author_flair_css_class: string, author_flair_text: string, created: bigint, created_utc: string, disable_comments: boolean, distinguished: string, domain: string, downs: bigint, edited: string, from: string, from_id: string, from_kind: string, gilded: bigint, hide_score: boolean, href_url: string, id: string, imp_pixel: string, is_self: boolean, link_flair_css_class: string, link_flair_text: string, media: struct\u003ccontent:string,height:bigint,oembed:struct\u003cauthor_name:string,author_url:string,cache_age:bigint,description:string,height:bigint,html:string,mean_alpha:double,provider_name:string,provider_url:string,thumbnail_height:bigint,thumbnail_url:string,thumb..."
+      },
+      "dateCreated": "Oct 19, 2016 7:46:30 PM",
+      "dateStarted": "Oct 19, 2016 9:19:30 PM",
+      "dateFinished": "Oct 19, 2016 9:19:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val df2 \u003d df.select(\"id\", \"selftext\", \"title\",\"url\", \"score\", \"created_utc\", \"author\")",
+      "dateUpdated": "Oct 19, 2016 9:20:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476906629810_-2143306411",
+      "id": "20161019-195029_749706471",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df2: org.apache.spark.sql.DataFrame \u003d [id: string, selftext: string, title: string, url: string, score: bigint, created_utc: string, author: string]\n"
+      },
+      "dateCreated": "Oct 19, 2016 7:50:29 PM",
+      "dateStarted": "Oct 19, 2016 9:20:03 PM",
+      "dateFinished": "Oct 19, 2016 9:20:04 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df2.show()",
+      "dateUpdated": "Oct 19, 2016 9:20:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476906697654_472924813",
+      "id": "20161019-195137_1638570713",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+------+--------------------+--------------------+--------------------+-----+-----------+------------------+\n|    id|            selftext|               title|                 url|score|created_utc|            author|\n+------+--------------------+--------------------+--------------------+-----+-----------+------------------+\n|1u4kuf|                    |    HAPPY BLUE YEAR!|http://fc05.devia...|    3| 1388534400|    DASHLICKER1991|\n|1u4kug|I don\u0027t think any...|Jan 01 00:00 UTC ...|http://www.reddit...|    7| 1388534400|          dans1988|\n|1u4kuh|                    |knitting my first...|http://25.media.t...|  582| 1388534401|       meLIZZZZZma|\n|1u4kui|I met this awesom...|I\u0027ve [20 F] been ...|http://www.reddit...|    0| 1388534401|  foolishquestions|\n|1u4kuj|                    |Shepard Shepard S...|https://www.youtu...|    4| 1388534402|            simsoy|\n|1u4kuk|The current weath...|December 31, 2013...|http://www.reddit...|    1| 1388534402|BreakfastInAmerica|\n|1u4kul|                    |Janet-Jacme-bounc...|http://www.freexh...|    1| 1388534403|             root6|\n|1u4kum|                    |How do I start up...|http://www.reddit...|    0| 1388534403|mygoalistomakeulol|\n|1u4kun|For Instance: Stu...|What would make t...|http://www.reddit...|    2| 1388534403| mr_butter_fingers|\n|1u4kup|                    |Why do African Am...|http://www.reddit...|    0| 1388534404|SuicideMurderPills|\n|1u4kuq|I\u0027ve been in the ...|In The Market For...|http://www.reddit...|    6| 1388534405|            Spovik|\n|1u4kur|                    |The temperature i...|http://i.imgur.co...|    5| 1388534405|         [deleted]|\n|1u4kus|I have very limit...|     I need eevee!!!|http://www.reddit...|    1| 1388534405|           adn3689|\n|1u4kut|               \u0026lt;3|LF DITTO. PLEASE ADD|http://www.reddit...|    0| 1388534405|       tytheleguid|\n|1u4kuu|                    |     2013-12-31.c39e|http://imgur.com/...|    1| 1388534405|         [deleted]|\n|1u4kuv|This thread is fo...|Monthly \u0027Self Pro...|http://www.reddit...|   15| 1388534406|           ranalog|\n|1u4kuw|I hope it\u0027s a goo...|Happy New Year /r...|http://www.reddit...|  571| 1388534407|        ReadsStuff|\n|1u4kux|                    | Happy New Year 2014|http://www.reddit...|    6| 1388534407|        tomoldbury|\n|1u4kuy|                    |How Drink Choice ...|http://www.washin...|    1| 1388534408|            lux326|\n|1u4kuz|                    |Preaches about fo...|http://memeslide....|    1| 1388534408|          funnzies|\n+------+--------------------+--------------------+--------------------+-----+-----------+------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Oct 19, 2016 7:51:37 PM",
+      "dateStarted": "Oct 19, 2016 9:20:23 PM",
+      "dateFinished": "Oct 19, 2016 9:20:24 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df2.drop(\"place_list\").createCassandraTable(\"processed_forum\", \"testing_with_derek\", \npartitionKeyColumns \u003d Some(Seq(\"id\")))",
+      "dateUpdated": "Oct 19, 2016 7:53:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476906740867_2004626032",
+      "id": "20161019-195220_790836040",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Oct 19, 2016 7:52:20 PM",
+      "dateStarted": "Oct 19, 2016 7:53:23 PM",
+      "dateFinished": "Oct 19, 2016 7:53:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df2.count()",
+      "dateUpdated": "Oct 19, 2016 7:59:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476907165963_-462938874",
+      "id": "20161019-195925_629585381",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res8: Long \u003d 4145541\n"
+      },
+      "dateCreated": "Oct 19, 2016 7:59:25 PM",
+      "dateStarted": "Oct 19, 2016 7:59:28 PM",
+      "dateFinished": "Oct 19, 2016 7:59:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df2.write\n  .format(\"org.apache.spark.sql.cassandra\")\n  .mode(\"append\")\n  .options(Map( \"table\" -\u003e \"testing_with_derek\", \"keyspace\" -\u003e \"processed_forum\"))\n  .save()",
+      "dateUpdated": "Oct 19, 2016 9:20:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476906803327_971098542",
+      "id": "20161019-195323_1793192895",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Oct 19, 2016 7:53:23 PM",
+      "dateStarted": "Oct 19, 2016 9:20:29 PM",
+      "dateFinished": "Oct 19, 2016 9:23:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1476906874478_1395384634",
+      "id": "20161019-195434_1577502524",
+      "dateCreated": "Oct 19, 2016 7:54:34 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "testing with derek",
+  "id": "2BYFBY2UM",
+  "angularObjects": {
+    "2BUZX9EWW:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BTJ3P41C:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BSMJA8VG:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

@@ -1,0 +1,536 @@
+{
+  "paragraphs": [
+    {
+      "text": "// Mongo\nimport com.mongodb.casbah.{WriteConcern \u003d\u003e MongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\n\n//ML\n\nimport org.apache.spark.sql.SQLContext\nimport org.apache.spark.ml.feature.{CountVectorizer, RegexTokenizer, StopWordsRemover}\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.ml.classification.LogisticRegression\nimport org.apache.spark.ml.Pipeline",
+      "dateUpdated": "Aug 29, 2016 9:12:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471539059975_447901904",
+      "id": "20160818-165059_1506697176",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.mongodb.casbah.{WriteConcern\u003d\u003eMongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\nimport org.apache.spark.sql.SQLContext\nimport org.apache.spark.ml.feature.{CountVectorizer, RegexTokenizer, StopWordsRemover}\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.ml.classification.LogisticRegression\nimport org.apache.spark.ml.Pipeline\n"
+      },
+      "dateCreated": "Aug 18, 2016 4:50:59 PM",
+      "dateStarted": "Aug 29, 2016 9:12:17 PM",
+      "dateFinished": "Aug 29, 2016 9:12:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var df \u003d sqlContext.read\n    .format(\"com.databricks.spark.csv\")\n    .option(\"header\", \"false\") // Use first line of all files as header\n    .option(\"inferSchema\", \"true\") // Automatically infer data types\n    .load(\"/home/syed/names\")\n    .drop(\"C2\")\n    .withColumn(\"label\", when($\"C1\" like \"F\", 0.0D).otherwise(1.0D))\n    .withColumnRenamed(\"C0\", \"fname\")",
+      "dateUpdated": "Aug 29, 2016 9:15:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471539069003_639537504",
+      "id": "20160818-165109_1591944322",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df: org.apache.spark.sql.DataFrame \u003d [fname: string, C1: string, label: double]\n"
+      },
+      "dateCreated": "Aug 18, 2016 4:51:09 PM",
+      "dateStarted": "Aug 29, 2016 9:15:55 PM",
+      "dateFinished": "Aug 29, 2016 9:15:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.count()",
+      "dateUpdated": "Aug 29, 2016 9:16:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471542943646_-1783289858",
+      "id": "20160818-175543_1624731680",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res8: Long \u003d 1690784\n"
+      },
+      "dateCreated": "Aug 18, 2016 5:55:43 PM",
+      "dateStarted": "Aug 29, 2016 9:16:21 PM",
+      "dateFinished": "Aug 29, 2016 9:16:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "((df.filter($\"label\"\u003d\u003d\u003d1.0D).limit(20)).unionAll(df.filter($\"label\"\u003d\u003d\u003d0.0D).limit(20))).show(40)",
+      "dateUpdated": "Aug 29, 2016 9:16:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471542308429_855981972",
+      "id": "20160818-174508_1361123193",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+-----------+---+-----+\n|      fname| C1|label|\n+-----------+---+-----+\n|      Jacob|  M|  1.0|\n|    Michael|  M|  1.0|\n|     Joshua|  M|  1.0|\n|    Matthew|  M|  1.0|\n|     Andrew|  M|  1.0|\n|      Ethan|  M|  1.0|\n|     Joseph|  M|  1.0|\n|     Daniel|  M|  1.0|\n|Christopher|  M|  1.0|\n|    Anthony|  M|  1.0|\n|    William|  M|  1.0|\n|   Nicholas|  M|  1.0|\n|       Ryan|  M|  1.0|\n|      David|  M|  1.0|\n|      Tyler|  M|  1.0|\n|  Alexander|  M|  1.0|\n|       John|  M|  1.0|\n|      James|  M|  1.0|\n|      Dylan|  M|  1.0|\n|    Zachary|  M|  1.0|\n|      Emily|  F|  0.0|\n|       Emma|  F|  0.0|\n|    Madison|  F|  0.0|\n|     Hannah|  F|  0.0|\n|     Olivia|  F|  0.0|\n|    Abigail|  F|  0.0|\n|     Alexis|  F|  0.0|\n|     Ashley|  F|  0.0|\n|  Elizabeth|  F|  0.0|\n|   Samantha|  F|  0.0|\n|   Isabella|  F|  0.0|\n|      Sarah|  F|  0.0|\n|      Grace|  F|  0.0|\n|     Alyssa|  F|  0.0|\n|     Lauren|  F|  0.0|\n|      Kayla|  F|  0.0|\n|    Brianna|  F|  0.0|\n|    Jessica|  F|  0.0|\n|     Taylor|  F|  0.0|\n|     Sophia|  F|  0.0|\n+-----------+---+-----+\n\n"
+      },
+      "dateCreated": "Aug 18, 2016 5:45:08 PM",
+      "dateStarted": "Aug 29, 2016 9:16:25 PM",
+      "dateFinished": "Aug 29, 2016 9:16:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val df_split \u003d df.randomSplit(Array(0.6, 0.4), seed \u003d 0)\nval training \u003d df_split(0)\nval test \u003d df_split(1)\n\nval tokenizer \u003d new RegexTokenizer()\n  .setGaps(false)\n  .setPattern(\"\\\\p{L}+\")\n  .setInputCol(\"fname\")\n  .setOutputCol(\"words\")\n  \nval countVectorizer \u003d new CountVectorizer()\n  .setInputCol(\"words\")\n  .setOutputCol(\"features\")\n\nval lr \u003d new LogisticRegression()\n  .setMaxIter(10)\n  .setRegParam(0.2)\n  .setElasticNetParam(0.0)\n\nval pipeline \u003d new Pipeline().setStages(Array(tokenizer, countVectorizer, lr))\n\nval lrModel \u003d pipeline.fit(training)",
+      "dateUpdated": "Aug 29, 2016 9:16:34 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471539094779_-577007869",
+      "id": "20160818-165134_1044025396",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df_split: Array[org.apache.spark.sql.DataFrame] \u003d Array([fname: string, C1: string, label: double], [fname: string, C1: string, label: double])\ntraining: org.apache.spark.sql.DataFrame \u003d [fname: string, C1: string, label: double]\ntest: org.apache.spark.sql.DataFrame \u003d [fname: string, C1: string, label: double]\ntokenizer: org.apache.spark.ml.feature.RegexTokenizer \u003d regexTok_a38e90b0b618\ncountVectorizer: org.apache.spark.ml.feature.CountVectorizer \u003d cntVec_974106af89b0\nlr: org.apache.spark.ml.classification.LogisticRegression \u003d logreg_92a57651216e\npipeline: org.apache.spark.ml.Pipeline \u003d pipeline_09f12efe3a88\nlrModel: org.apache.spark.ml.PipelineModel \u003d pipeline_09f12efe3a88\n"
+      },
+      "dateCreated": "Aug 18, 2016 4:51:34 PM",
+      "dateStarted": "Aug 29, 2016 9:16:34 PM",
+      "dateFinished": "Aug 29, 2016 9:17:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val tp \u003d df2.filter($\"label\" \u003d\u003d\u003d 1.0D \u0026\u0026 $\"prediction\" \u003d\u003d\u003d 1.0D).count()\n\nval fp \u003d df2.filter((not($\"label\" \u003d\u003d\u003d 1.0D)) \u0026\u0026 $\"prediction\" \u003d\u003d\u003d 1.0D).count()\n\nval fn \u003d df2.filter($\"label\" \u003d\u003d\u003d 1.0D \u0026\u0026 (not($\"prediction\" \u003d\u003d\u003d 1.0D))).count()\n\nval accuracy \u003d 1.0 * df2.filter($\"label\" \u003d\u003d\u003d $\"prediction\").count() / test.count()\n\nval precision \u003d 1.0 * ((1.0*(tp))/(tp+fp))\n\nval recall \u003d 1.0 * ((1.0 * tp) / (tp + fn))\n\nval f_one \u003d (2.0 * precision * recall) / (precision + recall)",
+      "dateUpdated": "Aug 29, 2016 9:16:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471542487409_2032203688",
+      "id": "20160818-174807_686917121",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\u003cconsole\u003e:58: error: not found: value df2\n         val tp \u003d df2.filter($\"label\" \u003d\u003d\u003d 1.0D \u0026\u0026 $\"prediction\" \u003d\u003d\u003d 1.0D).count()\n                  ^\n"
+      },
+      "dateCreated": "Aug 18, 2016 5:48:07 PM",
+      "dateStarted": "Aug 29, 2016 9:16:37 PM",
+      "dateFinished": "Aug 29, 2016 9:17:00 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val df2 \u003d lrModel.transform(test)",
+      "dateUpdated": "Aug 29, 2016 9:16:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471539117613_-451949153",
+      "id": "20160818-165157_584311365",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "df2: org.apache.spark.sql.DataFrame \u003d [fname: string, C1: string, label: double, words: array\u003cstring\u003e, features: vector, rawPrediction: vector, probability: vector, prediction: double]\n"
+      },
+      "dateCreated": "Aug 18, 2016 4:51:57 PM",
+      "dateStarted": "Aug 29, 2016 9:17:00 PM",
+      "dateFinished": "Aug 29, 2016 9:17:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "z.show(df2.filter($\"fname\"\u003d\u003d\u003d\"William\"))",
+      "dateUpdated": "Aug 18, 2016 6:14:12 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [
+            {
+              "name": "prediction",
+              "index": 7.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "C1",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [],
+          "scatter": {
+            "xAxis": {
+              "name": "fname",
+              "index": 0.0,
+              "aggr": "sum"
+            },
+            "yAxis": {
+              "name": "C1",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471542566590_-717688646",
+      "id": "20160818-174926_1657449598",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TABLE",
+        "msg": "fname\tC1\tlabel\twords\tfeatures\trawPrediction\tprobability\tprediction\nWilliam\tF\t0.0\tWrappedArray(william)\t(3193,[2650],[1.0])\t[-0.4486076194662365,0.4486076194662365]\t[0.38969186795167526,0.6103081320483247]\t1.0\n"
+      },
+      "dateCreated": "Aug 18, 2016 5:49:26 PM",
+      "dateStarted": "Aug 18, 2016 6:14:12 PM",
+      "dateFinished": "Aug 18, 2016 6:14:12 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"10.0.0.11\"), Database -\u003e \"dev-obit_database\", Collection -\u003e\"obit_raw\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\nval obit \u003d sqlContext.fromMongoDB(readConfig)",
+      "dateUpdated": "Aug 29, 2016 9:19:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471539156349_-652141174",
+      "id": "20160818-165236_1532234803",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e dev-obit_database, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e obit_raw, host -\u003e List(10.0.0.11)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@3ae34c17\nobit: org.apache.spark.sql.DataFrame \u003d [Paper: string, Spider: string, Obit: string, Entry_Date: string, State: string, Name: string, _id: string, Link: string]\n"
+      },
+      "dateCreated": "Aug 18, 2016 4:52:36 PM",
+      "dateStarted": "Aug 29, 2016 9:17:01 PM",
+      "dateFinished": "Aug 29, 2016 9:18:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val f_name \u003d udf((text: String) \u003d\u003e {\n    val temp \u003d text.split(\" \")\n    temp(0)\n})\n\nval l_name \u003d udf((text: String) \u003d\u003e {\n    val temp \u003d text.split(\" \")\n    if(temp.length \u003d\u003d 2) temp(1)\n    else temp((temp.length)-1)\n})\n\nval vet \u003d \"\"\"((us|u.s.|united\\sstates|u.\\ss.)\\s(army|military|navy|national\\sguard|marine|air\\sforce))|((joined|member\\sof|served\\sin)\\sthe\\s.*(army|military|navy|national\\sguard|marine|air\\sforce))|((war|army)\\s.*(veteran|vet).*)|(awarded.*purple\\sheart)|(served\\s\\w+\\scountry)|(military\\s(graveside\\srites|service|honor))\"\"\".r\n\ndef getFirst(pattern: scala.util.matching.Regex) \u003d udf(\n  (url: String) \u003d\u003e pattern.findFirstIn(url) match { \n    case Some(domain) \u003d\u003e \"T\"\n    case None \u003d\u003e \"F\"\n  }\n)\n\nval age2 \u003d udf((url: String) \u003d\u003e {\n    val apattern \u003d \"\"\"(,\\s?\\d{1,3},\\s\\D+) | ((age|aged)\\s\\d{1,3}[.;:,]?) | (age\\sof\\s\\d{1,3}[.;:,]?) | (\\d{1,3}\\syears\\s(old | young)[.;:,]?) | (^\\d{1,3},\\s\\D*) | (,\\s?\\d{1,3}\\sof)\"\"\".r\n    val bpattern \u003d  \"\"\"(?:born\\s(?:on\\s)?((?:january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sept|oct|nov|dec)[.]?\\s\\d{1,2},\\s\\d\\d\\d\\d))[.|,]*\"\"\".r\n    val cpattern \u003d \"\"\"(((january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sept|oct|nov|dec)[.]?\\s\\d{1,2},\\s\\d{4})\\s[-~]\\s((january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sept|oct|nov|dec)[.]?\\s\\d{1,2},\\s\\d{4}))\"\"\".r\n    val check \u003d apattern.findFirstIn(url).toArray\n    val check2 \u003d apattern.findFirstIn(url).toArray.length\n    if(check2 \u003d\u003d 1) check(0).replaceAll( \"[^\\\\d]\", \"\" )\n    else {\n            val check3 \u003d bpattern.findFirstIn(url).toArray\n            val check4 \u003d bpattern.findFirstIn(url).toArray.length\n            if(check4 \u003d\u003d 1) check3(0).replaceAll( \"[^\\\\d]\", \"\" )\n            else {\n                    val check4 \u003d bpattern.findFirstIn(url).toArray\n                    val check5 \u003d bpattern.findFirstIn(url).toArray.length\n                    if(check5 \u003d\u003d 1) check4(0).replaceAll( \"[^\\\\d]\", \"\" )\n                    else \"Unknown\"\n                    \n            }\n    }\n})\n\nval gender \u003d udf((text: Double) \u003d\u003e {\n    if(text \u003d\u003d 1.0) \"M\"\n    else \"F\"\n})\n\nval dates \u003d udf((url: String) \u003d\u003e {\n    val short \u003d \"\"\"[0-9]{4}-[0-9]{2}-[0-9]{2}\"\"\".r\n    val monthnames \u003d \"January February March April May June July August September October November December\".split(\" \")\n    val monthabrev \u003d \"Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec Sept\".split(\" \")\n    val pat \u003d ((monthnames ++ monthabrev).mkString(\"(\", \"\\\\b|\\\\b\", \")\") + \" ([0-9]{1,2})(st|nd|rd|th)?\" + \" [0-9]{4}\").r\n    val pub \u003d \"[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\".r\n    val short_d \u003d short.findAllIn(url).toArray\n    val body_d \u003d pat.findAllIn(url).toArray\n    val pub_d \u003d pub.findAllIn(url).toArray\n    short_d ++ body_d ++ pub_d\n    \n})\n\nval g_name \u003d udf((text: String) \u003d\u003e {\n    val temp \u003d text.split(\" \")\n    if(temp.length \u003c 3) temp(0) // first name\n    else if(temp.length \u003e 2) temp(0) + \" \" + temp(1) // first and middle name\n    else text // only name\n})",
+      "dateUpdated": "Aug 29, 2016 9:16:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471539275141_-102903635",
+      "id": "20160818-165435_1919874487",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "f_name: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,List(StringType))\nl_name: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,List(StringType))\nvet: scala.util.matching.Regex \u003d ((us|u.s.|united\\sstates|u.\\ss.)\\s(army|military|navy|national\\sguard|marine|air\\sforce))|((joined|member\\sof|served\\sin)\\sthe\\s.*(army|military|navy|national\\sguard|marine|air\\sforce))|((war|army)\\s.*(veteran|vet).*)|(awarded.*purple\\sheart)|(served\\s\\w+\\scountry)|(military\\s(graveside\\srites|service|honor))\ngetFirst: (pattern: scala.util.matching.Regex)org.apache.spark.sql.UserDefinedFunction\nage2: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,List(StringType))\ngender: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,List(DoubleType))\ndates: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,ArrayType(StringType,true),List(StringType))\ng_name: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,List(StringType))\n"
+      },
+      "dateCreated": "Aug 18, 2016 4:54:35 PM",
+      "dateStarted": "Aug 29, 2016 9:17:01 PM",
+      "dateFinished": "Aug 29, 2016 9:18:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val proc \u003d lrModel.transform(obit.withColumn(\"fname\", f_name($\"Name\")).withColumn(\"lname\", l_name($\"Name\")).withColumn(\"veteran_status\", getFirst(vet)($\"Obit\")).withColumn(\"Age\", age2($\"Obit\")).withColumn(\"Dates\", dates(regexp_replace($\"Obit\", \"\"\"[\\p{Punct}]\"\"\", \"\"))).withColumn(\"uname\", g_name($\"Name\")).select(\"fname\", \"lname\",\"uname\", \"veteran_status\", \"Age\", \"Dates\", \"Name\", \"Obit\")).select(\"fname\", \"lname\", \"uname\", \"veteran_status\", \"Age\", \"prediction\", \"Dates\", \"Name\", \"Obit\").withColumn(\"Gender\", gender($\"prediction\")).drop(\"prediction\")",
+      "dateUpdated": "Aug 29, 2016 9:19:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471539406233_-1063854790",
+      "id": "20160818-165646_1206782637",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "proc: org.apache.spark.sql.DataFrame \u003d [fname: string, lname: string, uname: string, veteran_status: string, Age: string, Dates: array\u003cstring\u003e, Name: string, Obit: string, Gender: string]\n"
+      },
+      "dateCreated": "Aug 18, 2016 4:56:46 PM",
+      "dateStarted": "Aug 29, 2016 9:19:45 PM",
+      "dateFinished": "Aug 29, 2016 9:19:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "proc.show()",
+      "dateUpdated": "Aug 29, 2016 9:19:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471540782639_1102261783",
+      "id": "20160818-171942_434339645",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------+---------+--------------+--------------+-------+--------------------+--------------------+--------------------+------+\n|   fname|    lname|         uname|veteran_status|    Age|               Dates|                Name|                Obit|Gender|\n+--------+---------+--------------+--------------+-------+--------------------+--------------------+--------------------+------+\n| Michael|Alexander|    Michael E.|             F|     56|      [Sept 17 2015]|Michael E. Alexan...|PLYMOUTH - Michae...|     F|\n|    Ruth|   Beaton|       Ruth E.|             F|Unknown|[Sept 19 2015, Se...|     Ruth E. Beaton |WILLIAMSTOWN - Th...|     F|\n|   Vivie|    Berry|      Vivie L.|             F|     74|[Sept 18 2015, Ja...|     Vivie L. Berry |MONTPELIER - Vivi...|     F|\n|  Denise|Boisvenue|     Denise A.|             F|Unknown|[Sept 7 2015, Oct...|Denise A. Boisvenue |LAKE CITY, Fla. -...|     F|\n|  Harvey|  Britton|        Harvey|             F|     58|[August 27 2015, ...|      Harvey Britton|\n Harvey \"Jack\" B...|     M|\n|  Judith|  Brodsky|        Judith|             F|     84|       [Jan 31 2015]|     Judith Brodsky |BRANDON - A priva...|     F|\n|    Kyle|  Buzzell|          Kyle|             F|     52|       [Sept 4 2015]|       Kyle Buzzell |PITTSFORD - A ser...|     M|\n| Gilbert|  Cameron|       Gilbert|             T|     90|[September 18 201...|     Gilbert Cameron|\n Gilbert Cameron...|     M|\n| Michael|  Colburn|    Michael A.|             F|     69|[Sept 19 2015, Fe...| Michael A. Colburn |MOUNT HOLLY - Mic...|     F|\n|    Elsa|    Cyrul|       Elsa A.|             F|     79|[September 18 201...|      Elsa A. Cyrul |HUBBARDTON - Elsa...|     F|\n| Rosalie|   Cresci|Rosalie Wilder|             F|     90|[September 8 2015...|Rosalie Wilder Cr...|\r\n\t\t\t\t\t\tRosalie W...|     F|\n| Cecelia|   Dauchy|       Cecelia|             F|Unknown|[September 8 2015...|      Cecelia Dauchy|\nCecelia Forest D...|     F|\n|   Edwin|      Jr.|      Edwin D.|             F|     70|[Nov 22 2014, Mar...|Edwin D. Farrar Jr. |Edwin \"Eddie\" Don...|     F|\n|    Mary|    2015)|Mary Beardsley|             F|     97|[September 11 201...|Mary Beardsley Fe...|WEST WINDSOR - Ma...|     F|\n|  Sharon|     Frey|        Sharon|             F|     60|[September 15 201...|        Sharon Frey |WEST HARTFORD, Co...|     F|\n|    Ross|   Gallup|  Ross Alfonso|             T|     81|[September 19 201...|Ross Alfonso Gallup |Ross Alfonso Gall...|     M|\n|Marjorie| Glodgett|      Marjorie|             F|Unknown|[September 18 201...|   Marjorie Glodgett|\r\n\t\t\t\t\t\tMarjorie ...|     F|\n|    Gary| Goodrich|       Gary G.|             T|     58|[Sept 17 2015, Au...|   Gary G. Goodrich |SPRINGFIELD - Gar...|     M|\n|   Lloyd|      Jr.|      Lloyd R.|             F|Unknown|                  []|Lloyd R. Goulette...|In Loving Memory ...|     M|\n|   Bryan|   Greene|      Bryan E.|             F|     43|[Sept 18 2015, Se...|    Bryan E. Greene |LEICESTER - Bryan...|     M|\n+--------+---------+--------------+--------------+-------+--------------------+--------------------+--------------------+------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 18, 2016 5:19:42 PM",
+      "dateStarted": "Aug 29, 2016 9:19:51 PM",
+      "dateFinished": "Aug 29, 2016 9:19:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val saveConfig \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"10.0.0.11\"), Database -\u003e \"dev-obit_database\", Collection -\u003e\"testing_deathmap\", \nSamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\n\nproc.saveToMongodb(saveConfig.build)",
+      "dateUpdated": "Aug 29, 2016 9:21:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471539784419_-1393046607",
+      "id": "20160818-170304_812230554",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "saveConfig: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e dev-obit_database, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e testing_deathmap, host -\u003e List(10.0.0.11)))\n"
+      },
+      "dateCreated": "Aug 18, 2016 5:03:04 PM",
+      "dateStarted": "Aug 29, 2016 9:21:11 PM",
+      "dateFinished": "Aug 29, 2016 9:26:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\ndfp \u003d sqlContext.sql(\"SELECT * FROM sup2\")\ndf0 \u003d dfp.collect()",
+      "dateUpdated": "Aug 18, 2016 5:17:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471539729991_660465542",
+      "id": "20160818-170209_1493706671",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Py4JJavaError: An error occurred while calling o98.collectToPython.\n: org.apache.spark.SparkException: Job aborted due to stage failure: Task 7 in stage 37.0 failed 1 times, most recent failure: Lost task 7.0 in stage 37.0 (TID 3232, localhost): java.lang.ArrayIndexOutOfBoundsException: 2\n\tat line640073113$105.$read$$iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$anonfun$1.apply(\u003cconsole\u003e:61)\n\tat line640073113$105.$read$$iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$anonfun$1.apply(\u003cconsole\u003e:58)\n\tat org.apache.spark.sql.catalyst.expressions.GeneratedClass$SpecificUnsafeProjection.apply(Unknown Source)\n\tat org.apache.spark.sql.execution.Project$$anonfun$1$$anonfun$apply$1.apply(basicOperators.scala:51)\n\tat org.apache.spark.sql.execution.Project$$anonfun$1$$anonfun$apply$1.apply(basicOperators.scala:49)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.next(SerDeUtil.scala:119)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.next(SerDeUtil.scala:110)\n\tat scala.collection.Iterator$class.foreach(Iterator.scala:727)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.foreach(SerDeUtil.scala:110)\n\tat scala.collection.generic.Growable$class.$plus$plus$eq(Growable.scala:48)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:103)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableOnce$class.to(TraversableOnce.scala:273)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.to(SerDeUtil.scala:110)\n\tat scala.collection.TraversableOnce$class.toBuffer(TraversableOnce.scala:265)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.toBuffer(SerDeUtil.scala:110)\n\tat scala.collection.TraversableOnce$class.toArray(TraversableOnce.scala:252)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.toArray(SerDeUtil.scala:110)\n\tat org.apache.spark.rdd.RDD$$anonfun$collect$1$$anonfun$12.apply(RDD.scala:927)\n\tat org.apache.spark.rdd.RDD$$anonfun$collect$1$$anonfun$12.apply(RDD.scala:927)\n\tat org.apache.spark.SparkContext$$anonfun$runJob$5.apply(SparkContext.scala:1858)\n\tat org.apache.spark.SparkContext$$anonfun$runJob$5.apply(SparkContext.scala:1858)\n\tat org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:66)\n\tat org.apache.spark.scheduler.Task.run(Task.scala:89)\n\tat org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:227)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\nDriver stacktrace:\n\tat org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1431)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1419)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1418)\n\tat scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)\n\tat scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:47)\n\tat org.apache.spark.scheduler.DAGScheduler.abortStage(DAGScheduler.scala:1418)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:799)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:799)\n\tat scala.Option.foreach(Option.scala:236)\n\tat org.apache.spark.scheduler.DAGScheduler.handleTaskSetFailed(DAGScheduler.scala:799)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1640)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1599)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1588)\n\tat org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)\n\tat org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:620)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1832)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1845)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1858)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1929)\n\tat org.apache.spark.rdd.RDD$$anonfun$collect$1.apply(RDD.scala:927)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:316)\n\tat org.apache.spark.rdd.RDD.collect(RDD.scala:926)\n\tat org.apache.spark.api.python.PythonRDD$.collectAndServe(PythonRDD.scala:405)\n\tat org.apache.spark.sql.DataFrame$$anonfun$collectToPython$1.apply$mcI$sp(DataFrame.scala:1739)\n\tat org.apache.spark.sql.DataFrame$$anonfun$collectToPython$1.apply(DataFrame.scala:1739)\n\tat org.apache.spark.sql.DataFrame$$anonfun$collectToPython$1.apply(DataFrame.scala:1739)\n\tat org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:56)\n\tat org.apache.spark.sql.DataFrame.withNewExecutionId(DataFrame.scala:2086)\n\tat org.apache.spark.sql.DataFrame.collectToPython(DataFrame.scala:1738)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:231)\n\tat py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:381)\n\tat py4j.Gateway.invoke(Gateway.java:259)\n\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:133)\n\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\n\tat py4j.GatewayConnection.run(GatewayConnection.java:209)\n\tat java.lang.Thread.run(Thread.java:745)\nCaused by: java.lang.ArrayIndexOutOfBoundsException: 2\n\tat line640073113$105.$read$$iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$anonfun$1.apply(\u003cconsole\u003e:61)\n\tat line640073113$105.$read$$iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$anonfun$1.apply(\u003cconsole\u003e:58)\n\tat org.apache.spark.sql.catalyst.expressions.GeneratedClass$SpecificUnsafeProjection.apply(Unknown Source)\n\tat org.apache.spark.sql.execution.Project$$anonfun$1$$anonfun$apply$1.apply(basicOperators.scala:51)\n\tat org.apache.spark.sql.execution.Project$$anonfun$1$$anonfun$apply$1.apply(basicOperators.scala:49)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.next(SerDeUtil.scala:119)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.next(SerDeUtil.scala:110)\n\tat scala.collection.Iterator$class.foreach(Iterator.scala:727)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.foreach(SerDeUtil.scala:110)\n\tat scala.collection.generic.Growable$class.$plus$plus$eq(Growable.scala:48)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:103)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableOnce$class.to(TraversableOnce.scala:273)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.to(SerDeUtil.scala:110)\n\tat scala.collection.TraversableOnce$class.toBuffer(TraversableOnce.scala:265)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.toBuffer(SerDeUtil.scala:110)\n\tat scala.collection.TraversableOnce$class.toArray(TraversableOnce.scala:252)\n\tat org.apache.spark.api.python.SerDeUtil$AutoBatchedPickler.toArray(SerDeUtil.scala:110)\n\tat org.apache.spark.rdd.RDD$$anonfun$collect$1$$anonfun$12.apply(RDD.scala:927)\n\tat org.apache.spark.rdd.RDD$$anonfun$collect$1$$anonfun$12.apply(RDD.scala:927)\n\tat org.apache.spark.SparkContext$$anonfun$runJob$5.apply(SparkContext.scala:1858)\n\tat org.apache.spark.SparkContext$$anonfun$runJob$5.apply(SparkContext.scala:1858)\n\tat org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:66)\n\tat org.apache.spark.scheduler.Task.run(Task.scala:89)\n\tat org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:227)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\t... 1 more\n\n(\u003cclass \u0027py4j.protocol.Py4JJavaError\u0027\u003e, Py4JJavaError(u\u0027An error occurred while calling o98.collectToPython.\\n\u0027, JavaObject id\u003do99), \u003ctraceback object at 0x7f1475dd9128\u003e)"
+      },
+      "dateCreated": "Aug 18, 2016 5:02:09 PM",
+      "dateStarted": "Aug 18, 2016 5:17:17 PM",
+      "dateFinished": "Aug 18, 2016 5:17:18 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471539763309_-1994271220",
+      "id": "20160818-170243_941197827",
+      "dateCreated": "Aug 18, 2016 5:02:43 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "deathmap",
+  "id": "2BV2WRRKT",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

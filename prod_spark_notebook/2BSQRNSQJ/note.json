@@ -1,0 +1,1310 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.mongodb.casbah.{WriteConcern \u003d\u003e MongodbWriteConcern}\nimport com.stratio.datasource._\nimport com.stratio.datasource.mongodb._\nimport com.stratio.datasource.mongodb.schema._\nimport com.stratio.datasource.mongodb.writer._\nimport com.stratio.datasource.mongodb.config._\nimport com.stratio.datasource.mongodb.config.MongodbConfig._\nimport org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray",
+      "dateUpdated": "Aug 19, 2016 7:18:39 AM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338502_-444308389",
+      "id": "20160803-201721_2116633707",
+      "result": "org.apache.zeppelin.interpreter.InterpreterException: org.apache.thrift.transport.TTransportException: java.net.ConnectException: Connection refused",
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 19, 2016 7:18:40 AM",
+      "dateFinished": "Aug 19, 2016 7:18:40 AM",
+      "status": "ERROR",
+      "errorMessage": "java.net.ConnectException: Connection refused\n\tat java.net.PlainSocketImpl.socketConnect(Native Method)\n\tat java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)\n\tat java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)\n\tat java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)\n\tat java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)\n\tat java.net.Socket.connect(Socket.java:579)\n\tat org.apache.thrift.transport.TSocket.open(TSocket.java:182)\n\tat org.apache.zeppelin.interpreter.remote.ClientFactory.create(ClientFactory.java:51)\n\tat org.apache.zeppelin.interpreter.remote.ClientFactory.create(ClientFactory.java:37)\n\tat org.apache.commons.pool2.BasePooledObjectFactory.makeObject(BasePooledObjectFactory.java:60)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:861)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:435)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:363)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.getClient(RemoteInterpreterProcess.java:184)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.init(RemoteInterpreter.java:163)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.getFormType(RemoteInterpreter.java:328)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.getFormType(LazyOpenInterpreter.java:105)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:260)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:328)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.6.146.93\"), Database -\u003e \"twitter\", Collection -\u003e\"liverpool\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\n\nval forum \u003d sqlContext.fromMongoDB(readConfig).withColumn(\"t2\", regexp_replace(lower($\"text\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).select(\"id\", \"_id\", \"text\", \"t2\", \"lang\", \"created_at\")",
+      "dateUpdated": "Aug 15, 2016 7:25:14 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": false,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338503_-444693137",
+      "id": "20160803-201838_997623076",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e liverpool, host -\u003e List(52.6.146.93)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@aaf66b70\nforum: org.apache.spark.sql.DataFrame \u003d [id: double, _id: string, text: string, t2: string, lang: string, created_at: string]\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:25:14 PM",
+      "dateFinished": "Aug 15, 2016 7:25:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val space \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else text.split(\" \")\n})",
+      "dateUpdated": "Aug 15, 2016 7:25:16 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338503_-444693137",
+      "id": "20160803-201905_1338551166",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "space: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,ArrayType(StringType,true),List(StringType))\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:25:35 PM",
+      "dateFinished": "Aug 15, 2016 7:25:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"10.0.1.205\"), Database -\u003e \"twitter\", Collection -\u003e\"products\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\n\nval products \u003d sqlContext.fromMongoDB(readConfig).select(\"name\", \"synonyms\", \"_id\", \"consists_of\").where(size($\"synonyms\") \u003e 0).withColumn(\"synonyms\", explode($\"synonyms\")).withColumn(\"synonyms\", regexp_replace(lower($\"synonyms\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).withColumn(\"size\", size(space($\"synonyms\"))).sort(desc(\"size\")).filter(\"consists_of is null\").drop(\"consists_of\")",
+      "dateUpdated": "Aug 15, 2016 7:25:18 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338503_-444693137",
+      "id": "20160803-201917_900240781",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e products, host -\u003e List(10.0.1.205)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@8de0cf6d\nproducts: org.apache.spark.sql.DataFrame \u003d [name: string, synonyms: string, _id: double, size: int]\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:25:40 PM",
+      "dateFinished": "Aug 15, 2016 7:25:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"10.0.1.205\"), Database -\u003e \"twitter\", Collection -\u003e\"symptoms\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\nval symptoms \u003d sqlContext.fromMongoDB(readConfig).select(\"name\", \"synonyms\", \"_id\").where(size($\"synonyms\") \u003e 0).withColumn(\"synonyms\", explode($\"synonyms\"))\n.withColumn(\"synonyms\", regexp_replace(lower($\"synonyms\"), \"\"\"[\\p{Punct}]\"\"\", \" \")).withColumn(\"size\", size(space($\"synonyms\"))).sort(desc(\"size\"))",
+      "dateUpdated": "Aug 15, 2016 7:25:20 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338503_-444693137",
+      "id": "20160803-201931_1679461521",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e symptoms, host -\u003e List(10.0.1.205)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@c1871eb1\nsymptoms: org.apache.spark.sql.DataFrame \u003d [name: string, synonyms: string, _id: int, size: int]\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:25:41 PM",
+      "dateFinished": "Aug 15, 2016 7:25:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"10.0.1.205\"), Database -\u003e \"twitter\", Collection -\u003e\"pii\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\n\nval pii \u003d sqlContext.fromMongoDB(readConfig).select(\"phrase\", \"_id\").withColumnRenamed(\"synonyms\", \"phrase\")",
+      "dateUpdated": "Aug 15, 2016 7:25:22 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338503_-444693137",
+      "id": "20160803-201947_565947011",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e pii, host -\u003e List(10.0.1.205)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@4b8e626e\npii: org.apache.spark.sql.DataFrame \u003d [phrase: string, _id: double]\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:25:46 PM",
+      "dateFinished": "Aug 15, 2016 7:25:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val symp \u003d symptoms.filter(not($\"name\".contains(\"UE: \"))).filter(not($\"_id\"\u003d\u003d\u003d2175)).collect()\nval ue \u003d symptoms.filter($\"name\".contains(\"UE: \")).collect()\nval prod \u003d products.collect()\nval pi \u003d pii.collect()\n\nval p_syn \u003d prod.map(x\u003d\u003e x(1).toString).toSet\nval s_syn \u003d symp.map(x\u003d\u003e x(1).toString).toSet\nval u_syn \u003d ue.map(x\u003d\u003e x(1).toString).toSet\nval pi_syn \u003d pi.map(x\u003d\u003e x(0).toString).toSet\n\nvar pa :Map[String,String] \u003d Map()\n\nvar sa :Map[String,String] \u003d Map()\n\nvar ua :Map[String,String] \u003d Map()\n\nvar pia :Map[String,String] \u003d Map()\n\n\nfor(i \u003c- prod){\n    pa+\u003d (i(1).toString -\u003e i(0).toString)\n}\n\nfor(i \u003c- symp){\n    sa+\u003d (i(1).toString -\u003e i(0).toString)\n}\n\nfor(i \u003c- ue){\n    ua+\u003d (i(1).toString -\u003e i(0).toString)\n}\n\nfor(i \u003c- pi){\n    pia+\u003d (i(0).toString -\u003e i(0).toString)\n}",
+      "dateUpdated": "Aug 15, 2016 7:33:53 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338503_-444693137",
+      "id": "20160803-202003_1324951108",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "symp: Array[org.apache.spark.sql.Row] \u003d Array([unevaluable event,feels like i m writing with my left hand in my right hand,347,13], [hallucination,keep thinking i see people out of the corner of my eye,105,12], [abnormal sleep,i fall asleep for roughly 3 hours and then stay awake,389,11], [abdominal discomfort,makes me feel like i ve been kicked in the stomach,1713,11], [nail picking,fingernails i m sorry there s no skin left around you,2350,11], [vaginal bleeding,have a period for just a bout a solid year,46,10], [pain in extremity,feet feel like i have been on them all day,72,10], [nonspecific reaction,hate the feeling when you want it to be over,204,10], [frequent urination,waking up in the middle of the night to pee,209,10], [chest discomfort,my chest fells like an elephant is sitti...ue: Array[org.apache.spark.sql.Row] \u003d Array([UE: Negative social perception,people look just as gross and stupid smoking e cig things as a real cigarette,2150,15], [UE: Negative social perception,dumb grls on the bus are tryna hide smokin an e cig,2150,12], [UE: Negative social perception,smoking an e cig in the library does not make you cool,2150,12], [UE: Negative social perception,if you smoke an e cig inside i assume you re asshole,2150,12], [UE: Negative social perception,if you re smoking an e cig i m judging you,2150,11], [UE: Health related testimonial,it has been a long time since i felt this good,2155,11], [UE: High efficacy,it has been a long time since i felt this good,2359,11], [UE: Entyvio Connect - Positive experience,with the help of my case manager at entyvio connect,23...prod: Array[org.apache.spark.sql.Row] \u003d Array([drospirenone/ethinyl estradiol/levomefolate calcium tablets and levomefolate calcium,drospirenone ethinyl estradiol levomefolate calcium tablets and levomefolate calcium,587.0,9], [6F Angio-Seal Vascular Closure Device Vip,6 f angio seal vascular closure device vip,371.0,8], [Centruroides (scorpion) Immune F(ab)2(equine),centruroides scorpion immune f ab 2 equine,63.0,7], [6 Shooter Saeed Multi-Band Ligator,6 shooter saeed multi band ligator,370.0,6], [Coated Vicryl Plus Antibacterial (Polyglactin 910),coated vicryl plus antibacterial polyglactin 910,389.0,6], [Homechoice Automated Pd Set With Cassette,homechoice automated pd set with cassette,403.0,6], [Octrode Lead Kit, 60Cm Length,octrode lead kit 60 cm length,412.0,6], [mometasone furoa...pi: Array[org.apache.spark.sql.Row] \u003d Array([ethan,6.0], [isabella,18.0], [olivia,19.0], [noah,23.0], [abigail,25.0], [sophia,26.0], [alexis,28.0], [hannah,29.0], [samantha,40.0], [jayden,41.0], [zachary,42.0], [elijah,43.0], [ava,44.0], [caleb,50.0], [alyssa,55.0], [aiden,59.0], [chloe,60.0], [natalie,64.0], [evan,66.0], [isaiah,68.0], [brianna,71.0], [gavin,72.0], [riley,73.0], [connor,76.0], [kayla,78.0], [hailey,82.0], [ella,85.0], [landon,87.0], [aidan,90.0], [jasmine,93.0], [liam,97.0], [avery,98.0], [addison,101.0], [lily,104.0], [nathaniel,108.0], [jeremiah,111.0], [hayden,112.0], [brayden,113.0], [katherine,114.0], [allison,116.0], [kaitlyn,119.0], [wyatt,120.0], [kaylee,121.0], [sebastian,124.0], [peyton,125.0], [megan,126.0], [alexandra,128.0], [lillian,130.0], [xavier,132.0]...p_syn: scala.collection.immutable.Set[String] \u003d Set(axitinib, drospirenone, fabior, zolman, beclomet, opsumit, typhoid jab, adorma, minicap, stribid, mucivil, everolimus, terbigalen, terfast, erfin, asr uni femoral impl size 45, ego electronic cigs, addwize, lepitam, terbilum, viekira, erbitux, breo account, ego cig, suvorexant, whooping cough tetanus, neutrogena eyeliner, muzome, orsythia, tudorza pressair, calcium gluconate, fungiban, spencer forrest laser, breo watches, larazapam, ferriprox, tapentadole, meningococcal group b vaccine, klonipin, cig liquids, buprenurphine, guanfacine, cloudchaser, yentreve, dicil, anpar, tapentidal, levetiragamma, dabigatran, zakofin, lymphoseek, panderm plus, interbi, albiglutide, centruroides, prednisolene, pazital, buspirone hydrochloride, oramoprh...s_syn: scala.collection.immutable.Set[String] \u003d Set(stoma site rash, red circles around my eyes, weren t helping, ill just, bad reactions, piss my pants, inflammatory, got me seeing shit, losing it s benefits, arm hurtz, isn t doing me no justice, arm is so swollen, abnormal hair growth, peripheral edema, peripheral coldness, swollen breast, doze off, room spinning, anti neutrophil cytoplasmic antibody positive vasculitis, rage, loopin me out, nothing is happening, headache, sleeping most of the day, irritated eyelid, leg hurts, my appetite is gone, no effect on you any more, black out, laughing, stevens johnsons, serum sickness like reaction, blurry, pregnant on birth control, got me feeling some typa way, took me out on disability, multiple birth sibling, yacking, no way to fight off ...u_syn: scala.collection.immutable.Set[String] \u003d Set(need sold today, was taking, nic base, from tysabri, headache, liquid, used, cloudchaser, clearance sale, has been pretty good, pharma, immunosuppressive, so far so good, company coverage, chargers, been a blessing, successful infusion, beautiful, mojito, what are, ohm, birthday, dont want to stop using e cigs, to humira, teenager, dangerous, one stop shop, started my entyvio, smells like shit, savings, isn t looking promising, menthol, not sure if this is a side effect, researcher, can you advise me, no side effects, tastes awesome, topper, insurance not approved, outlaw, remission rate, need to decice about stopping nicotine, swag, in a lot of pain, it has been a long time since i felt this good, cleaning your, scares me, positive re...pi_syn: scala.collection.immutable.Set[String] \u003d Set(senger, khaliq, clarissa, taye, shayden, brink, erdman, mcquaig, jerell, marr, cardell, layton, nailah, mario, isadora, brownfield, kettler, lillyana, benning, maliya, teresa, charlotta, boggs, wimmer, kharma, rorie, daigle, haugh, keianna, whidden, belton, pepi, williford, jena, keilyn, chee, huntlee, yoshi, kalem, kimmy, araseli, laurens, michels, derry, hickson, calli, kris, mckim, hartt, clough, cynthie, gowan, lisabeth, ramel, holiman, whitfield, cariotta, yocum, michael, krebs, pfister, bohner, buckle, bing, rheanna, stavros, thiago, losey, skye, rolon, karas, makya, abisai, reya, stringfield, fleurette, cyrille, hellene, bandy, jeremiah, coney, lonee, baila, aho, burket, kynthia, stipe, yousif, brieanna, cianni, magnolia, betti...pa: Map[String,String] \u003d Map()\nsa: Map[String,String] \u003d Map()\nua: Map[String,String] \u003d Map()\npia: Map[String,String] \u003d Map()\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:33:53 PM",
+      "dateFinished": "Aug 15, 2016 7:33:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val ns \u003d Array(products.select(\"size\").take(1)(0)(0).toString.toInt, symptoms.select(\"size\").take(1)(0)(0).toString.toInt)\nval nsize \u003d ns.max",
+      "dateUpdated": "Aug 15, 2016 7:34:00 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338503_-444693137",
+      "id": "20160803-202022_1262151952",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "ns: Array[Int] \u003d Array(9, 15)\nnsize: Int \u003d 15\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:34:00 PM",
+      "dateFinished": "Aug 15, 2016 7:34:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer\n\nval tokenizer \u003d new Tokenizer().setInputCol(\"t2\").setOutputCol(\"words\")\n\nvar tokenized \u003d tokenizer.transform(forum)\n\nfor(i \u003c- 1 to nsize){\n\n    var num \u003d Array(\"ngram\", i).mkString\n\n    var ngi \u003d new NGram().setInputCol(\"words\").setOutputCol(num).setN(i)\n\n    tokenized \u003d ngi.transform(tokenized)\n    tokenized \u003d tokenized.withColumn(\"test\", tokenized(num).cast(\"String\")).withColumn(\"w2\", concat($\"words\".cast(\"String\"), $\"test\")).drop(num).drop(\"test\")\n}",
+      "dateUpdated": "Aug 15, 2016 7:34:02 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": false,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338503_-444693137",
+      "id": "20160803-202031_422386569",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.ml.feature.NGram\nimport org.apache.spark.ml.feature.Tokenizer\ntokenizer: org.apache.spark.ml.feature.Tokenizer \u003d tok_4b8c1fd182c3\ntokenized: org.apache.spark.sql.DataFrame \u003d [id: double, _id: string, text: string, t2: string, lang: string, created_at: string, words: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:34:02 PM",
+      "dateFinished": "Aug 15, 2016 7:34:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val matcher \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else {\n    val words \u003d text.split(\",\").toSet\n    val pc \u003d p_syn \u0026 words\n    val cc \u003d s_syn \u0026 words\n    val uc \u003d u_syn \u0026 words\n    val pic \u003d pi_syn \u0026 words\n    Map(\"prod\" -\u003e (pc.toArray collect pa), \"con\" -\u003e (cc.toArray collect sa), \"ue\" -\u003e (uc.toArray collect ua), \n    \"pii\" -\u003e (pic.toArray collect pia))\n    }\n})",
+      "dateUpdated": "Aug 15, 2016 7:34:07 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338504_-446616882",
+      "id": "20160803-202038_1111510835",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "matcher: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,MapType(StringType,ArrayType(StringType,true),true),List(StringType))\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:34:07 PM",
+      "dateFinished": "Aug 15, 2016 7:34:08 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end \u003d tokenized.withColumn(\"temp\", matcher($\"w2\")).withColumn(\"pr\", $\"temp\"(\"prod\")).withColumn(\"s\", $\"temp\"(\"con\"))\n.withColumn(\"ue\", $\"temp\"(\"ue\")).withColumn(\"pii\", $\"temp\"(\"pii\")).drop(\"temp\").drop(\"w2\").drop(\"words\").drop(\"t2\")",
+      "dateUpdated": "Aug 15, 2016 7:34:10 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338504_-446616882",
+      "id": "20160803-202050_1635093549",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end: org.apache.spark.sql.DataFrame \u003d [id: double, _id: string, text: string, lang: string, created_at: string, pr: array\u003cstring\u003e, s: array\u003cstring\u003e, ue: array\u003cstring\u003e, pii: array\u003cstring\u003e]\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:34:10 PM",
+      "dateFinished": "Aug 15, 2016 7:34:11 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end.select(\"_id\", \"pr\", \"s\", \"ue\", \"pii\").show()",
+      "dateUpdated": "Aug 15, 2016 7:34:13 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": false,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338504_-446616882",
+      "id": "20160803-202100_432764544",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+---+---+--------------------+-----------------+\n|                 _id| pr|  s|                  ue|              pii|\n+--------------------+---+---+--------------------+-----------------+\n|57b20e5d1a62b7021...| []| []|                  []|           [glyn]|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n|57b20e5d1a62b7021...| []| []|                  []|         [norman]|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n|57b20e5d1a62b7021...| []| []|                  []|         [walter]|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n|57b20e5d1a62b7021...| []| []|                  []|          [chris]|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n|57b20e5d1a62b7021...| []| []|                  []|  [song, charles]|\n|57b20e5d1a62b7021...| []| []|[UE: Family membe...|          [serio]|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n|57b20e5d1a62b7021...| []| []|         [UE: Shape]|[browne, jackson]|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n|57b20e5d1a62b7021...| []| []|                  []|           [alaa]|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n|57b20e5d1a62b7021...| []| []|                  []|               []|\n+--------------------+---+---+--------------------+-----------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:34:13 PM",
+      "dateFinished": "Aug 15, 2016 7:34:14 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.PipelineModel\nval yolo \u003d PipelineModel.load(\"/home/syed/AeClassifier.model\")",
+      "dateUpdated": "Aug 15, 2016 7:29:18 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338504_-446616882",
+      "id": "20160803-202106_510229202",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.ml.PipelineModel\nyolo: org.apache.spark.ml.PipelineModel \u003d pipeline_e6ec2d152454\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:29:18 PM",
+      "dateFinished": "Aug 15, 2016 7:29:21 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val class_s \u003d udf((prediction: Double, ue: WrappedArray[Double]) \u003d\u003e {\n    if(ue \u003d\u003d null) 1.0\n  else if (ue.length \u003d\u003d 0) 1.0\n  else if (ue.length !\u003d0 \u0026\u0026 prediction \u003d\u003d 0.0D) 2.0\n  else if (ue.length !\u003d0 \u0026\u0026 prediction \u003d\u003d 1.0D) 7.0\n  else 1.0\n})",
+      "dateUpdated": "Aug 15, 2016 7:29:26 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338504_-446616882",
+      "id": "20160803-202146_652518590",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "class_s: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction2\u003e,DoubleType,List(DoubleType, ArrayType(DoubleType,false)))\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:29:26 PM",
+      "dateFinished": "Aug 15, 2016 7:29:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val ind \u003d udf((ue: org.apache.spark.mllib.linalg.Vector) \u003d\u003e {\n    ue.toArray.max\n})",
+      "dateUpdated": "Aug 15, 2016 7:29:29 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338504_-446616882",
+      "id": "20160803-203432_690320814",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "ind: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,DoubleType,List(org.apache.spark.mllib.linalg.VectorUDT@f71b0bce))\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:29:29 PM",
+      "dateFinished": "Aug 15, 2016 7:29:29 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end2 \u003d end.withColumn(\"t\", $\"text\")",
+      "dateUpdated": "Aug 15, 2016 7:29:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471287336355_321405365",
+      "id": "20160815-185536_787308359",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end2: org.apache.spark.sql.DataFrame \u003d [id: double, _id: string, text: string, lang: string, created_at: string, pr: array\u003cstring\u003e, s: array\u003cstring\u003e, ue: array\u003cstring\u003e, pii: array\u003cstring\u003e, t: string]\n"
+      },
+      "dateCreated": "Aug 15, 2016 6:55:36 PM",
+      "dateStarted": "Aug 15, 2016 7:29:32 PM",
+      "dateFinished": "Aug 15, 2016 7:29:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end20 \u003d yolo.transform(end2).drop(\"rawPrediction\").drop(\"words\").drop(\"features\").drop(\"filtered\")\n.withColumn(\"tg\", class_s($\"prediction\", $\"ue\")).drop(\"prediction\").withColumn(\"_id\", $\"_id\".cast(\"String\")).withColumn(\"ind\", ind($\"probability\").cast(\"Double\")).drop(\"probability\")",
+      "dateUpdated": "Aug 15, 2016 7:29:34 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": false,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338504_-446616882",
+      "id": "20160803-202158_1953380899",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "org.apache.spark.sql.AnalysisException: cannot resolve \u0027UDF(prediction,ue)\u0027 due to data type mismatch: argument 2 requires array\u003cdouble\u003e type, however, \u0027ue\u0027 is of array\u003cstring\u003e type.;\n\tat org.apache.spark.sql.catalyst.analysis.package$AnalysisErrorAt.failAnalysis(package.scala:42)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1$$anonfun$apply$2.applyOrElse(CheckAnalysis.scala:65)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1$$anonfun$apply$2.applyOrElse(CheckAnalysis.scala:57)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$transformUp$1.apply(TreeNode.scala:335)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$transformUp$1.apply(TreeNode.scala:335)\n\tat org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(TreeNode.scala:69)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformUp(TreeNode.scala:334)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$5.apply(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$5.apply(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$4.apply(TreeNode.scala:281)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat scala.collection.Iterator$class.foreach(Iterator.scala:727)\n\tat scala.collection.AbstractIterator.foreach(Iterator.scala:1157)\n\tat scala.collection.generic.Growable$class.$plus$plus$eq(Growable.scala:48)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:103)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableOnce$class.to(TraversableOnce.scala:273)\n\tat scala.collection.AbstractIterator.to(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toBuffer(TraversableOnce.scala:265)\n\tat scala.collection.AbstractIterator.toBuffer(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toArray(TraversableOnce.scala:252)\n\tat scala.collection.AbstractIterator.toArray(Iterator.scala:1157)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformChildren(TreeNode.scala:321)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformUp(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.transformExpressionUp$1(QueryPlan.scala:108)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.org$apache$spark$sql$catalyst$plans$QueryPlan$$recursiveTransform$2(QueryPlan.scala:118)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan$$anonfun$org$apache$spark$sql$catalyst$plans$QueryPlan$$recursiveTransform$2$1.apply(QueryPlan.scala:122)\n\tat scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)\n\tat scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)\n\tat scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)\n\tat scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableLike$class.map(TraversableLike.scala:244)\n\tat scala.collection.AbstractTraversable.map(Traversable.scala:105)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.org$apache$spark$sql$catalyst$plans$QueryPlan$$recursiveTransform$2(QueryPlan.scala:122)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan$$anonfun$2.apply(QueryPlan.scala:127)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat scala.collection.Iterator$class.foreach(Iterator.scala:727)\n\tat scala.collection.AbstractIterator.foreach(Iterator.scala:1157)\n\tat scala.collection.generic.Growable$class.$plus$plus$eq(Growable.scala:48)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:103)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableOnce$class.to(TraversableOnce.scala:273)\n\tat scala.collection.AbstractIterator.to(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toBuffer(TraversableOnce.scala:265)\n\tat scala.collection.AbstractIterator.toBuffer(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toArray(TraversableOnce.scala:252)\n\tat scala.collection.AbstractIterator.toArray(Iterator.scala:1157)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.transformExpressionsUp(QueryPlan.scala:127)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1.apply(CheckAnalysis.scala:57)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1.apply(CheckAnalysis.scala:50)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:121)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$class.checkAnalysis(CheckAnalysis.scala:50)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis(Analyzer.scala:44)\n\tat org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:34)\n\tat org.apache.spark.sql.DataFrame.\u003cinit\u003e(DataFrame.scala:133)\n\tat org.apache.spark.sql.DataFrame.org$apache$spark$sql$DataFrame$$withPlan(DataFrame.scala:2126)\n\tat org.apache.spark.sql.DataFrame.select(DataFrame.scala:707)\n\tat org.apache.spark.sql.DataFrame.withColumn(DataFrame.scala:1188)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:127)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:132)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:134)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:136)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:138)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:140)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:142)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:144)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:146)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:148)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:150)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:152)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:154)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:156)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:158)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:160)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:162)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:164)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:166)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:168)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:170)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:172)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:174)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:176)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:178)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:180)\n\tat \u003cinit\u003e(\u003cconsole\u003e:182)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:186)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 7:29:34 PM",
+      "dateFinished": "Aug 15, 2016 7:29:35 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end20.select(\"pr\", \"s\", \"ue\", \"tg\", \"pii\", \"_id\", \"ind\").show()",
+      "dateUpdated": "Aug 15, 2016 6:56:16 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338505_-447001631",
+      "id": "20160803-202207_1318484845",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+---+---+--------+---+------------------+--------------------+------------------+\n| pr|  s|      ue| tg|               pii|                 _id|               ind|\n+---+---+--------+---+------------------+--------------------+------------------+\n| []| []|      []|1.0|         [32783.0]|57b20e5d1a62b7021...|0.6577607459837953|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|0.7746173424912594|\n| []| []|      []|1.0|         [34748.0]|57b20e5d1a62b7021...|0.8575730335323963|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|0.6545278741331304|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|0.5547410546297091|\n| []| []|      []|1.0|         [34826.0]|57b20e5d1a62b7021...|0.5641005771902178|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|0.5270238616581286|\n| []| []|      []|1.0|         [35040.0]|57b20e5d1a62b7021...|0.7492850645882727|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|0.5393492526033279|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|0.5480397353271397|\n| []| []|      []|1.0|[34866.0, 34793.0]|57b20e5d1a62b7021...|0.7099006460967233|\n| []| []|[2142.0]|7.0|         [21454.0]|57b20e5d1a62b7021...|0.9073859381423806|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|0.5442989923422279|\n| []| []|[2031.0]|7.0|[11609.0, 34551.0]|57b20e5d1a62b7021...|0.7176537151652818|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|  0.67345232031049|\n| []| []|      []|1.0|          [5787.0]|57b20e5d1a62b7021...|0.6128215269322055|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|0.5442989923422279|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|0.7398725708681895|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|0.5547410546297091|\n| []| []|      []|1.0|                []|57b20e5d1a62b7021...|0.5547410546297091|\n+---+---+--------+---+------------------+--------------------+------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 6:56:16 PM",
+      "dateFinished": "Aug 15, 2016 6:56:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val h \u003d end20.dtypes\nval s \u003d h.map(x\u003d\u003e \"\\\\(|\\\\)\".r.replaceAllIn(x.toString, \"\").split(\",\")).filter(_(1)\u003d\u003d \"StringType\").map(_(0))\nval d \u003d h.map(x\u003d\u003e \"\\\\(|\\\\)\".r.replaceAllIn(x.toString, \"\").split(\",\")).filter(_(1)\u003d\u003d \"DoubleType\").map(_(0))\nval i \u003d h.map(x\u003d\u003e \"\\\\(|\\\\)\".r.replaceAllIn(x.toString, \"\").split(\",\")).filter(_(1)\u003d\u003d \"IntegerType\").map(_(0))",
+      "dateUpdated": "Aug 15, 2016 6:57:48 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338505_-447001631",
+      "id": "20160803-202217_418719372",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "h: Array[(String, String)] \u003d Array((id,DoubleType), (_id,StringType), (text,StringType), (lang,StringType), (created_at,StringType), (pr,ArrayType(DoubleType,false)), (s,ArrayType(DoubleType,false)), (ue,ArrayType(DoubleType,false)), (pii,ArrayType(DoubleType,false)), (t,StringType), (tg,DoubleType), (ind,DoubleType))\ns: Array[String] \u003d Array(_id, text, lang, created_at, t)\nd: Array[String] \u003d Array(id, tg, ind)\ni: Array[String] \u003d Array()\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 6:57:48 PM",
+      "dateFinished": "Aug 15, 2016 6:57:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val errors \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) null\n    else if(text\u003d\u003d\"NaN\") null\n    else text\n})\nval errors_d \u003d udf((text: Double) \u003d\u003e {\n    if(text.isNaN) -1.0\n    else text\n})\n\nvar end30\u003dend20\nfor(o \u003c- s){\n    end30 \u003d end30.withColumn(o, errors(end30(o)))\n}\n\nfor(j \u003c- d){\n    end30 \u003d end30.withColumn(j, errors_d(end30(j)))\n}\n\nfor(k \u003c- i){\n    end30 \u003d end30.withColumn(k, errors_d(end30(k).cast(\"Double\")))\n}\n\nval errors_l \u003d udf((text: String) \u003d\u003e {\n    if(text\u003d\u003dnull) \"\"\n    else text\n})\n\nend30\u003dend30.withColumn(\"loc\", errors_l($\"loc\"))",
+      "dateUpdated": "Aug 15, 2016 6:57:51 PM",
+      "config": {
+        "enabled": true,
+        "tableHide": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338505_-447001631",
+      "id": "20160803-202228_1298918298",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "errors: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,List(StringType))\nerrors_d: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,DoubleType,List(DoubleType))\nend30: org.apache.spark.sql.DataFrame \u003d [id: double, _id: string, text: string, lang: string, created_at: string, pr: array\u003cdouble\u003e, s: array\u003cdouble\u003e, ue: array\u003cdouble\u003e, pii: array\u003cdouble\u003e, t: string, tg: double, ind: double]\nerrors_l: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,List(StringType))\norg.apache.spark.sql.AnalysisException: cannot resolve \u0027loc\u0027 given input columns: [pr, ind, text, id, tg, s, t, created_at, pii, ue, _id, lang];\n\tat org.apache.spark.sql.catalyst.analysis.package$AnalysisErrorAt.failAnalysis(package.scala:42)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1$$anonfun$apply$2.applyOrElse(CheckAnalysis.scala:60)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1$$anonfun$apply$2.applyOrElse(CheckAnalysis.scala:57)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$transformUp$1.apply(TreeNode.scala:335)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$transformUp$1.apply(TreeNode.scala:335)\n\tat org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(TreeNode.scala:69)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformUp(TreeNode.scala:334)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$5.apply(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$5.apply(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$4$$anonfun$apply$9.apply(TreeNode.scala:310)\n\tat scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)\n\tat scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)\n\tat scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)\n\tat scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableLike$class.map(TraversableLike.scala:244)\n\tat scala.collection.AbstractTraversable.map(Traversable.scala:105)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$4.apply(TreeNode.scala:308)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat scala.collection.Iterator$class.foreach(Iterator.scala:727)\n\tat scala.collection.AbstractIterator.foreach(Iterator.scala:1157)\n\tat scala.collection.generic.Growable$class.$plus$plus$eq(Growable.scala:48)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:103)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableOnce$class.to(TraversableOnce.scala:273)\n\tat scala.collection.AbstractIterator.to(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toBuffer(TraversableOnce.scala:265)\n\tat scala.collection.AbstractIterator.toBuffer(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toArray(TraversableOnce.scala:252)\n\tat scala.collection.AbstractIterator.toArray(Iterator.scala:1157)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformChildren(TreeNode.scala:321)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformUp(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$5.apply(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$5.apply(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$4.apply(TreeNode.scala:281)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat scala.collection.Iterator$class.foreach(Iterator.scala:727)\n\tat scala.collection.AbstractIterator.foreach(Iterator.scala:1157)\n\tat scala.collection.generic.Growable$class.$plus$plus$eq(Growable.scala:48)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:103)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableOnce$class.to(TraversableOnce.scala:273)\n\tat scala.collection.AbstractIterator.to(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toBuffer(TraversableOnce.scala:265)\n\tat scala.collection.AbstractIterator.toBuffer(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toArray(TraversableOnce.scala:252)\n\tat scala.collection.AbstractIterator.toArray(Iterator.scala:1157)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformChildren(TreeNode.scala:321)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.transformUp(TreeNode.scala:332)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.transformExpressionUp$1(QueryPlan.scala:108)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.org$apache$spark$sql$catalyst$plans$QueryPlan$$recursiveTransform$2(QueryPlan.scala:118)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan$$anonfun$org$apache$spark$sql$catalyst$plans$QueryPlan$$recursiveTransform$2$1.apply(QueryPlan.scala:122)\n\tat scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)\n\tat scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)\n\tat scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)\n\tat scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableLike$class.map(TraversableLike.scala:244)\n\tat scala.collection.AbstractTraversable.map(Traversable.scala:105)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.org$apache$spark$sql$catalyst$plans$QueryPlan$$recursiveTransform$2(QueryPlan.scala:122)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan$$anonfun$2.apply(QueryPlan.scala:127)\n\tat scala.collection.Iterator$$anon$11.next(Iterator.scala:328)\n\tat scala.collection.Iterator$class.foreach(Iterator.scala:727)\n\tat scala.collection.AbstractIterator.foreach(Iterator.scala:1157)\n\tat scala.collection.generic.Growable$class.$plus$plus$eq(Growable.scala:48)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:103)\n\tat scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:47)\n\tat scala.collection.TraversableOnce$class.to(TraversableOnce.scala:273)\n\tat scala.collection.AbstractIterator.to(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toBuffer(TraversableOnce.scala:265)\n\tat scala.collection.AbstractIterator.toBuffer(Iterator.scala:1157)\n\tat scala.collection.TraversableOnce$class.toArray(TraversableOnce.scala:252)\n\tat scala.collection.AbstractIterator.toArray(Iterator.scala:1157)\n\tat org.apache.spark.sql.catalyst.plans.QueryPlan.transformExpressionsUp(QueryPlan.scala:127)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1.apply(CheckAnalysis.scala:57)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1.apply(CheckAnalysis.scala:50)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:121)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis$class.checkAnalysis(CheckAnalysis.scala:50)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis(Analyzer.scala:44)\n\tat org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:34)\n\tat org.apache.spark.sql.DataFrame.\u003cinit\u003e(DataFrame.scala:133)\n\tat org.apache.spark.sql.DataFrame.org$apache$spark$sql$DataFrame$$withPlan(DataFrame.scala:2126)\n\tat org.apache.spark.sql.DataFrame.select(DataFrame.scala:707)\n\tat org.apache.spark.sql.DataFrame.withColumn(DataFrame.scala:1188)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:134)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:139)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$$$93297bcd59dca476dd569cf51abed168$$$$$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:141)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:143)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:145)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:147)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:149)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:151)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:153)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:155)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:157)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:159)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:161)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:163)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:165)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:167)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:169)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:171)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:173)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:175)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:177)\n\tat $iwC$$iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:179)\n\tat $iwC$$iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:181)\n\tat $iwC$$iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:183)\n\tat $iwC$$iwC.\u003cinit\u003e(\u003cconsole\u003e:185)\n\tat $iwC.\u003cinit\u003e(\u003cconsole\u003e:187)\n\tat \u003cinit\u003e(\u003cconsole\u003e:189)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:193)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat .\u003cinit\u003e(\u003cconsole\u003e:7)\n\tat .\u003cclinit\u003e(\u003cconsole\u003e)\n\tat $print(\u003cconsole\u003e)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)\n\tat org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)\n\tat org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)\n\tat org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpretInput(SparkInterpreter.java:810)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:753)\n\tat org.apache.zeppelin.spark.SparkInterpreter.interpret(SparkInterpreter.java:746)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:341)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 15, 2016 6:57:51 PM",
+      "dateFinished": "Aug 15, 2016 6:57:52 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end30.select(\"downs\", \"tg\", \"loc\", \"title\", \"num_comments\").show()",
+      "dateUpdated": "Aug 8, 2016 6:08:08 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338505_-447001631",
+      "id": "20160803-202241_706367488",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+-----+---+---+--------------------+------------+\n|downs| tg|loc|               title|num_comments|\n+-----+---+---+--------------------+------------+\n| null|1.0|   |RE: WWAPP- June 1-15|        null|\n| null|2.0|   |RE: WWAPP - June ...|        null|\n| null|7.0|   |          RE: AF \u0026 O|        null|\n| null|1.0|   |RE: Medication Na...|        null|\n| null|1.0|   |RE: Name Medicine...|        null|\n| null|1.0|   |RE: Name Medicine...|        null|\n| null|2.0|   |    Re: Lansoprazole|        null|\n| null|1.0|   |  RE: [A9XX]Mapy GPS|        null|\n| null|2.0|   |RE: WWAPP - Augus...|        null|\n| null|7.0|   |RE: WWAPP Jan 8- ...|        null|\n| null|7.0|   |RE: Heartburn Med...|        null|\n| null|7.0|   |                    |        null|\n| null|7.0|   |Cheap tiffany jew...|        null|\n| null|7.0|   |Comprar Zyprexa o...|        null|\n| null|1.0|   |trouble bipolaire...|        null|\n| null|1.0|   |What a crock Nova...|        null|\n| null|2.0|   |Buy Cheap Ranitid...|        null|\n| null|7.0|   |Buy Cheap Prevaci...|        null|\n| null|1.0|   |RE: did the miren...|        null|\n| null|7.0|   |Order Cheap Preva...|        null|\n+-----+---+---+--------------------+------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 8, 2016 6:08:08 PM",
+      "dateFinished": "Aug 8, 2016 6:08:09 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val saveConfig \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"52.0.59.4\"), Database -\u003e \"twitter\", Collection -\u003e\"dsForum\", \nSamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\n\nend30.saveToMongodb(saveConfig.build)",
+      "dateUpdated": "Aug 5, 2016 3:31:26 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338505_-447001631",
+      "id": "20160803-202250_2142179715",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "saveConfig: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e twitter, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e fdaTweets, host -\u003e List(52.0.59.4)))\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "status": "ABORT",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end.registerTempTable(\"sup\")",
+      "dateUpdated": "Aug 15, 2016 7:34:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471287487395_829283780",
+      "id": "20160815-185807_1350179653",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 15, 2016 6:58:07 PM",
+      "dateStarted": "Aug 15, 2016 7:34:31 PM",
+      "dateFinished": "Aug 15, 2016 7:34:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\ndfp \u003d sqlContext.sql(\"SELECT * FROM sup\")\ndf0 \u003d dfp.collect()",
+      "dateUpdated": "Aug 15, 2016 7:34:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471287565819_-1520084949",
+      "id": "20160815-185925_1385704862",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 15, 2016 6:59:25 PM",
+      "dateStarted": "Aug 15, 2016 7:34:33 PM",
+      "dateFinished": "Aug 15, 2016 7:34:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nimport pandas as pd\ndf \u003d pd.DataFrame(df0)\ndf.to_csv(\u0027/home/syed/liverpoool_tagged22.csv\u0027, orient\u003d\u0027records\u0027, index\u003dFalse, encoding\u003d\u0027utf-8\u0027)",
+      "dateUpdated": "Aug 15, 2016 7:34:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471287593326_704025849",
+      "id": "20160815-185953_747693540",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 15, 2016 6:59:53 PM",
+      "dateStarted": "Aug 15, 2016 7:34:37 PM",
+      "dateFinished": "Aug 15, 2016 7:34:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end30.select(\"_id\", \"ind\").show(50, false)",
+      "dateUpdated": "Aug 8, 2016 6:08:15 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338505_-447001631",
+      "id": "20160803-204632_520822412",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+-----------+------------------+\n|_id        |ind               |\n+-----------+------------------+\n|3072130924 |0.6864495413894328|\n|3120649836 |0.7392755388559575|\n|4006845548 |0.953660696848521 |\n|4451003559 |0.5336810059853357|\n|4597172647 |0.5547410546297091|\n|4627062695 |0.5547410546297091|\n|5856901349 |0.5483588272060012|\n|7086409876 |0.8323448798778381|\n|8839167596 |0.8020997859236295|\n|12082900588|0.5128779030112295|\n|13578367275|1.0               |\n|15753365861|0.9999671253057913|\n|16243705548|1.0               |\n|16259317196|0.9999999265225953|\n|16263722700|0.9999999709282679|\n|16395805283|0.5547410546297091|\n|16425651813|0.9999999493351986|\n|16425997413|1.0               |\n|16428300256|0.8439491843103719|\n|16431316581|1.0               |\n|16433504992|0.8439853056707187|\n|16457111264|1.0               |\n|16480948069|0.9999546430840016|\n|16484029029|1.0               |\n|16498106213|0.9999609635508426|\n|16510780517|0.9998545762431775|\n|16516546661|0.9999999969609219|\n|16516782181|1.0               |\n|16521907301|1.0               |\n|16535935077|1.0               |\n|16547565669|1.0               |\n|16571900640|0.5676996416791122|\n|16625356256|0.5077492273510207|\n|16642990304|0.9779015643983172|\n|16644799456|1.0               |\n|16650005728|0.9988146330762083|\n|16650005984|0.6630924476892268|\n|16671425381|0.9999999999367273|\n|16680732947|0.865123085151918 |\n|16694695136|0.9976918991307533|\n|16695829472|0.9060505775975132|\n|16735919717|0.629548074749916 |\n|16750639072|1.0               |\n|16776841696|0.9713408240068573|\n|16777421411|0.9999878317643254|\n|16797843936|0.9991514712702958|\n|16798893004|0.830313242839973 |\n|16800586976|0.6360848846714481|\n|16812870368|0.9535036889290291|\n|16814740960|0.5024234610994772|\n+-----------+------------------+\nonly showing top 50 rows\n\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 8, 2016 6:08:15 PM",
+      "dateFinished": "Aug 8, 2016 6:08:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val end4 \u003d end30.select(\"_id\", \"ind\")",
+      "dateUpdated": "Aug 8, 2016 6:08:21 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470411155747_550841614",
+      "id": "20160805-153235_1026946915",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "end4: org.apache.spark.sql.DataFrame \u003d [_id: string, ind: double]\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:32:35 PM",
+      "dateStarted": "Aug 8, 2016 6:08:21 PM",
+      "dateFinished": "Aug 8, 2016 6:08:21 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end4.registerTempTable(\"sup\")",
+      "dateUpdated": "Aug 8, 2016 6:08:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470411174462_-963514732",
+      "id": "20160805-153254_2123122950",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 5, 2016 3:32:54 PM",
+      "dateStarted": "Aug 8, 2016 6:08:23 PM",
+      "dateFinished": "Aug 8, 2016 6:08:24 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndf\u003dsqlContext.sql(\"SELECT * FROM sup\")\ndf2\u003ddf.collect()",
+      "dateUpdated": "Aug 8, 2016 6:08:26 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470411185243_-350393551",
+      "id": "20160805-153305_626496582",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Aug 5, 2016 3:33:05 PM",
+      "dateStarted": "Aug 8, 2016 6:08:26 PM",
+      "dateFinished": "Aug 8, 2016 6:08:54 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nprint(df2[1:10])",
+      "dateUpdated": "Aug 8, 2016 6:08:58 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409338505_-447001631",
+      "id": "20160804-184335_327089886",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "[Row(_id\u003du\u00273120649836\u0027, ind\u003d0.7392755388559575), Row(_id\u003du\u00274006845548\u0027, ind\u003d0.953660696848521), Row(_id\u003du\u00274451003559\u0027, ind\u003d0.5336810059853357), Row(_id\u003du\u00274597172647\u0027, ind\u003d0.5547410546297091), Row(_id\u003du\u00274627062695\u0027, ind\u003d0.5547410546297091), Row(_id\u003du\u00275856901349\u0027, ind\u003d0.5483588272060012), Row(_id\u003du\u00277086409876\u0027, ind\u003d0.8323448798778381), Row(_id\u003du\u00278839167596\u0027, ind\u003d0.8020997859236295), Row(_id\u003du\u002712082900588\u0027, ind\u003d0.5128779030112295)]\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:02:18 PM",
+      "dateStarted": "Aug 8, 2016 6:08:58 PM",
+      "dateFinished": "Aug 8, 2016 6:08:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nimport pandas as pd\n\npd_df \u003d pd.DataFrame(df2)\npd_df.columns\u003d[\u0027id\u0027, \u0027ind\u0027]\nprint(len(pd_df))\nprint(pd_df[:5])",
+      "dateUpdated": "Aug 8, 2016 6:09:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409382103_2014499239",
+      "id": "20160805-150302_1791726672",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "447423\n           id       ind\n0  3072130924  0.686450\n1  3120649836  0.739276\n2  4006845548  0.953661\n3  4451003559  0.533681\n4  4597172647  0.554741\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:03:02 PM",
+      "dateStarted": "Aug 8, 2016 6:09:02 PM",
+      "dateFinished": "Aug 8, 2016 6:09:02 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nprint(pd_df[0:5])\nprint(pd_df[447422:447424])",
+      "dateUpdated": "Aug 8, 2016 6:15:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470678008268_17609647",
+      "id": "20160808-174008_1260671956",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "           id       ind\n0  3072130924  0.686450\n1  3120649836  0.739276\n2  4006845548  0.953661\n3  4451003559  0.533681\n4  4597172647  0.554741\n                  id       ind\n447422  reddit_zzz9r  0.987704\n"
+      },
+      "dateCreated": "Aug 8, 2016 5:40:08 PM",
+      "dateStarted": "Aug 8, 2016 6:15:54 PM",
+      "dateFinished": "Aug 8, 2016 6:16:09 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nimport pymongo\nimport datetime\n\n# connect to mongo\nclient \u003d pymongo.MongoClient(\u002752.6.146.93\u0027)\ndb \u003d client[\u0027twitter\u0027]\n\nprint(datetime.datetime.now())\nfor row in pd_df[400000:447424].itertuples():\n    db.dsForum.update_one({\u0027_id\u0027: row.id},{\u0027$set\u0027: {\u0027ind\u0027: row.ind}}, upsert\u003dTrue)\nprint(datetime.datetime.now())",
+      "dateUpdated": "Sep 19, 2016 8:19:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470409623036_-727269041",
+      "id": "20160805-150703_296159387",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "2016-08-08 18:15:33.932542\n2016-08-08 18:16:09.577367\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:07:03 PM",
+      "dateStarted": "Aug 8, 2016 6:15:33 PM",
+      "dateFinished": "Aug 8, 2016 6:16:09 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nprint(pd_df[200000:200005])",
+      "dateUpdated": "Aug 5, 2016 4:11:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470413284870_-1170859928",
+      "id": "20160805-160804_740714132",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "                 id       ind       id_str\n200000  43776058077  0.973933  43776058077\n200001  43776233956  0.998145  43776233956\n200002  43777425885  0.669345  43777425885\n200003  43777504108  0.786091  43777504108\n200004  43778935005  0.783071  43778935005\n"
+      },
+      "dateCreated": "Aug 5, 2016 4:08:04 PM",
+      "dateStarted": "Aug 5, 2016 4:11:03 PM",
+      "dateFinished": "Aug 5, 2016 4:11:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n# reddit_zzs2q\ncursor \u003d db.dsForum.find({\u0027_id\u0027:\u0027reddit_zzs2q\u0027}).limit(1)\nprint(list(cursor))",
+      "dateUpdated": "Aug 5, 2016 4:30:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470410669086_1248875166",
+      "id": "20160805-152429_1259662582",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "[{u\u0027pii\u0027: [], u\u0027gdr\u0027: None, u\u0027cc\u0027: None, u\u0027uname\u0027: u\u0027[deleted]\u0027, u\u0027ind\u0027: 0.9424187747232802, u\u0027cr\u0027: datetime.datetime(2012, 9, 16, 19, 12, 44), u\u0027content_hash\u0027: None, u\u0027id\u0027: u\u0027zzs2q\u0027, u\u0027pr\u0027: [1166.0, 146.0, 85.0, 309.0, 317.0, 1166.0], u\u0027loc\u0027: u\u0027\u0027, u\u0027title\u0027: u\u0027Medications while pregnant? \u0027, u\u0027num_comments\u0027: 9.0, u\u0027s\u0027: [119.0, 117.0, 1478.0, 31.0, 44.0, 62.0, 26.0, 136.0], u\u0027t_hash\u0027: None, u\u0027score\u0027: 6.0, u\u0027retrieved_on\u0027: u\u0027Thu Sep 17 08:32:00 UTC 2015\u0027, u\u0027parent_id\u0027: None, u\u0027fname\u0027: u\u0027BabyBumps\u0027, u\u0027sid\u0027: None, u\u0027tid\u0027: u\u0027t3_zzs2q\u0027, u\u0027tg\u0027: 2.0, u\u0027type\u0027: u\u0027reddit\u0027, u\u0027downs\u0027: 0.0, u\u0027flink\u0027: u\u0027https://www.reddit.com/r/BabyBumps\u0027, u\u0027ds\u0027: u\u0027pushshift\u0027, u\u0027lang\u0027: None, u\u0027tlink\u0027: u\u0027https://www.reddit.com/r/BabyBumps/comments/zzs2q/medications_while_pregnant/\u0027, u\u0027tstarter\u0027: True, u\u0027dom\u0027: u\u0027reddit.com\u0027, u\u0027url\u0027: u\u0027http://www.reddit.com/r/BabyBumps/comments/zzs2q/medications_while_pregnant/\u0027, u\u0027cat\u0027: None, u\u0027bname\u0027: u\u0027Reddit\u0027, u\u0027query_id\u0027: None, u\u0027t\u0027: u\"So, I am currently not pregnant. We were planning on trying soon but some stuff came up and we pushed it back. Anyways, I follow all your stories, they really make me happy. But recently, my Trigeminal Neuralgia which was in remission has returned. I was put back on my medications: Tegretol, Cymbalta, Gabapentin, Tramadol. I can function without all except Tegretol. So I was researching TN while pregnant and since it is so rare there aren\u0027t a lot of experienced people out there. But what is out there depressed me enough to stop coming here and reading. A lot of them ended up having C-Sections due to the increased pain, and some have had multiple miscarriages after coming off the meds and being in too much pain. So this WONDERFUL experience I thought I would have looked like it would be a nightmare. \\n\\nMost of the literature says to stop all the medication. But, people who have Epilepsy who are on Tegretol can\u0027t stop their meds. So I was wondering how they do it. And looking it up, I see that they stay on their medications and most of the time things turn out fine. It bumps your risk of defects up to around 4%-6%. They say to balance out the risks vs benefits. To me, the benefit of the medicine outweighs the risk. Without the medication, not only will the pain be immense, but I won\u0027t be able to eat or drink or anything. I\u0027ve pretty much made up my mind to fight for staying on the meds when the time comes, but I would really appreciate some of your opinions, especially those who have been through it. \", u\u0027v\u0027: None, u\u0027ue\u0027: [2038.0, 2391.0, 2062.0, 2103.0], u\u0027_id\u0027: u\u0027reddit_zzs2q\u0027, u\u0027ups\u0027: 6.0}]\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:24:29 PM",
+      "dateStarted": "Aug 5, 2016 4:30:55 PM",
+      "dateFinished": "Aug 5, 2016 4:30:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end4.show(false)",
+      "dateUpdated": "Aug 5, 2016 4:31:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470410921344_1105913328",
+      "id": "20160805-152841_832157143",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+-----------+------------------+\n|_id        |ind               |\n+-----------+------------------+\n|3072130924 |0.6864495413894328|\n|3120649836 |0.7392755388559575|\n|4006845548 |0.953660696848521 |\n|4451003559 |0.5336810059853357|\n|4597172647 |0.5547410546297091|\n|4627062695 |0.5547410546297091|\n|5856901349 |0.5483588272060012|\n|7086409876 |0.8323448798778381|\n|8839167596 |0.8020997859236295|\n|12082900588|0.5128779030112295|\n|13578367275|1.0               |\n|15753365861|0.9999671253057913|\n|16243705548|1.0               |\n|16259317196|0.9999999265225953|\n|16263722700|0.9999999709282679|\n|16395805283|0.5547410546297091|\n|16425651813|0.9999999493351986|\n|16425997413|1.0               |\n|16428300256|0.8439491843103719|\n|16431316581|1.0               |\n+-----------+------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 5, 2016 3:28:41 PM",
+      "dateStarted": "Aug 5, 2016 4:31:36 PM",
+      "dateFinished": "Aug 5, 2016 4:31:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "end20.show()",
+      "dateUpdated": "Aug 15, 2016 7:03:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470414696200_-1774135290",
+      "id": "20160805-163136_654818333",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+------+--------------------+--------------------+----+--------------------+---+---+--------+------------------+--------------------+---+------------------+\n|    id|                 _id|                text|lang|          created_at| pr|  s|      ue|               pii|                   t| tg|               ind|\n+------+--------------------+--------------------+----+--------------------+---+---+--------+------------------+--------------------+---+------------------+\n|7.6E17|57b20e5d1a62b7021...|RT @JensAnders197...|  en|Mon Aug 01 15:38:...| []| []|      []|         [32783.0]|RT @JensAnders197...|1.0|0.6577607459837953|\n|7.6E17|57b20e5d1a62b7021...|RT @Whack_: 35. O...|  en|Mon Aug 01 15:38:...| []| []|      []|                []|RT @Whack_: 35. O...|1.0|0.7746173424912594|\n|7.6E17|57b20e5d1a62b7021...|RT @wwwbigbaldhea...|  en|Mon Aug 01 15:38:...| []| []|      []|         [34748.0]|RT @wwwbigbaldhea...|1.0|0.8575730335323963|\n|7.6E17|57b20e5d1a62b7021...|amanhã é feriado ...|  pt|Mon Aug 01 15:38:...| []| []|      []|                []|amanhã é feriado ...|1.0|0.6545278741331304|\n|7.6E17|57b20e5d1a62b7021...|                 ok.| und|Mon Aug 01 15:38:...| []| []|      []|                []|                 ok.|1.0|0.5547410546297091|\n|7.6E17|57b20e5d1a62b7021...|RT @paddypower: W...|  en|Mon Aug 01 15:38:...| []| []|      []|         [34826.0]|RT @paddypower: W...|1.0|0.5641005771902178|\n|7.6E17|57b20e5d1a62b7021...|RT @Mourinholic: ...|  tr|Mon Aug 01 15:38:...| []| []|      []|                []|RT @Mourinholic: ...|1.0|0.5270238616581286|\n|7.6E17|57b20e5d1a62b7021...|@CHRIS_FUCK_PINE ...|  ru|Mon Aug 01 15:38:...| []| []|      []|         [35040.0]|@CHRIS_FUCK_PINE ...|1.0|0.7492850645882727|\n|7.6E17|57b20e5d1a62b7021...|RT @JaredLeto: 🐊...| und|Mon Aug 01 15:38:...| []| []|      []|                []|RT @JaredLeto: 🐊...|1.0|0.5393492526033279|\n|7.6E17|57b20e5d1a62b7021...|@Bigdunnyd @donna...|  en|Mon Aug 01 15:38:...| []| []|      []|                []|@Bigdunnyd @donna...|1.0|0.5480397353271397|\n|7.6E17|57b20e5d1a62b7021...|A Song For You - ...|  en|Mon Aug 01 15:38:...| []| []|      []|[34866.0, 34793.0]|A Song For You - ...|1.0|0.7099006460967233|\n|7.6E17|57b20e5d1a62b7021...|RT @LuulaCavs_: L...|  es|Mon Aug 01 15:38:...| []| []|[2142.0]|         [21454.0]|RT @LuulaCavs_: L...|7.0|0.9073859381423806|\n|7.6E17|57b20e5d1a62b7021...|https://t.co/YEv5...| und|Mon Aug 01 15:38:...| []| []|      []|                []|https://t.co/YEv5...|1.0|0.5442989923422279|\n|7.6E17|57b20e5d1a62b7021...|Now playing on Ro...|  en|Mon Aug 01 15:38:...| []| []|[2031.0]|[11609.0, 34551.0]|Now playing on Ro...|7.0|0.7176537151652818|\n|7.6E17|57b20e5d1a62b7021...|RT @nur_f4tin: My...|  en|Mon Aug 01 15:38:...| []| []|      []|                []|RT @nur_f4tin: My...|1.0|  0.67345232031049|\n|7.6E17|57b20e5d1a62b7021...|RT @alaa_saeed88:...|  ar|Mon Aug 01 15:38:...| []| []|      []|          [5787.0]|RT @alaa_saeed88:...|1.0|0.6128215269322055|\n|7.6E17|57b20e5d1a62b7021...|أحييييييييييييييي...|  ar|Mon Aug 01 15:38:...| []| []|      []|                []|أحييييييييييييييي...|1.0|0.5442989923422279|\n|7.6E17|57b20e5d1a62b7021...|Sometimes idk why...|  en|Mon Aug 01 15:38:...| []| []|      []|                []|Sometimes idk why...|1.0|0.7398725708681895|\n|7.6E17|57b20e5d1a62b7021...|@Jat0fumi あくまでも誰か...|  ja|Mon Aug 01 15:38:...| []| []|      []|                []|@Jat0fumi あくまでも誰か...|1.0|0.5547410546297091|\n|7.6E17|57b20e5d1a62b7021...|         11강도 못가겠다..|  ko|Mon Aug 01 15:38:...| []| []|      []|                []|         11강도 못가겠다..|1.0|0.5547410546297091|\n+------+--------------------+--------------------+----+--------------------+---+---+--------+------------------+--------------------+---+------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Aug 5, 2016 4:31:36 PM",
+      "dateStarted": "Aug 15, 2016 7:03:29 PM",
+      "dateFinished": "Aug 15, 2016 7:03:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1471287809841_1701000550",
+      "id": "20160815-190329_2027869768",
+      "dateCreated": "Aug 15, 2016 7:03:29 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "mongo push",
+  "id": "2BSQRNSQJ",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

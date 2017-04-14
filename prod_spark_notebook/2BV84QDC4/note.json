@@ -1,0 +1,178 @@
+{
+  "paragraphs": [
+    {
+      "text": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext",
+      "dateUpdated": "Sep 21, 2016 9:00:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470756255190_-450747637",
+      "id": "20160809-152415_1022680731",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\n"
+      },
+      "dateCreated": "Aug 9, 2016 3:24:15 PM",
+      "dateStarted": "Sep 21, 2016 9:00:15 PM",
+      "dateFinished": "Sep 21, 2016 9:00:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.cassandraTable(\"processed_forum\", \"syed\").count()",
+      "dateUpdated": "Sep 21, 2016 9:01:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470756257334_4795061",
+      "id": "20160809-152417_1926293810",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res6: Long \u003d 2636449\n"
+      },
+      "dateCreated": "Aug 9, 2016 3:24:17 PM",
+      "dateStarted": "Sep 21, 2016 9:01:07 PM",
+      "dateFinished": "Sep 21, 2016 9:01:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i \u003c- 1 to 10){\n    print(sc.cassandraTable(\"processed_forum\", \"syed\").count())\n    print(\"\\n\")\n}",
+      "dateUpdated": "Sep 21, 2016 9:03:34 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1470756281339_-345680539",
+      "id": "20160809-152441_772861174",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "2719787\n2736984\n2751146\n2763693\n2774229\n2789787\n2823739\n2856739\n2875417\n2893139\n"
+      },
+      "dateCreated": "Aug 9, 2016 3:24:41 PM",
+      "dateStarted": "Sep 21, 2016 9:03:34 PM",
+      "dateFinished": "Sep 21, 2016 9:10:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "2+2",
+      "dateUpdated": "Sep 21, 2016 8:59:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474487341752_263368251",
+      "id": "20160921-194901_1437438701",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res0: Int \u003d 4\n"
+      },
+      "dateCreated": "Sep 21, 2016 7:49:01 PM",
+      "dateStarted": "Sep 21, 2016 8:59:49 PM",
+      "dateFinished": "Sep 21, 2016 9:00:09 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474491481001_-299821537",
+      "id": "20160921-205801_841568873",
+      "dateCreated": "Sep 21, 2016 8:58:01 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "cassandra count",
+  "id": "2BV84QDC4",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

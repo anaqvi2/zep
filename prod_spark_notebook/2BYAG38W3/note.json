@@ -1,0 +1,447 @@
+{
+  "paragraphs": [
+    {
+      "text": "var forum \u003d sqlContext.jsonFile(\"/opt/pipe2spark/processing/processed_news___news/processed_news___news/57e9d1b4e2abc776b286d4ad_57d9eb18e2abc771bc10ca05\")",
+      "dateUpdated": "Sep 29, 2016 7:26:12 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474736656011_-1551563294",
+      "id": "20160924-170416_603219679",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\nforum: org.apache.spark.sql.DataFrame \u003d [authors: array\u003cstring\u003e, cr: bigint, description: string, dom: string, ds: string, feed: string, girder_item_id: string, id: string, load_date: bigint, place_name: string, raw_t: string, rdt: bigint, t: string, tags: array\u003cstring\u003e, title: string, type: string, url: string, ymds: bigint]\n"
+      },
+      "dateCreated": "Sep 24, 2016 5:04:16 PM",
+      "dateStarted": "Sep 29, 2016 7:26:12 PM",
+      "dateFinished": "Sep 29, 2016 7:26:14 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val f2 \u003d forum.withColumn(\"dom2\", regexp_replace(lower($\"dom\"), \"\"\"https://|www.|/\"\"\", \"\"))",
+      "dateUpdated": "Sep 29, 2016 7:26:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474736681640_-1247965764",
+      "id": "20160924-170441_1871448498",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "f2: org.apache.spark.sql.DataFrame \u003d [authors: array\u003cstring\u003e, cr: bigint, description: string, dom: string, ds: string, feed: string, girder_item_id: string, id: string, load_date: bigint, place_name: string, raw_t: string, rdt: bigint, t: string, tags: array\u003cstring\u003e, title: string, type: string, url: string, ymds: bigint, dom2: string]\n"
+      },
+      "dateCreated": "Sep 24, 2016 5:04:41 PM",
+      "dateStarted": "Sep 29, 2016 7:26:16 PM",
+      "dateFinished": "Sep 29, 2016 7:26:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "f2.join(alexa, f2(\"dom2\")\u003d\u003d\u003dalexa(\"url2\"), \"left\").drop(\"dom2\")\n.drop(\"url2\").na.fill(0,Seq(\"impact\"))",
+      "dateUpdated": "Sep 29, 2016 7:26:21 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474743572329_-696988967",
+      "id": "20160924-185932_1110713793",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res81: org.apache.spark.sql.DataFrame \u003d [authors: array\u003cstring\u003e, cr: bigint, description: string, dom: string, ds: string, feed: string, girder_item_id: string, id: string, load_date: bigint, place_name: string, raw_t: string, rdt: bigint, t: string, tags: array\u003cstring\u003e, title: string, type: string, url: string, ymds: bigint, impact: int]\n"
+      },
+      "dateCreated": "Sep 24, 2016 6:59:32 PM",
+      "dateStarted": "Sep 29, 2016 7:26:21 PM",
+      "dateFinished": "Sep 29, 2016 7:26:22 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "res81.filter($\"impact\"\u003e0).count()",
+      "dateUpdated": "Sep 29, 2016 7:26:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474743583798_145257023",
+      "id": "20160924-185943_1692647131",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res84: Long \u003d 108\n"
+      },
+      "dateCreated": "Sep 24, 2016 6:59:43 PM",
+      "dateStarted": "Sep 29, 2016 7:26:32 PM",
+      "dateFinished": "Sep 29, 2016 7:26:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "res81.select(\"dom\", \"impact\").show()",
+      "dateUpdated": "Sep 29, 2016 7:27:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475177200370_-1864481901",
+      "id": "20160929-192640_852858789",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+------+\n|                 dom|impact|\n+--------------------+------+\n|http://www.denton...|     0|\n| http://www.ibj.com/|     0|\n|http://www.swcbul...|     0|\n|http://www.newsad...|     0|\n|http://www.miamit...|     0|\n|http://www.mtexpr...|     0|\n|http://local.malv...|     0|\n|http://triblive.com/|     0|\n|http://www.wadena...|     0|\n|http://www.westwo...|     0|\n|https://www.havas...|     0|\n|https://www.chron...|     0|\n|https://login.hom...|     0|\n|http://www.tuscal...|     0|\n|http://www.pntonl...|     0|\n|http://www.jamest...|     0|\n|http://www.nydail...|     0|\n|http://www.review...|     0|\n|http://www.canyon...|     0|\n|http://www.itemli...|     0|\n+--------------------+------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 29, 2016 7:26:40 PM",
+      "dateStarted": "Sep 29, 2016 7:27:17 PM",
+      "dateFinished": "Sep 29, 2016 7:27:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "forum.select(\"dom\").show()",
+      "dateUpdated": "Sep 24, 2016 6:19:01 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474741130750_864648811",
+      "id": "20160924-181850_214953839",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+\n|                 dom|\n+--------------------+\n|https://www.geeks...|\n+--------------------+\n\n"
+      },
+      "dateCreated": "Sep 24, 2016 6:18:50 PM",
+      "dateStarted": "Sep 24, 2016 6:19:01 PM",
+      "dateFinished": "Sep 24, 2016 6:19:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val builder \u003d MongodbConfigBuilder(Map(Host -\u003e List(\"dev-one-mongo.epidemi.co\"), Database -\u003e \"EpiOne\", Collection -\u003e\"final_alexa\", SamplingRatio -\u003e 1.0, WriteConcern -\u003e \"normal\"))\nval readConfig \u003d builder.build()\n\nval alexa \u003d sqlContext.fromMongoDB(readConfig).withColumnRenamed(\"url\", \"url2\").select(\"url2\", \"impact\").cache()",
+      "dateUpdated": "Sep 24, 2016 6:56:01 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474737858873_1257015020",
+      "id": "20160924-172418_907080994",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "builder: com.stratio.datasource.mongodb.config.MongodbConfigBuilder \u003d MongodbConfigBuilder(Map(database -\u003e EpiOne, writeConcern -\u003e normal, schema_samplingRatio -\u003e 1.0, collection -\u003e final_alexa, host -\u003e List(dev-one-mongo.epidemi.co)))\nreadConfig: com.stratio.datasource.util.Config \u003d com.stratio.datasource.util.ConfigBuilder$$anon$1@ad34bde6\nalexa: org.apache.spark.sql.DataFrame \u003d [url2: string, impact: int]\n"
+      },
+      "dateCreated": "Sep 24, 2016 5:24:18 PM",
+      "dateStarted": "Sep 24, 2016 6:56:01 PM",
+      "dateFinished": "Sep 24, 2016 6:56:02 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val b \u003d alexa.select($\"url\").map(x\u003d\u003e x(0).toString).toArray.toSeq",
+      "dateUpdated": "Sep 24, 2016 6:18:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474736691644_17640290",
+      "id": "20160924-170451_1418801031",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\nb: Seq[String] \u003d WrappedArray(nytimes.com, timesofindia.indiatimes.com, usatoday.com, wsj.com, indianexpress.com, economictimes.indiatimes.com, latimes.com, nypost.com, chron.com, thehindu.com, sfgate.com, navbharattimes.indiatimes.com, eenadu.net, chicagotribune.com, hollywoodreporter.com, hindustantimes.com, smh.com.au, manoramaonline.com, thehill.com, andhrajyothy.com, amarujala.com, business-standard.com, livemint.com, bostonglobe.com, theglobeandmail.com, dnaindia.com, nj.com, anandabazar.com, mathrubhumi.com, washingtontimes.com, freep.com, philly.com, theage.com.au, seattletimes.com, thestar.com, dallasnews.com, deccanchronicle.com, startribune.com, azcentral.com, al.com, oregonlive.com, washingtonexaminer.com, miamiherald.com, observer.com, financialexpress.com, ajc.com, stltoda..."
+      },
+      "dateCreated": "Sep 24, 2016 5:04:51 PM",
+      "dateStarted": "Sep 24, 2016 6:18:17 PM",
+      "dateFinished": "Sep 24, 2016 6:18:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "res163(0)",
+      "dateUpdated": "Sep 24, 2016 6:00:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474737534447_3996767",
+      "id": "20160924-171854_65559923",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res165: org.apache.spark.sql.Row \u003d [nytimes.com]\n"
+      },
+      "dateCreated": "Sep 24, 2016 5:18:54 PM",
+      "dateStarted": "Sep 24, 2016 6:00:55 PM",
+      "dateFinished": "Sep 24, 2016 6:00:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "forum.show()",
+      "dateUpdated": "Sep 24, 2016 10:24:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474740751466_-9068325",
+      "id": "20160924-181231_1520052354",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+-------------------+--------------------+--------------------+------+---------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+---------------+--------------------+----------+\n|             authors|                 cr|         description|                 dom|    ds|           feed|      girder_item_id|                  id|           load_date|          place_name|               raw_t|                 rdt|                   t|                tags|               title|           type|                 url|      ymds|\n+--------------------+-------------------+--------------------+--------------------+------+---------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+---------------+--------------------+----------+\n|                  []|               null|You can change th...|http://autos.gulf...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://autos.gulf...|2016-09-09T07:36:...|         mississippi|gulflive.com/r/nM...|2016-09-09T03:59:...|Close\n\nCongratula...|[used, set, cars,...|Used Cars for sal...|News_Aggregator|http://autos.gulf...|2016090914|\n|                  []|               null|Stories from Mond...|http://www.lemars...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://www.lemars...|2016-09-09T07:35:...|                iowa|Enlarge text/r/nS...|2016-09-09T03:59:...|Stories from Mond...|[school, le, iowa...|Stories from Mond...|News_Aggregator|http://www.lemars...|2016090914|\n|[Amanda Bancroft,...|               null|But now that the ...|http://www.freewe...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://www.freewe...|2016-09-09T07:36:...|            arkansas|Arts \u0026 Entertainm...|2016-09-09T03:59:...|Richard Nixon had...|[putin, dnc, camp...|Break-In: The Kre...|News_Aggregator|http://www.freewe...|2016090914|\n|[Tao Interactive ...|               null|Posted 6/25/09 (T...|http://www.bhgnew...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://www.bhgnew...|2016-09-09T07:35:...|        north dakota|Printing/r/nNewsp...|2016-09-09T03:59:...|Council, school c...|[parshall, school...|Mountrail County ...|News_Aggregator|http://www.bhgnew...|2016090914|\n|                  []|               null|HARRISBURG, Pa. -...| http://www.vpa.net/|scrapy|News_Aggregator|57d84e87e2abc7514...|http://www.vpa.ne...|2016-09-09T07:35:...|            virginia|Skip to main cont...|2016-09-09T03:59:...|HARRISBURG, Pa. -...|[east, alliance, ...|America East join...|News_Aggregator|http://www.vpa.ne...|2016090914|\n|[You Need An Onli...|               null|And with the 2015...|http://marshfield...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://marshfield...|2016-09-09T07:35:...|            missouri|oTNCMS_Ad.setRela...|2016-09-09T03:59:...|The state basebal...|[week, hughes, ma...|Marshfield, Roger...|News_Aggregator|http://marshfield...|2016090914|\n|                  []|               null|The song Understa...|http://thecirclen...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://thecirclen...|2016-09-09T07:35:...|           minnesota|Home/r/nSitemap/r...|2016-09-09T03:59:...|Written by Jamiso...|[redhouse, trios,...|NEWS FROM A NATIV...|News_Aggregator|http://thecirclen...|2016090914|\n|                  []|               null|Out of the dozen ...|http://www.dailyc...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://www.dailyc...|2016-09-09T07:36:...|          california|Thursday, Septemb...|2016-09-09T03:59:...|Now that it’s rel...|[opening, influen...|The Daily Califor...|News_Aggregator|http://www.dailyc...|2016090914|\n|   [Wanderful Media]|               null|- The Find\u0026Save T...|http://findnsave....|scrapy|News_Aggregator|57d84e87e2abc7514...|http://findnsave....|2016-09-09T07:35:...|            illinois|Change/r/nPowered...|2016-09-09T03:59:...|Thank you!\n\nWe\u0027ll...|[shopping, thank,...|Camping Sale in B...|News_Aggregator|http://findnsave....|2016090914|\n|       [Mark Pohlad]|2016-09-08T10:30:24|The Drama of Obje...|http://art.newcit...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://art.newcit...|2016-09-09T07:35:...|            illinois|Skip links/r/nNew...|2016-09-09T03:59:...|The Drama of Obje...|[art, chicago, in...|         Mark Pohlad|News_Aggregator|http://art.newcit...|2016090824|\n|                  []|               null|                    |http://www.bellin...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://www.bellin...|2016-09-09T07:36:...|          washington|Customer Service ...|2016-09-09T03:59:...|                    |[summer, eyes, ja...|Eyes of the world...|News_Aggregator|http://www.bellin...|2016090914|\n|                  []|               null|SHREVES PUMPKIN P...|http://marketplac...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://marketplac...|2016-09-09T07:35:...|            illinois|My Account/r/nAnn...|2016-09-09T03:59:...|SHREVES PUMPKIN P...|[noon, 6185161851...|Mt Vernon Registe...|News_Aggregator|http://marketplac...|2016090914|\n|[Chelsia Rose Mar...|2016-08-24T06:00:10|Daily News winner...|http://www.nydail...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://www.nydail...|2016-09-09T07:35:...|            new york|Trending:/r/nTIM ...|2016-09-09T03:59:...|Lights, camera — ...|[studios, student...|Daily News winner...|News_Aggregator|http://www.nydail...|2016082310|\n|                  []|               null|This transcript h...| http://www.wsj.com/|scrapy|News_Aggregator|57d84e87e2abc7514...|http://www.wsj.co...|2016-09-09T07:35:...|                  US|Home/r/nBrowse/r/...|2016-09-09T03:59:...|This transcript h...|[stores, bonds, g...|The Mad, Mad, Mad...|News_Aggregator|http://www.wsj.co...|2016090914|\n|   [Wanderful Media]|               null|- The Find\u0026Save T...|http://findnsave....|scrapy|News_Aggregator|57d84e87e2abc7514...|http://findnsave....|2016-09-09T07:36:...|       massachusetts|Change/r/nPowered...|2016-09-09T03:59:...|Thank you!\n\nWe\u0027ll...|[shopping, thank,...|Love Reigns Sales...|News_Aggregator|http://findnsave....|2016090914|\n|                  []|               null|                    |http://www.idahop...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://www.idahop...|2016-09-09T07:36:...|               idaho|                null|2016-09-09T03:59:...|                    |[article, type, s...|RSS Results in si...|News_Aggregator|http://www.idahop...|2016090914|\n|                  []|               null|June 20, 2016 It ...|http://www.ironmo...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://www.ironmo...|2016-09-09T07:36:...|            michigan|Mobile: /r/nmobil...|2016-09-09T03:59:...|June 20, 2016 It ...|[meant, united, l...|Opinion - Letters...|News_Aggregator|http://www.ironmo...|2016090914|\n|                  []|               null|Sheldon Whitehous...|https://www.washi...|scrapy|News_Aggregator|57d84e87e2abc7514...|https://www.washi...|2016-09-09T07:36:...|district of columbia|Sign In/r/nUserna...|2016-09-09T03:59:...|\n\n(April Greer/Fo...|[evolving, patien...|WATCH: Is technol...|News_Aggregator|https://www.washi...|2016090914|\n|[Community Newspa...|               null|More and more stu...|http://communityn...|scrapy|News_Aggregator|57d84e87e2abc7514...|http://communityn...|2016-09-09T07:36:...|             florida|305-669-7355/r/nN...|2016-09-09T03:59:...|More and more stu...|[distance, 58, st...|Miami\u0027s Community...|News_Aggregator|http://communityn...|2016090914|\n|    [Missoulian Com]|               null|* CountryAfghanis...|https://missoulia...|scrapy|News_Aggregator|57d84e87e2abc7514...|https://missoulia...|2016-09-09T07:35:...|             montana|Sign Up/r/nDashbo...|2016-09-09T03:59:...|* Country\n\nAfghan...|[kingdom, united,...|      missoulian.com|News_Aggregator|https://missoulia...|2016090914|\n+--------------------+-------------------+--------------------+--------------------+------+---------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+---------------+--------------------+----------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 24, 2016 6:12:31 PM",
+      "dateStarted": "Sep 24, 2016 10:24:49 PM",
+      "dateFinished": "Sep 24, 2016 10:24:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "forum.select($\"load_date\").show()",
+      "dateUpdated": "Sep 24, 2016 10:32:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474755889629_1631967371",
+      "id": "20160924-222449_2091416864",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+\n|           load_date|\n+--------------------+\n|2016-09-16T20:52:...|\n|2016-09-16T20:52:...|\n|2016-09-16T20:52:...|\n|2016-09-16T20:52:...|\n|2016-09-16T20:52:...|\n|2016-09-16T20:52:...|\n|2016-09-16T20:52:...|\n|2016-09-16T20:52:...|\n|2016-09-16T20:52:...|\n|2016-09-16T20:53:...|\n|2016-09-16T20:53:...|\n|2016-09-16T20:53:...|\n|2016-09-16T20:53:...|\n|2016-09-16T20:53:...|\n|2016-09-16T20:53:...|\n|2016-09-16T20:53:...|\n|2016-09-16T20:53:...|\n|2016-09-16T20:54:...|\n|2016-09-16T20:54:...|\n|2016-09-16T20:54:...|\n+--------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 24, 2016 10:24:49 PM",
+      "dateStarted": "Sep 24, 2016 10:32:51 PM",
+      "dateFinished": "Sep 24, 2016 10:32:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "alexa.show()",
+      "dateUpdated": "Sep 29, 2016 8:12:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1474756014928_1035591251",
+      "id": "20160924-222654_74818205",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+------+\n|                url2|impact|\n+--------------------+------+\n|         nytimes.com|     5|\n|timesofindia.indi...|     5|\n|        usatoday.com|     5|\n|             wsj.com|     5|\n|   indianexpress.com|     5|\n|economictimes.ind...|     5|\n|         latimes.com|     5|\n|          nypost.com|     5|\n|           chron.com|     5|\n|        thehindu.com|     5|\n|          sfgate.com|     5|\n|navbharattimes.in...|     5|\n|          eenadu.net|     5|\n|  chicagotribune.com|     5|\n|hollywoodreporter...|     5|\n|  hindustantimes.com|     5|\n|          smh.com.au|     5|\n|  manoramaonline.com|     5|\n|         thehill.com|     5|\n|    andhrajyothy.com|     5|\n+--------------------+------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 24, 2016 10:26:54 PM",
+      "dateStarted": "Sep 29, 2016 8:12:31 PM",
+      "dateFinished": "Sep 29, 2016 8:12:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475179951258_513817972",
+      "id": "20160929-201231_1906624664",
+      "dateCreated": "Sep 29, 2016 8:12:31 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "testing news alexa",
+  "id": "2BYAG38W3",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

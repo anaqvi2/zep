@@ -1,0 +1,451 @@
+{
+  "paragraphs": [
+    {
+      "text": "import org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\nimport org.apache.spark.sql.types._",
+      "dateUpdated": "Oct 3, 2016 2:49:34 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475078082398_-106795848",
+      "id": "20160915-150102_470871247",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.sql.SQLContext\nimport com.stratio.datasource.util.Config._\nimport scala.collection.mutable.WrappedArray\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.cql._\nimport org.apache.spark.SparkContext\nimport org.apache.spark.sql.types._\n"
+      },
+      "dateCreated": "Sep 28, 2016 3:54:42 PM",
+      "dateStarted": "Oct 3, 2016 2:49:34 AM",
+      "dateFinished": "Oct 3, 2016 2:50:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// 57f08324e2abc7664a94c6f9_57956237e2abc7079f4a711b\n// 57f08324e2abc7664a94c6f9_57956235e2abc7079f4a7115\n// 57f08324e2abc7664a94c6f9_57956234e2abc7079f4a7112\n// 57f08324e2abc7664a94c6f9_57956232e2abc7079f4a710f\n// 57f08324e2abc7664a94c6f9_57956231e2abc7079f4a710c\n\n// val hm_test \u003d sqlContext.jsonFile(\"/opt/pipe2spark/processing/processed_news___news_hm\").persist()\n// val hm_test \u003d sqlContext.jsonFile(\"/opt/pipe2spark/to_process/processed_news___news\").persist()\nval hm_social \u003d sqlContext.jsonFile(\"/opt/pipe2spark/processing/twitter2/\").persist()",
+      "dateUpdated": "Oct 3, 2016 1:50:42 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475078082399_-107180597",
+      "id": "20160925-234850_341350513",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "warning: there were 1 deprecation warning(s); re-run with -deprecation for details\nhm_social: org.apache.spark.sql.DataFrame \u003d [_corrupt_record: string, acr: bigint, cc: string, classification: string, classification_id: bigint, cr: bigint, description: string, ds: string, dup_count: bigint, dup_of: string, f: string, feed: string, feed_id: bigint, flng: bigint, flrs: bigint, girder_item_id: string, hm_metas: array\u003cstruct\u003calert_meta_id:string,case_count_date:string,confirmed_cases:string,confirmed_deaths:string,disease_category:string,disease_category_id:string,disease_id:bigint,disease_name:string,duration:string,hide:string,meta_category_list:string,meta_category_list_ids:string,place:struct\u003cgeo_geonameid:string,place_id:bigint,place_lat:double,place_lng:double,place_name:string\u003e,radius:string,ruled_out:string,severity:string,species_id:bigint,species_name:string,su..."
+      },
+      "dateCreated": "Sep 28, 2016 3:54:42 PM",
+      "dateStarted": "Oct 3, 2016 1:50:42 PM",
+      "dateFinished": "Oct 3, 2016 2:02:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// println(hm_social.count())\nhm_social.printSchema()",
+      "dateUpdated": "Oct 3, 2016 2:49:08 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475098892067_-267235533",
+      "id": "20160928-214132_1660105852",
+      "result": "org.apache.thrift.transport.TTransportException: java.net.SocketException: Broken pipe",
+      "dateCreated": "Sep 28, 2016 9:41:32 PM",
+      "dateStarted": "Oct 3, 2016 2:49:08 AM",
+      "dateFinished": "Oct 3, 2016 2:49:08 AM",
+      "status": "ERROR",
+      "errorMessage": "java.net.SocketException: Broken pipe\n\tat java.net.SocketOutputStream.socketWrite0(Native Method)\n\tat java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:113)\n\tat java.net.SocketOutputStream.write(SocketOutputStream.java:159)\n\tat java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)\n\tat java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)\n\tat org.apache.thrift.transport.TIOStreamTransport.flush(TIOStreamTransport.java:159)\n\tat org.apache.thrift.TServiceClient.sendBase(TServiceClient.java:65)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.send_interpret(RemoteInterpreterService.java:243)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:232)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:269)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:94)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:279)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:176)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:328)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// chinese example - 3925172 - 57ec07e5e2abc7406f22ff10\n// html example - 3926371 - 57ec0c4ee2abc7406f231ab8\n// \nhm_social.drop(\"indic__mws\").drop(\"ae__mws\").write.json(\"/opt/pipe2spark/processing/dsforums\")\n// write.format(\"org.apache.spark.sql.cassandra\").mode(\"append\").options(Map( \"table\" -\u003e \"forum\", \"keyspace\" -\u003e \"processed_forum\")).save()",
+      "dateUpdated": "Oct 2, 2016 6:48:41 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475088505928_1347695236",
+      "id": "20160928-184825_1422976880",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 28, 2016 6:48:25 PM",
+      "dateStarted": "Oct 2, 2016 6:48:41 AM",
+      "dateFinished": "Oct 2, 2016 6:49:41 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "hm_social.drop(\"indic__mws\")",
+      "dateUpdated": "Oct 2, 2016 6:14:26 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475350409823_-1111508240",
+      "id": "20161001-193329_1265167390",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "res28: org.apache.spark.sql.DataFrame \u003d [bname: string, cat: string, cc: string, cr: bigint, description: string, dom: string, ds: string, dup_of: string, flink: string, fname: string, gdr: string, gdr_v: string, girder_item_id: string, id: string, indic_v: string, lang: string, loc: string, num_comments: bigint, pii__mws: array\u003cdouble\u003e, pii_v: string, product__mws: array\u003cdouble\u003e, profanity__mws: array\u003cdouble\u003e, profanity_v: string, rdt: bigint, score: bigint, stg_v: string, symptom__mws: array\u003cdouble\u003e, t: string, tg__mws: double, tg_v: string, tid: string, title: string, tlink: string, tstarter: boolean, type: string, ue__mws: array\u003cdouble\u003e, ue_v: string, uname: string, ups: bigint, url: string, v: boolean, ymds: bigint]\n"
+      },
+      "dateCreated": "Oct 1, 2016 7:33:29 PM",
+      "dateStarted": "Oct 2, 2016 6:14:26 AM",
+      "dateFinished": "Oct 2, 2016 6:14:27 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "println(hm_test.count())\nhm_test.printSchema()",
+      "dateUpdated": "Sep 28, 2016 8:39:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475078994359_-2059677284",
+      "id": "20160928-160954_1963046328",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "6399\nroot\n |-- authors: array (nullable \u003d true)\n |    |-- element: string (containsNull \u003d true)\n |-- classification: string (nullable \u003d true)\n |-- classification_id: string (nullable \u003d true)\n |-- cr: long (nullable \u003d true)\n |-- description: string (nullable \u003d true)\n |-- dom: string (nullable \u003d true)\n |-- ds: string (nullable \u003d true)\n |-- dup_count: string (nullable \u003d true)\n |-- dup_of: string (nullable \u003d true)\n |-- feed: string (nullable \u003d true)\n |-- feed_id: string (nullable \u003d true)\n |-- girder_item_id: string (nullable \u003d true)\n |-- hm_metas: array (nullable \u003d true)\n |    |-- element: struct (containsNull \u003d true)\n |    |    |-- alert_meta_id: string (nullable \u003d true)\n |    |    |-- case_count_date: long (nullable \u003d true)\n |    |    |-- confirmed_cases: long (nullable \u003d true)\n |    |    |-- confirmed_deaths: long (nullable \u003d true)\n |    |    |-- disease_category: string (nullable \u003d true)\n |    |    |-- disease_category_id: long (nullable \u003d true)\n |    |    |-- disease_id: long (nullable \u003d true)\n |    |    |-- disease_name: string (nullable \u003d true)\n |    |    |-- duration: string (nullable \u003d true)\n |    |    |-- hide: long (nullable \u003d true)\n |    |    |-- meta_category_list: string (nullable \u003d true)\n |    |    |-- meta_category_list_ids: string (nullable \u003d true)\n |    |    |-- place: struct (nullable \u003d true)\n |    |    |    |-- geo_geonameid: string (nullable \u003d true)\n |    |    |    |-- place_id: long (nullable \u003d true)\n |    |    |    |-- place_lat: double (nullable \u003d true)\n |    |    |    |-- place_lng: double (nullable \u003d true)\n |    |    |    |-- place_name: string (nullable \u003d true)\n |    |    |-- radius: string (nullable \u003d true)\n |    |    |-- ruled_out: long (nullable \u003d true)\n |    |    |-- severity: string (nullable \u003d true)\n |    |    |-- species_id: long (nullable \u003d true)\n |    |    |-- species_name: string (nullable \u003d true)\n |    |    |-- suspected_cases: long (nullable \u003d true)\n |    |    |-- suspected_deaths: long (nullable \u003d true)\n |-- id: string (nullable \u003d true)\n |-- incident_date: string (nullable \u003d true)\n |-- info_blob: string (nullable \u003d true)\n |-- info_blob2: string (nullable \u003d true)\n |-- lang: string (nullable \u003d true)\n |-- load_date: long (nullable \u003d true)\n |-- place_list: array (nullable \u003d true)\n |    |-- element: struct (containsNull \u003d true)\n |    |    |-- geo_geonameid: string (nullable \u003d true)\n |    |    |-- place_id: long (nullable \u003d true)\n |    |    |-- place_lat: double (nullable \u003d true)\n |    |    |-- place_lng: double (nullable \u003d true)\n |    |    |-- place_name: string (nullable \u003d true)\n |-- raw_t: string (nullable \u003d true)\n |-- rdt: long (nullable \u003d true)\n |-- search_string_id: string (nullable \u003d true)\n |-- src: string (nullable \u003d true)\n |-- src_id: string (nullable \u003d true)\n |-- submitted_by: string (nullable \u003d true)\n |-- t: string (nullable \u003d true)\n |-- tags: array (nullable \u003d true)\n |    |-- element: string (containsNull \u003d true)\n |-- title: string (nullable \u003d true)\n |-- title_ar: string (nullable \u003d true)\n |-- title_en: string (nullable \u003d true)\n |-- title_es: string (nullable \u003d true)\n |-- title_fr: string (nullable \u003d true)\n |-- title_id: string (nullable \u003d true)\n |-- title_pt: string (nullable \u003d true)\n |-- title_ru: string (nullable \u003d true)\n |-- title_vi: string (nullable \u003d true)\n |-- title_zh: string (nullable \u003d true)\n |-- type: string (nullable \u003d true)\n |-- url: string (nullable \u003d true)\n |-- ymds: long (nullable \u003d true)\n\n"
+      },
+      "dateCreated": "Sep 28, 2016 4:09:54 PM",
+      "dateStarted": "Sep 28, 2016 8:39:25 PM",
+      "dateFinished": "Sep 28, 2016 8:40:21 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "hm_test.show()",
+      "dateUpdated": "Sep 28, 2016 6:46:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475081445284_-1713915550",
+      "id": "20160928-165045_130976563",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+-------------------+-----------------+-------------+--------------------+--------------------+---------+---------+-------+--------------------+-------+--------------------+--------------------+-------+-------------+--------------------+--------------------+----+-------------+--------------------+--------------------+-------------+----------------+--------------------+------+------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------+--------+----------------+--------------------+----------+\n|             authors|     classification|classification_id|           cr|         description|                 dom|       ds|dup_count| dup_of|                feed|feed_id|      girder_item_id|            hm_metas|     id|incident_date|           info_blob|          info_blob2|lang|    load_date|          place_list|               raw_t|          rdt|search_string_id|                 src|src_id|submitted_by|                   t|                tags|               title|            title_ar|            title_en|            title_es|            title_fr|            title_id|            title_pt|            title_ru|title_vi|title_zh|            type|                 url|      ymds|\n+--------------------+-------------------+-----------------+-------------+--------------------+--------------------+---------+---------+-------+--------------------+-------+--------------------+--------------------+-------+-------------+--------------------+--------------------+----+-------------+--------------------+--------------------+-------------+----------------+--------------------+------+------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------+--------+----------------+--------------------+----------+\n|                null|            Context|                4|1452464149000|据广东省疾控中心专家研判,根据近年...|    news.southcn.com|HealthMap|        0|   null|            Baidu 新闻|     62|57ec07e5e2abc7406...|[[5935679,null,nu...|3925172|         null|粤孕妇感染H7N9死亡系谣言 或会...| XXXXXX 据广东省疾控中心专...|  zh|1475086690000|[[null,334,24.876...|\u003c!DOCTYPE html\u003e\u003ch...|1452464149000|            null|    news.southcn.com| 44946|        null|\u003c!DOCTYPE html\u003e\u003ch...|              [h7n9]|粤孕妇感染H7N9死亡系谣言 或会...|                null|Guangdong Departm...|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://news.south...|2016011049|\n|   [Raja Abdulrahim]|               null|             null|1452508260000|UN Aid Convoy Hea...|             wsj.com|HealthMap|        0|3925593|Google News Syria...|     79|57ec0c22e2abc7406...|[[5937405,null,nu...|3926324|         null|conflict219 UN Ai...| XXXXXX UN Aid Co...|  en|1475087369000|[[null,null,null,...|\u003c!DOCTYPE html\u003e\n\u003c...|1452510194000|               7| Wall Street Journal|116738|        null|News Corp is a ne...|[town, worlds, me...|UN Aid Convoy Hea...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.wsj.co...|2016011100|\n|                null|               null|             null|1452466880000|Don\u0026#39;t own the...|http://www.livele...|HealthMap|        0|   null|        Vaccine News|     46|57ec07fbe2abc7406...|[[5935715,null,nu...|3925198|         null|LiveLeak.com - An...|                null|  en|1475086836000|[[null,null,null,...|\u003c!DOCTYPE HTML PU...|1452466880000|            null|                null|  null|        null|Don\u0027t own the rig...|[woman, dont, rig...|LiveLeak.com - An...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.livele...|2016011020|\n|                null|               null|             null|1452495095000|Aid convoys head ...|   news-sentinel.com|HealthMap|        0|3925591|Google News Syria...|     79|57ec0a1ae2abc7406...|[[5936427,null,nu...|3925781|         null|conflict219 Aid c...| XXXXXX Aid convo...|  en|1475086962000|[[null,86,35.0131...|\u003c!DOCTYPE HTML\u003e\n\u003c...|1452495773000|               6|       News Sentinel|  9006|        null|\u003c!DOCTYPE HTML\u003e\n\u003c...|[head, villages, ...|Aid convoys head ...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.news-s...|2016011135|\n|                null|            Context|                4|1452449025000|Uganda: Uwa Deplo...|       allafrica.com|HealthMap|        0|   null|Google News Wildl...|     64|57ec09ade2abc7406...|[[5936306,null,nu...|3925671|         null|Uganda: Uwa Deplo...|                null|  en|1475086936000|[[null,97,1.27996...|                null|1452492049000|            null|       AllAfrica.com|   164|        null|                null|                null|Uganda: Uwa Deplo...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://allafrica....|2016011045|\n|[Asharq Al-awsat ...|               null|             null|1452498732000|Aid Convoys Set o...|  english.aawsat.com|HealthMap|        0|3925591|Google News Syria...|     79|57ec0a8fe2abc7406...|[[5936592,null,nu...|3925899|         null|conflict219 Aid C...| XXXXXX Aid Convo...|  en|1475086996000|[[null,86,35.0131...|\r\n\r\n\u003c!DOCTYPE htm...|1452499418000|               7|      Asharq Alawsat|124655|        null|Aid Convoys Set o...|[set, kefraya, vi...|Aid Convoys Set o...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://english.aa...|2016011112|\n|                null|Not Disease Related|                5|1452502414000|Among women the 5...|https://twitter.com/|HealthMap|        0|   null|                  NA|    134|57ec0b04e2abc7406...|[[5936787,null,nu...|3926030|         null|Among women the 5...|                null|  en|1475087083000|[[null,null,null,...|\u003c!DOCTYPE html\u003e\n\u003c...|1452503228000|            null|                null|  null|        null|Add a location to...|[cervix, diagnose...|Among women the 5...|                null|                null|                null|                null|                null|                null|                null|    null|    null|              NA|https://twitter.c...|2016011134|\n|                null|Not Disease Related|                5|1452481200000|A Bavois, Enerego...|  http://www.tdg.ch/|HealthMap|        0|   null|Francophone News ...|    157|57ec098fe2abc7406...|[[5936269,null,nu...|3925637|         null|Une start-up vaud...| XXXXXX A Bavois,...|  fr|1475086929000|[[null,100,46.564...|\u003c!DOCTYPE html PU...|1452489546000|            null|                null|  null|        null|Valoriser les alg...|[vaudoise, sort, ...|Une start-up vaud...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.tdg.ch...|2016011100|\n|                null|               null|             null|1452432355000|\u003ctable border\u003d\"0\"...|wiltsglosstandard...|HealthMap|        0|   null|Google Meningitis...|     54|57ec0c4ee2abc7406...|[[5937459,null,nu...|3926371|         null|Students warned a...| XXXXXX Students ...|  de|1475087413000|[[null,279,53.034...|\u003c!DOCTYPE html\u003e\n\u003c...|1452510855000|             358|Wilts and Glouces...| 22099|        null|It looks like you...|[website, adverti...|Students warned a...|                null|Students warned a...|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.wiltsg...|2016011055|\n|                null|Not Disease Related|                5|1452476097000|تهجس معظم النساء ...|     daralakhbar.com|HealthMap|        0|3923694|          Arabic RSS|     70|57ec08b2e2abc7406...|[[5935967,null,nu...|3925400|         null|كيف تظهرين أصغر ع...| XXXXXX تهجس معظم...|  ar|1475086871000|[[null,null,null,...|                null|1452478235000|            null|       Dar Al-Akhbar| 99540|        null| XXXXXX تهجس معظم...|                null|كيف تظهرين أصغر ع...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.darala...|2016011157|\n|                null|               null|             null|1452489246000|Madaya: UN aid co...|             bbc.com|HealthMap|        0|3924894|Google News Syria...|     79|57ec09b4e2abc7406...|[[5936314,null,nu...|3925679|         null|conflict219 Maday...| XXXXXX Madaya: U...|  en|1475086938000|[[null,85,33.9202...|\u003c!DOCTYPE html\u003e\n\u003c...|1452492099000|               7|            BBC News|112350|        null|    Also in the News|[town, convoy, se...|Madaya: UN aid co...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.bbc.co...|2016011106|\n|                null|           Breaking|                1|1452411225000|Nigeria: Lassa Fe...|       allafrica.com|HealthMap|        0|3921323|         Google News|      4|57ec086ce2abc7406...|[[5935866,null,nu...|3925323|         null|Nigeria: Lassa Fe...|                null|  en|1475086851000|[[null,62,9.59396...|                null|1452474022000|             116|       AllAfrica.com|   164|        null|                null|                null|Nigeria: Lassa Fe...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://allafrica....|2016011045|\n|      [Jon Shainman]|Not Disease Related|                5|1452487454000|22-year-old man s...|http://www.wptv.com/|HealthMap|        0|   null|   Gun Violence News|    152|57ec0a26e2abc7406...|[[5936442,1452470...|3925794|         null|22-year-old man s...| XXXXXX 22-year-o...|  en|1475086965000|[[null,50721,27.4...|\n\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r...|1452496052000|             435|                null|  null|        null|\n\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r...|[pierce, 22yearol...|22-year-old man s...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.wptv.c...|2016011114|\n|                null|           Breaking|                1|1452509260000|全省报告乙类法定传染病17种共12...|http://www.sdwsjs...|HealthMap|        0|   null|Ministry of Healt...|    110|57ec0bdde2abc7406...|[[5937242,null,nu...|3926252|         null|       山东省卫生和计划生育委员会| XXXXXX 全省报告乙类法定传...|  zh|1475087300000|[[null,349,35.995...|\u003c!DOCTYPE html PU...|1452509261000|            null|                null|  null|       20598|\u003c!DOCTYPE html PU...|                null|山东省2015年12月份法定报告传...|مقاطعة شاندونغ في...|Shandong Province...|Provincia de Shan...|La province du Sh...|Provinsi Shandong...|Província de Shan...|Провинции Шаньдун...|    null|    null|Official Sources|http://www.sdwsjs...|2016011140|\n|                null|            Context|                4|1452459141000|Four-day anti-pol...|       nation.com.pk|HealthMap|        0|3925040|         Google News|      4|57ec086ee2abc7406...|[[5935868,null,nu...|3925325|         null|Four-day anti-pol...| XXXXXX Four-day ...|  en|1475086851000|[[null,140,29.967...|\u003c!DOCTYPE html PU...|1452474045000|             135|          The Nation| 29827|        null|PESHAWAR - Four d...|[fata, polio, fou...|Four-day anti-pol...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://nation.com...|2016011021|\n|   [Anna-lysa Gayle]|Not Disease Related|                5|1452454560000|Man says he accid...|http://www.wlky.com/|HealthMap|        0|3924025|   Gun Violence News|    152|57ec0756e2abc7406...|[[5935447,null,nu...|3925006|         null|Man says he accid...| XXXXXX Man says ...|  en|1475086657000|[[null,50696,38.2...|\u003c!DOCTYPE html\u003e\n\n...|1452456262000|             434|                null|  null|        null|Louisville police...|[boy, childs, sho...|Man says he accid...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.wlky.c...|2016011000|\n|                null|               null|             null|1452510450000|Weekend attacks o...|         thestar.com|HealthMap|        0|3925767|Google News Syria...|     79|57ec0cc3e2abc7406...|[[5937618,null,nu...|3926484|         null|conflict219 Weeke...| XXXXXX Weekend a...|  en|1475087530000|[[null,140,29.967...|\u003c!DOCTYPE html\u003e\n\u003c...|1452513818000|               4|        Toronto Star|   109|        null|BERLIN—A group of...|[north, attacked,...|Weekend attacks o...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.thesta...|2016011130|\n|                null|Not Disease Related|                5|1452491853000|\u003ctable border\u003d\"0\"...|http://www.gazeta...|HealthMap|        0|   null|Georgia Republic ...|    119|57ec09eee2abc7406...|[[5936379,null,nu...|3925738|         null|«Партия Саакашвил...| XXXXXX «Партия С...|  ru|1475086954000|[[null,null,null,...|\u003c!DOCTYPE html\u003e\n\u003c...|1452492893000|            null|                null|  null|        null|«Единое националь...|  [ru, 2006, online]|«Партия Саакашвил...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.gazeta...|2016011133|\n|                null|               null|             null|1452487416000|Syria:humanitaria...|        ansamed.info|HealthMap|        0|3920549|Google News Syria...|     79|57ec09b2e2abc7406...|[[5936311,null,nu...|3925676|         null|conflict219 Syria...| XXXXXX Syria:hum...|  en|1475086937000|[[null,86,35.0131...|\u003c!DOCTYPE html PU...|1452492090000|               9|             ANSAmed| 76925|        null|Syria:humanitaria...|[province, humani...|Syria:humanitaria...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.ansame...|2016011136|\n|[Kate Mather, Los...|Not Disease Related|                5|1452499228000|LAPD chief recomm...|http://www.latime...|HealthMap|        4|   null|   Gun Violence News|    152|57ec0b0ae2abc7406...|[[5936793,1452470...|3926036|         null|LAPD chief recomm...| XXXXXX LAPD chie...|  en|1475087088000|[[null,29005,33.9...|\u003c!DOCTYPE html\u003e\n\u003c...|1452503245000|             435|                null|  null|        null|Los Angeles polic...|[criminal, venice...|LAPD chief recomm...|                null|                null|                null|                null|                null|                null|                null|    null|    null|      News/Media|http://www.latime...|2016011128|\n+--------------------+-------------------+-----------------+-------------+--------------------+--------------------+---------+---------+-------+--------------------+-------+--------------------+--------------------+-------+-------------+--------------------+--------------------+----+-------------+--------------------+--------------------+-------------+----------------+--------------------+------+------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------+--------+----------------+--------------------+----------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 28, 2016 4:50:45 PM",
+      "dateStarted": "Sep 28, 2016 6:46:13 PM",
+      "dateFinished": "Sep 28, 2016 6:46:13 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "",
+      "dateUpdated": "Oct 2, 2016 6:11:00 AM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "editorMode": "ace/mode/scala",
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475078082399_-107180597",
+      "id": "20160927-222149_1045342606",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Sep 28, 2016 3:54:42 PM",
+      "dateStarted": "Sep 28, 2016 6:46:29 PM",
+      "dateFinished": "Sep 28, 2016 6:46:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var hm_test_nonull \u003d hm_test.drop(\"any\")",
+      "dateUpdated": "Sep 28, 2016 6:35:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475087728678_-1262147378",
+      "id": "20160928-183528_1349837485",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "hm_test_nonull: org.apache.spark.sql.DataFrame \u003d [authors: array\u003cstring\u003e, classification: string, classification_id: string, cr: bigint, description: string, dom: string, ds: string, dup_count: string, dup_of: string, feed: string, feed_id: string, girder_item_id: string, hm_metas: array\u003cstruct\u003calert_meta_id:string,case_count_date:bigint,confirmed_cases:bigint,confirmed_deaths:bigint,disease_category:string,disease_category_id:bigint,disease_id:bigint,disease_name:string,duration:string,hide:bigint,meta_category_list:string,meta_category_list_ids:string,place:struct\u003cgeo_geonameid:string,place_id:bigint,place_lat:double,place_lng:double,place_name:string\u003e,radius:string,ruled_out:string,severity:string,species_id:bigint,species_name:string,suspected_cases:string,suspected_deaths:string\u003e\u003e,..."
+      },
+      "dateCreated": "Sep 28, 2016 6:35:28 PM",
+      "dateStarted": "Sep 28, 2016 6:35:45 PM",
+      "dateFinished": "Sep 28, 2016 6:35:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "hm_test_nonull.show()",
+      "dateUpdated": "Sep 28, 2016 6:35:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475087747796_1657357925",
+      "id": "20160928-183547_150959401",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+-------------------+-----------------+-------------+--------------------+--------------------+---------+---------+-------+--------------------+-------+--------------------+--------------------+-------+-------------+--------------------+--------------------+----+-------------+--------------------+--------------------+-------------+----------------+-------------------+------+------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+------------------+--------------------+----------+\n|             authors|     classification|classification_id|           cr|         description|                 dom|       ds|dup_count| dup_of|                feed|feed_id|      girder_item_id|            hm_metas|     id|incident_date|           info_blob|          info_blob2|lang|    load_date|          place_list|               raw_t|          rdt|search_string_id|                src|src_id|submitted_by|                   t|                tags|               title|            title_ar|            title_en|            title_es|            title_fr|            title_pt|            title_ru|            title_vi|            title_zh|              type|                 url|      ymds|\n+--------------------+-------------------+-----------------+-------------+--------------------+--------------------+---------+---------+-------+--------------------+-------+--------------------+--------------------+-------+-------------+--------------------+--------------------+----+-------------+--------------------+--------------------+-------------+----------------+-------------------+------+------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+------------------+--------------------+----------+\n|                null|Not Disease Related|                5|1437523200000|Plasmodium vivax ...|http://www.ncbi.n...|HealthMap|        0|   null|      ABRAID GenBank|    173|57ec05c3e2abc7406...|[[5934906,null,nu...|3924550|         null|Plasmodium vivax ...|                null|  en|1475085790000|[[null,51,20.2598...|\u003c?xml version\u003d\"1....|1452434803000|            null|               null|  null|        null|Warning: The NCBI...|[function, maurit...|Plasmodium vivax ...|                null|                null|                null|                null|                null|                null|                null|                null|Scientific Reports|http://www.ncbi.n...|2015072200|\n|                null|Not Disease Related|                5|1434153600000|Burkholderia pseu...|http://www.ncbi.n...|HealthMap|        0|   null|      ABRAID GenBank|    173|57ec05fae2abc7406...|[[5934972,null,nu...|3924616|         null|Burkholderia pseu...|                null|  en|1475085812000|[[null,151,15.127...|\u003c?xml version\u003d\"1....|1452434806000|            null|               null|  null|        null|Warning: The NCBI...|[function, web, n...|Burkholderia pseu...|                null|                null|                null|                null|                null|                null|                null|                null|Scientific Reports|http://www.ncbi.n...|2015061300|\n|                null|           Breaking|                1|1452441600000|\u003cimg src\u003d\u0027http://...|         okaz.com.sa|HealthMap|        0|   null|          Arabic RSS|     70|57ec06fce2abc7406...|[[5935330,1452384...|3924909|         null|\u0026#xab;كورونا\u0026#xbb...| XXXXXX كشف مسح إ...|  ar|1475086132000|[[null,2656,26.33...|\r\n\u003c!DOCTYPE HTML\u003e...|1452449231000|            null|               Okaz| 21716|        null|شارك من خلال تويت...|[39, 12, 1433, 33...|\u0026#xab;كورونا\u0026#xbb...|                null|«Corona» affects ...|                null|                null|                null|                null|                null|                null|        News/Media|http://www.okaz.c...|2016011000|\n|                null|Not Disease Related|                5|1452441600000|فشل مواطن في تهري...|      alraimedia.com|HealthMap|        0|3923323|          Arabic RSS|     70|57ec06fde2abc7406...|[[5935333,null,nu...|3924910|         null|مواطن فشل في تهري...| XXXXXX فشل مواطن...|  ar|1475086135000|[[null,null,null,...|\r\n\r\n\u003c!DOCTYPE htm...|1452449235000|            null|       Al Rai Media| 97065|        null|| كتب عزيز أحمد |...|                [41]|مواطن فشل في تهري...|                null|                null|                null|                null|                null|                null|                null|                null|        News/Media|http://www.alraim...|2016011000|\n|                null|Not Disease Related|                5|1434153600000|Burkholderia pseu...|http://www.ncbi.n...|HealthMap|        0|   null|      ABRAID GenBank|    173|57ec061be2abc7406...|[[5935010,null,nu...|3924654|         null|Burkholderia pseu...|                null|  en|1475085825000|[[null,151,15.127...|\u003c?xml version\u003d\"1....|1452434808000|            null|               null|  null|        null|Warning: The NCBI...|[function, web, n...|Burkholderia pseu...|                null|                null|                null|                null|                null|                null|                null|                null|Scientific Reports|http://www.ncbi.n...|2015061300|\n|                null|Not Disease Related|                5|1452433767000|\u003cimg src\u003d\"http://...|http://www.vestik...|HealthMap|        0|   null|Georgia Republic RSS|    122|57ec0667e2abc7406...|[[5935112,null,nu...|3924738|         null|Лариджани: действ...| XXXXXX Последние...|  ru|1475086090000|[[null,106,39.966...|\u003c!DOCTYPE html\u003e\n\u003c...|1452435576000|            null|               null|  null|        null|Последние действи...|            [newsam]|Лариджани: действ...|                null|                null|                null|                null|                null|                null|                null|                null|        News/Media|http://www.vestik...|2016011027|\n|[Kaitlyn Schallhorn]|               null|             null|1452432144000|Syrian Refugee Am...|        theblaze.com|HealthMap|        0|3924766|Google News Syria...|     79|57ec06a2e2abc7406...|[[5935195,null,nu...|3924813|         null|conflict219 Syria...| XXXXXX Syrian Re...|  en|1475086112000|[[null,106,39.966...|\u003c!DOCTYPE html\u003e\n\u003c...|1452441677000|               4|       TheBlaze.com| 72762|        null|WASHINGTON (AP) —...|[guest, family, u...|Syrian Refugee Am...|                null|                null|                null|                null|                null|                null|                null|                null|        News/Media|http://www.thebla...|2016011024|\n|   [Julio Hortiales]|Not Disease Related|                5|1452432328000|\u003ctable border\u003d\"0\"...|      elnuevodia.com|HealthMap|        0|   null| Google News Español|      9|57ec0691e2abc7406...|[[5935173,null,nu...|3924791|         null|\u0027Cuello de texto\u0027...| XXXXXX Cuello de...|  es|1475086109000|[[null,516,19.434...|\u003c!doctype html \u003e\n...|1452438728000|            null|            Siete24|129433|        null|‘Cuello de texto’...|[el, en, la, los,...|\u0027Cuello de texto\u0027...|                null|                null|                null|                null|                null|                null|                null|                null|        News/Media|https://www.siete...|2016011028|\n|                null|Not Disease Related|                5|1434240000000|Burkholderia pseu...|http://www.ncbi.n...|HealthMap|        0|   null|      ABRAID GenBank|    173|57ec05d1e2abc7406...|[[5934922,null,nu...|3924566|         null|Burkholderia pseu...|                null|  en|1475085795000|[[null,151,15.127...|\u003c?xml version\u003d\"1....|1452434804000|            null|               null|  null|        null|Warning: The NCBI...|[function, web, n...|Burkholderia pseu...|                null|                null|                null|                null|                null|                null|                null|                null|Scientific Reports|http://www.ncbi.n...|2015061400|\n|                null|               null|             null|1452418080000|Syrian rebels ask...|        gulfnews.com|HealthMap|        1|   null|Google News Syria...|     79|57ec06cae2abc7406...|[[5935244,null,nu...|3924851|         null|conflict219 Syria...| XXXXXX Syrian re...|  en|1475086118000|[[null,null,null,...|                null|1452445414000|               7|       gulfnews.com|  2694|        null| XXXXXX Syrian re...|                null|Syrian rebels ask...|                null|                null|                null|                null|                null|                null|                null|                null|        News/Media|http://gulfnews.c...|2016011000|\n|                null|Not Disease Related|                5|1434153600000|Burkholderia pseu...|http://www.ncbi.n...|HealthMap|        0|   null|      ABRAID GenBank|    173|57ec05fde2abc7406...|[[5934975,null,nu...|3924619|         null|Burkholderia pseu...|                null|  en|1475085811000|[[null,151,15.127...|\u003c?xml version\u003d\"1....|1452434806000|            null|               null|  null|        null|Warning: The NCBI...|[function, web, n...|Burkholderia pseu...|                null|                null|                null|                null|                null|                null|                null|                null|Scientific Reports|http://www.ncbi.n...|2015061300|\n|                null|Not Disease Related|                5|1434240000000|Burkholderia pseu...|http://www.ncbi.n...|HealthMap|        0|   null|      ABRAID GenBank|    173|57ec05ebe2abc7406...|[[5934954,null,nu...|3924598|         null|Burkholderia pseu...|                null|  en|1475085803000|[[null,150,1.2916...|\u003c?xml version\u003d\"1....|1452434805000|            null|               null|  null|        null|Warning: The NCBI...|[function, web, n...|Burkholderia pseu...|                null|                null|                null|                null|                null|                null|                null|                null|Scientific Reports|http://www.ncbi.n...|2015061400|\n|[Http Tribune Com...|           Breaking|                1|1452441760000|An unprofitable h...|      tribune.com.pk|HealthMap|        2|   null|         Google News|      4|57ec070de2abc7406...|[[5935353,null,nu...|3924926|         null|An unprofitable h...| XXXXXX An unprof...|  en|1475086137000|[[null,941,31.0,7...|\u003c!doctype html\u003e\u003ch...|1452452424000|             227|The Express Tribune| 25777|        null|Kinnow Grower­s’ ...|[grown, damaged, ...|An unprofitable h...|حصاد مربحة: \u0026#39;...|                null|Una cosecha renta...|Une récolte non r...|Uma colheita não ...|Убыточную урожай:...|An thu hoạch khôn...|一个无利可图的收获：“柑橘溃疡破损...|        News/Media|http://tribune.co...|2016011040|\n|                null|Not Disease Related|                5|1452443121000|\u003ctable border\u003d\"0\"...|        eurosport.fr|HealthMap|        0|   null|Google News Portu...|     28|57ec0709e2abc7406...|[[5935349,null,nu...|3924923|         null|EN DIRECT / LIVE....| XXXXXX EN DIRECT...|  pt|1475086134000|[[null,288,-36.98...|\u003c!DOCTYPE html\u003e\r\n...|1452449519000|            null|       Eurosport.fr|118449|        null|EN DIRECT / LIVE....|[celta, rencontre...|EN DIRECT / LIVE....|                null|                null|                null|                null|                null|                null|                null|                null|        News/Media|http://www.eurosp...|2016011021|\n|                null|           Breaking|                1|1452286175000|\u003ctable border\u003d\"0\"...|           crhoy.com|HealthMap|        0|   null| Google News Español|      9|57ec0635e2abc7406...|[[5935041,null,nu...|3924678|         null|OPS dice que caso...| XXXXXX OPS dice ...|  es|1475086072000|[[null,17,9.9702,...|\u003c!doctype html\u003e\n\u003c...|1452435107000|            null|          crhoy.com|107375|        null|De acuerdo con la...|[influenza, dismi...|OPS dice que caso...|                null|PAHO said that ca...|                null|                null|                null|                null|                null|                null|        News/Media|http://www.crhoy....|2016010835|\n|                null|Not Disease Related|                5|1452436896000|Two Found Shot To...|    http://wspa.com/|HealthMap|        1|   null|   Gun Violence News|    152|57ec0684e2abc7406...|[[5935151,1452384...|3924774|         null|Two Found Shot To...| XXXXXX Two Found...|  en|1475086106000|[[null,51173,34.3...|\u003c!DOCTYPE html\u003e\n\u003c...|1452438311000|             434|               null|  null|        null|CHICAGO (AP) — A ...|[independent, att...|Two Found Shot To...|                null|                null|                null|                null|                null|                null|                null|                null|        News/Media|http://wspa.com/2...|2016011036|\n|                null|           Breaking|                1|1452406988000|\u003ctable border\u003d\"0\"...|   es.vietnamplus.vn|HealthMap|        0|   null| Google News Español|      9|57ec0702e2abc7406...|[[5935341,null,nu...|3924916|         null|Sacrifican cerca ...| XXXXXX Sacrifica...|  es|1475086133000|[[null,3347,14.75...|\n\u003c!DOCTYPE html\u003e\n...|1452449288000|            null|           Vietnam+| 30954|        null|Vacunación para a...|[corrales, en, mi...|Sacrifican cerca ...|                null|Nearly a thousand...|                null|                null|                null|                null|                null|                null|        News/Media|http://es.vietnam...|2016011008|\n|                null|Not Disease Related|                5|1452421222000|\u003cimg src\u003d\"http://...|http://www.vestik...|HealthMap|        0|   null|Georgia Republic RSS|    122|57ec0656e2abc7406...|[[5935088,null,nu...|3924721|         null|Полиция Ирана про...| XXXXXX Подраздел...|  ru|1475086081000|[[null,134,40.5,4...|\u003c!DOCTYPE html\u003e\n\u003c...|1452435511000|            null|               null|  null|        null|Подразделение ант...|   [90, 652, tasnim]|Полиция Ирана про...|                null|                null|                null|                null|                null|                null|                null|                null|        News/Media|http://www.vestik...|2016011022|\n|                null|Not Disease Related|                5|1434153600000|Burkholderia pseu...|http://www.ncbi.n...|HealthMap|        0|   null|      ABRAID GenBank|    173|57ec05f2e2abc7406...|[[5934962,null,nu...|3924606|         null|Burkholderia pseu...|                null|  en|1475085807000|[[null,151,15.127...|\u003c?xml version\u003d\"1....|1452434806000|            null|               null|  null|        null|Warning: The NCBI...|[function, web, n...|Burkholderia pseu...|                null|                null|                null|                null|                null|                null|                null|                null|Scientific Reports|http://www.ncbi.n...|2015061300|\n|                null|Not Disease Related|                5|1437523200000|Plasmodium vivax ...|http://www.ncbi.n...|HealthMap|        0|   null|      ABRAID GenBank|    173|57ec05cee2abc7406...|[[5934918,null,nu...|3924562|         null|Plasmodium vivax ...|                null|  en|1475085792000|[[null,51,20.2598...|\u003c?xml version\u003d\"1....|1452434804000|            null|               null|  null|        null|Warning: The NCBI...|[function, maurit...|Plasmodium vivax ...|                null|                null|                null|                null|                null|                null|                null|                null|Scientific Reports|http://www.ncbi.n...|2015072200|\n+--------------------+-------------------+-----------------+-------------+--------------------+--------------------+---------+---------+-------+--------------------+-------+--------------------+--------------------+-------+-------------+--------------------+--------------------+----+-------------+--------------------+--------------------+-------------+----------------+-------------------+------+------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+------------------+--------------------+----------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 28, 2016 6:35:47 PM",
+      "dateStarted": "Sep 28, 2016 6:35:55 PM",
+      "dateFinished": "Sep 28, 2016 6:36:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "hm_test.select(\"hm_metas\").show()",
+      "dateUpdated": "Sep 28, 2016 4:43:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475078082400_-121416306",
+      "id": "20160923-175432_1077285324",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+\n|            hm_metas|\n+--------------------+\n|[[6206725,null,nu...|\n|[[6255999,null,nu...|\n|[[6225862,null,nu...|\n|[[6213461,null,nu...|\n|[[6256184,null,nu...|\n|[[6215482,null,nu...|\n|[[6210808,null,nu...|\n|[[6257687,null,nu...|\n|[[6215926,null,nu...|\n|[[6228012,null,nu...|\n|[[6247008,null,nu...|\n|[[6207304,null,nu...|\n|[[6220455,null,nu...|\n|[[6217540,null,nu...|\n|[[6209311,null,nu...|\n|[[6242520,null,nu...|\n|[[6201145,null,nu...|\n|[[6240172,null,nu...|\n|[[6257349,null,nu...|\n|[[6221974,null,nu...|\n+--------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 28, 2016 3:54:42 PM",
+      "dateStarted": "Sep 28, 2016 4:43:11 PM",
+      "dateFinished": "Sep 28, 2016 4:43:44 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Sep 28, 2016 3:54:42 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475078082400_-121416306",
+      "id": "20160923-175419_1616436775",
+      "dateCreated": "Sep 28, 2016 3:54:42 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "result",
+      "dateUpdated": "Sep 28, 2016 3:54:42 PM",
+      "config": {
+        "enabled": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "colWidth": 12.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475078082411_-124109548",
+      "id": "20160919-183254_961578373",
+      "dateCreated": "Sep 28, 2016 3:54:42 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1475078229690_1034216148",
+      "id": "20160928-155709_870774391",
+      "dateCreated": "Sep 28, 2016 3:57:09 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "debug_hm",
+  "id": "2BYNWZJME",
+  "angularObjects": {
+    "2BTJ3P41C:shared_process": [],
+    "2BUSJ5B5T:shared_process": [],
+    "2BUCYP1D2:shared_process": [],
+    "2BRYFEHJ7:shared_process": [],
+    "2BT211CDH:shared_process": [],
+    "2BTX1MQS6:shared_process": [],
+    "2BU87RU3U:shared_process": [],
+    "2BTB82RPQ:shared_process": [],
+    "2BRP3ZUWJ:shared_process": [],
+    "2BT3JK3T4:shared_process": [],
+    "2BUTB2HA6:shared_process": [],
+    "2BTXGDVEJ:shared_process": [],
+    "2BRZ896X6:shared_process": [],
+    "2BSSEDUXN:shared_process": [],
+    "2BSMJA8VG:shared_process": [],
+    "2BSJYK2YE:shared_process": [],
+    "2BUZX9EWW:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
